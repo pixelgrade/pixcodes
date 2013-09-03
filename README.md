@@ -1,7 +1,10 @@
-pixelgrade-shortcodes
+=== PixLikes ===
+
+WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and more.
+
 ==================
 
-~Current Version:1.6.11~
+~Current Version:1.7.0~
 
 ==================
 

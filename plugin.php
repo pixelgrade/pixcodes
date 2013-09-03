@@ -2,8 +2,8 @@
 /*
 Plugin Name: Pixelgrade Shortcodes
 Plugin URI: http://pixelgrade.com
-Description: Adds shortcodes to your wordpress editor
-Version: 1.6.11
+Description: WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and more.
+Version: 1.7.0
 Author: Pixelgrade Media
 Author URI: http://pixelgrade.com
 Author Email: contact@pixelgrade.com
@@ -65,25 +65,25 @@ class WpGradeShortcodes {
 		$this->github_plugin_updater_init();
 	}
 
-    public function github_plugin_updater_init() {
-        include_once 'updater.php';
+	public function github_plugin_updater_init() {
+		include_once 'updater.php';
 //        define( 'WP_GITHUB_FORCE_UPDATE', true ); // this is only for testing
-        if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
-            $config = array(
-                'slug' => plugin_basename( __FILE__ ),
-                'api_url' => 'https://api.github.com/repos/andreilupu/pixelgrade-shortcodes',
-                'raw_url' => 'https://raw.github.com/andreilupu/pixelgrade-shortcodes/update',
-                'github_url' => 'https://github.com/andreilupu/pixelgrade-shortcodes/tree/update',
-                'zip_url' => 'https://github.com/andreilupu/pixelgrade-shortcodes/archive/update.zip',
-                'sslverify' => false,
-                'requires' => '3.0',
-                'tested' => '3.3',
-                'readme' => 'README.md',
+		if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
+			$config = array(
+				'slug' => plugin_basename( __FILE__ ),
+				'api_url' => 'https://api.github.com/repos/pixelgrade/pixcodes',
+				'raw_url' => 'https://raw.github.com/pixelgrade/pixcodes/update',
+				'github_url' => 'https://github.com/pixelgrade/pixcodes/tree/update',
+				'zip_url' => 'https://github.com/pixelgrade/pixcodes/archive/update.zip',
+				'sslverify' => false,
+				'requires' => '3.0',
+				'tested' => '3.3',
+				'readme' => 'README.md',
 //			'access_token' => '',
-            );
-            new WP_GitHub_Updater( $config );
-        }
-    }
+			);
+			new WP_GitHub_Updater( $config );
+		}
+	}
 
 	public function plugin_textdomain() {
 		$domain = 'wpgrade_txtd';
