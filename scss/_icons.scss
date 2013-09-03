@@ -1,0 +1,50 @@
+#pixelgrade_shortcodes_modal .l_modal_body {
+	.pxg_icon_list {
+		border-right:1px solid #ccc;
+		border-bottom:1px solid #ccc;
+		li {
+			float:left;
+			clear:none;
+			width:7%;
+			height:38px;
+			margin:0;
+			padding:5px;
+			border-left:1px solid #ccc;
+			border-top:1px solid #ccc;
+			cursor:pointer;
+			position:relative;
+			i {
+				@include backface-visibility(hidden);
+				@include perspective(1000px);
+				font-size:14px;
+				position:absolute;
+				top:0;
+				left:0;
+				z-index:10;
+				height: 38px;
+				line-height: 38px;
+				width:100%;
+				@include transition(all 0.3s);
+			}
+			&:hover, &.active {
+				i {
+					background:#464646;
+					font-size:24px;
+					color:#fff;
+					height: 45px;
+					top: -5px;
+					line-height: 45px;
+					left: -5px;
+					width: 45px;
+					@include box-shadow(0 2px 3px rgba(0,0,0,0.3));
+					z-index:12;
+				}
+			}
+			&.active {
+				i {
+					background:#01a279;
+				}
+			}
+		}
+	}
+}

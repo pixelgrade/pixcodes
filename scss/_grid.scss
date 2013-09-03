@@ -1,0 +1,233 @@
+
+//						: Grid
+$greedy-breakpoints			: 400px hand 900px lap 2000px desk;
+$greedy-columns         : 12;
+$greedy-gutter          : 20;
+
+$bpNames: ();
+$bpSizes: ();
+@mixin processBreakpoints() {
+    @each $breakpoint in $greedy-breakpoints {
+        @if index($greedy-breakpoints, $breakpoint) % 2 == 0 {
+            $bpNames: append($bpNames, $breakpoint);
+        } @else {
+            $bpSizes: append($bpSizes, $breakpoint);
+        }
+    }
+    $bpSizes: append($bpSizes, 0);
+}
+
+@include processBreakpoints();
+
+@function emQuery($px) {
+    @return $px/$base-font-size + em;
+}
+
+@function queryString($query) {
+    $string: "";
+    @if length($query) == 1 {
+        @if nth($query, 1) != 0 {
+            $string: " and (min-width: " + emQuery($query) + ")";
+        }
+    }
+    @if length($query) == 2 {
+        @if nth($query, 2) == 0 {
+            @if nth($query, 1) != 0 {
+                $string: " and (min-width: " + emQuery(nth($query,1)) + ")";
+            }
+        } @else {
+            @if nth($query, 1) == 0 {
+                $string: " and (max-width: " + emQuery(nth($query,2)) + ")";
+            } @else {
+                $string: " and (min-width: " + emQuery(nth($query,1)) + ") and (max-width: " + emQuery(nth($query,2)) + ")";
+            }
+        }
+    }
+    @if length($query) > 2 {
+        @warn("");
+    }
+    @return unquote("only screen" + $string);
+}
+
+@mixin media($query) {
+    @if length($query) == 1 {
+        $index: index($bpNames, $query);
+        @if $index {
+            $bp1: nth($bpSizes, $index);
+            $bp2: nth($bpSizes, $index + 1);
+            @media #{queryString($bp1 $bp2)} {
+                @content;
+            }
+        } @else {
+            @media #{queryString($query 0)} {
+                @content;
+            }
+        }
+    } @else {
+        $bp1: nth($query,1);
+        $bp2: nth($query,2);
+        $index1: index($bpNames, $bp1);
+        $index2: index($bpNames, $bp2);
+        @if $index1 != false {
+            $bp1: nth($bpSizes, $index1);
+        }
+        @if $index2 != false {
+            $bp2: if($bp1 == from, nth($bpSizes, $index2) + 1px, nth($bpSizes, $index2));
+        }
+        @if ($bp1 == from) {
+            $bp1: $bp2;
+            $bp2: 0;
+        }
+        @if ($bp1 == to) {
+            $bp1: 0;
+        }
+        @media #{queryString($bp1 $bp2)} {
+            @content;
+        }
+    }
+}
+
+$classN: (); // name
+$classR: (); // ratio
+$classP: (); // placeholder
+$classT: (); // type
+
+@mixin newClass($n, $r, $t: col, $p: false) {
+    $classN: append($classN, $n);
+    $classR: append($classR, $r);
+    $classT: append($classT, $t);
+    $classP: append($classP, $p);
+}
+
+@mixin generateClasses() {
+    @for $i from 1 through length($classN) {
+        $n: nth($classN, $i);
+        $r: nth($classR, $i);
+        $t: nth($classT, $i);
+        $p: nth($classP, $i);
+
+        @if $t == col {
+            %#{$n} {
+                @extend .columns;
+                @extend .span#{$r * $greedy-columns};
+            }
+        }
+
+        @if $t == push {
+            %#{$n} {
+                left: percentage($r);
+            }
+        }
+
+        @if $t == pull {
+            %#{$n} {
+                left: -1 * percentage($r);
+            }
+        }
+
+        @if $t == offset {
+            %#{$n} {
+                margin-left: percentage($r);
+            }
+        }
+
+        @if $p != true {
+            .#{$n} {
+                @extend %#{$n};
+            }
+        }
+    }
+
+    @each $bp in $bpNames {
+        @include media(from $bp) {
+            @for $i from 1 through length($classN) {
+                $n: nth($classN, $i);
+                $r: nth($classR, $i);
+                $t: nth($classT, $i);
+                $p: nth($classP, $i);
+
+                @if $t == col {
+                    %#{$bp}-#{$n} {
+                        width: percentage($r);
+                    }
+                }
+
+                @if $t == offset {
+                    %#{$bp}-#{$n} {
+                        margin-left: percentage($r);
+                    }
+                }
+
+                @if $t == push {
+                    %#{$bp}-#{$n} {
+                        left: percentage($r);
+                    }
+                }
+
+                @if $t == pull {
+                    %#{$bp}-#{$n} {
+                        left: -1 * percentage($r);
+                    }
+                }
+
+                @if $p != true {
+                    .#{$bp}-#{$n} {
+                        @extend %#{$bp}-#{$n};
+                    }
+                }
+            }
+        }
+    }
+}
+
+$classN: (); // name
+$classR: (); // ratio
+$classP: (); // placeholder
+$classT: (); // type
+
+@for $i from 1 through $greedy-columns { 
+
+  .span#{$i} {
+    width: percentage($i/$greedy-columns);
+  }
+
+  @include newClass(span#{$i}, $i / $greedy-columns);
+  @include newClass(offset#{$i}, $i / $greedy-columns, offset);
+  @include newClass(push#{$i}, $i / $greedy-columns, push);
+  @include newClass(pull#{$i}, $i / $greedy-columns, pull);
+}
+
+@each $bp in $bpNames {
+  @for $i from 1 through $greedy-columns {
+    @include media(from $bp) {
+      .#{$bp}-span#{$i} {
+        width: percentage($i/$greedy-columns);
+      }
+    }
+  }
+}
+
+@include generateClasses();
+
+.row {
+    @extend %cf;
+    margin-left: -1 * $greedy-gutter;
+
+    @include media(to hand) {
+        margin-left: 0;
+    }
+}
+
+.column, .columns {
+  float: left;
+  border-left: $greedy-gutter solid transparent;
+  min-height: 1px;
+  position: relative;
+  margin-bottom: 10px;
+
+  @include media(to hand) {
+    float: none;
+    border-left-width: 0;
+    width: 100%;
+  }
+}

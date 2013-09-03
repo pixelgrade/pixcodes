@@ -1,0 +1,461 @@
+// reset
+@mixin resetBoxModel() {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+// css properties mixins
+@mixin calc($property, $expression) { 
+	#{$property}: -webkit-calc(#{$expression}); 
+	#{$property}:    -moz-calc(#{$expression}); 
+	#{$property}:     -ms-calc(#{$expression}); 
+	#{$property}:      -o-calc(#{$expression}); 
+	#{$property}:         calc(#{$expression}); 
+} 
+
+// calculations
+@mixin rem($property, $values) {
+	$rem: $fontSizeBase/1rem;
+	#{$property}: $values;
+	@if type-of($values) == "number" {
+		#{$property}: $values/$rem;
+	} @else {
+		$rem-values: unquote("");
+		@each $value in $values {
+			@if $value == 0 or $value == auto or $value == !important {
+				$rem-values: append($rem-values, $value);
+			} @else {
+				$rem-values: append($rem-values, $value/$rem);
+			}
+		}
+		#{$property}: $rem-values;
+	}
+}
+
+// typography mixins
+@mixin verticalGrid($ratio: 1) {
+	@include background-image(linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0) 96%, rgba(0,0,0,.1) 98%, rgba(0,0,0,.1) 100%, rgba(0,0,0,0)));
+	@include background-size($ratio * 1rem $ratio * 1rem);
+}
+
+@mixin fontSize($fs, $lh, $ratio: 1) {
+  $ems: ceil($fs/($fontSizeBase*$lh*$ratio));
+  $lineHeight: ($ems*$fontSizeBase*$lh*$ratio)/$fs;
+  // line-height: $lineHeight;
+  
+  // a
+  // position: relative;
+  // top: (($lineHeight - 1)/2 + 0.215) + em;
+  // left: 0;
+
+  // c
+  // padding-top: (($lineHeight - 1)/2 + 0.215) + em;
+  // padding-bottom: $lineHeight/$ems - (($lineHeight - 1)/2 + 0.215) + em;
+  
+  @include rem(font-size, $fs);
+}
+
+@mixin fs($fs: $fontSizeBase, $lh: $lineHeightBase, $ratio: 1) {
+  @include fontSize($fs, $lh, $ratio);
+}
+
+// @mixin fontSize($fs, $lh, $ratio) {
+// 	$ems: ceil($fs/($fontSizeBase*$lh));
+// 	$height: ($ems*$fontSizeBase*$lh)/$fs;
+// 	$height: $height*$ratio;
+
+// 	// Change global variables
+// 	$lineHeight: ($height*$fs + 0.05px)/$fs; //**George
+// 	// $lineHeight: 1.5;
+
+// 	$fontSize: $fs;
+
+// 	line-height: $lineHeight;
+// 	@include rem('font-size', $fontSize);
+// }
+
+// @mixin fs($fs: $fontSizeBase, $lh: $lineHeightBase, $ratio: 1) {
+// 	@include fontSize($fs, $lh, $ratio);
+// }
+
+@mixin white-space($wrap-space) {
+	@if $wrap-space == 'pre-wrap' {
+		white-space: #{-moz-}$wrap-space;
+		white-space: $wrap-space;
+	} @else {
+		white-space: $wrap-space;
+	}
+}
+
+// grid mixins
+$bpNames: ();
+$bpSizes: 0;
+@mixin processBreakpoints() {
+	@each $bp in $breakpoints {
+		@if index($breakpoints, $bp) % 2 == 1 {
+			$bpNames: append($bpNames, $bp);
+		} @else {
+			$bpSizes: append($bpSizes, $bp);
+		}
+	}
+	$bpSizes: append($bpSizes, 0);
+}
+
+@mixin remuxQueries() {
+	// remux
+	$steps: ($maxFontSize - $minFontSize) / $stepSize + 1;
+	// @for $i from 1 through length($bpNames) - 1 {
+		$currentBp: nth($bpSizes, 2);
+		$currentFs: $minFontSize;
+
+		$diff: (nth($bpSizes, length($bpNames)) - nth($bpSizes, 1)) / $steps;
+		@for $j from 1 through $steps {
+			@include mq($currentBp) {
+				html {
+					font-size: percentage($currentFs/16px);
+				}
+			}
+			$currentBp: $currentBp + $diff;
+			$currentFs: $currentFs + $stepSize;
+		}
+	// }
+}
+
+$clN: (); $clR: (); $clP: (); $clT: ();
+@mixin newClass($name, $ratio, $type: span, $placeholder: false) {
+	$clN		: append($clN, $name);
+	$clR		: append($clR, $ratio);
+	$clP		: append($clP, $placeholder);
+
+	// rethink
+	$clT		: append($clT, $type);
+}
+
+@function getMediaString($bp) {
+
+	$bp1: "";
+	$bp2: "";
+
+	@if nth($bp, 1) == from {
+		$bp1: " and (min-width: " + baseEm(nth($bp, 2)) +")";
+		@return unquote("only screen" + $bp1 + $bp2);
+	}
+
+	@if nth($bp, 1) == to or nth($bp, 1) == 0 {
+		$bp1: " and (max-width: " + baseEm(nth($bp, 2)) +")";
+		@return unquote("only screen" + $bp1 + $bp2);
+	}
+
+	@if nth($bp, 1) != from and nth($bp, 1) != to and nth($bp, 1) != 0 {
+		$bp1: " and (min-width: " + baseEm(nth($bp, 1)) +")";
+		@if nth($bp, 2) == 0 {
+			$bp2: "";
+		}
+		@return unquote("only screen" + $bp1 + $bp2);
+	}
+}
+
+// if value passed to this function is found in the breakpoints list
+// it is converted into its corresponding px value
+@function getBreakpointSize($bp) {
+	$index: index($bpNames, $bp);
+	@if $index == false {
+		@return $bp;
+	} @else {
+		@return nth($bpSizes, $index);
+	}
+}
+
+@mixin mq($bp: $defaultBreakpoint) {
+
+	$dbp: getBreakpointSize($defaultBreakpoint);
+
+	@if length($bp) == 1 {
+
+		$bp: getBreakpointSize($bp);
+
+		@if $bp == $dbp {
+			@content;
+		} @else {
+
+			@if $bp > $dbp {
+				@media #{getMediaString(from $bp)} {
+					@content;
+				}
+			} 
+
+			@if $bp < $dbp {
+				@media #{getMediaString(to $bp)} {
+					@content;
+				}
+			}
+		}
+
+	} @else {
+		$bp1: getBreakpointSize(nth($bp, 1));
+		$bp2: getBreakpointSize(nth($bp, 2));
+
+		@media #{getMediaString($bp1 $bp2)} {
+			@content;
+		}
+	}
+}
+
+@mixin m1q($bp) {
+	// short named mixin for using media queries
+	// breakpoints declared in settings can be used as parameters
+	$bp1: nth($bp, 1);
+	$bp2: 0;
+	@if length($bp) == 2 {
+		$bp2: nth($bp, 2);
+	}
+	$index: index($bpNames, $bp1);
+
+	@if length($bp) == 1 and $index == 1 {
+		@content;
+	} @else {
+		@if $index != false {
+			$bp1: nth($bpSizes, $index);
+		}
+		@if $bp1 != 0 {
+			$bp1: " and (min-width: " + baseEm($bp1) +")";
+		} @else {
+			$bp1: "";
+		}
+		$index: index($bpNames, $bp2);
+		@if $index != false {
+			$bp2: nth($bpSizes, $index);
+		}
+		@if $bp2 != 0 {
+			$bp2: " and (max-width: " + baseEm($bp2) +")";
+		} @else {
+			$bp2: "";
+		}
+		@media #{unquote("only screen " + $bp1 + $bp2)} {
+			@content;
+		}
+	}
+}
+
+@mixin generateClasses() {
+	// extend default grid element
+	@for $j from 1 through length($clN) {
+		$name: nth($clN, $j);
+		$type: nth($clT, $j);
+		$placeholder: nth($clP, $j);
+
+			@if $type == span {
+				@if $placeholder == true {
+					%#{$name} {
+						@extend %span;
+						// dirty stacking
+						@include mq(to lap) {
+							body & {
+								// width: 100%;
+								margin-left: 0;
+							}
+							body &:first-child {
+								margin-left: 0;
+							}
+						}
+					}
+				} @else {
+					.#{$name} {
+						@extend %span;
+						// dirty stacking
+						@include mq(to lap) {
+							body & {
+								// width: 100%;
+								margin-left: 0;
+							}
+							body &:first-child {
+								margin-left: 0;
+							}
+						}
+					}
+				}
+			}
+	}
+
+	// create classes based on breakpoints
+	@if $responsive == true {
+		$one: (100% - $margin * ($columns - 1)) / $columns;
+		@for $i from 1 through length($bpNames) {
+			$bp: nth($bpNames, $i);
+			@include mq($bp) {
+				@for $j from 1 through length($clN) {
+					$name: nth($clN, $j);
+					$span: nth($clR, $j) * $columns;
+					$placeholder: nth($clP, $j);
+					$type: nth($clT, $j);
+
+					$class: #{$bp}-#{$name};
+
+					@if $i == 3 {
+						$class: #{$name};
+					}
+
+					@if ($margin != 0) {
+						$width: $one * $span + $margin * ($span - 1);
+					} @else {
+						$width: percentage(1/$span);
+					}
+
+					@if $type == span {
+						@if $placeholder == true {
+							%#{$class} {
+								width: $width;
+							}
+						} @else {
+							.#{$class} {
+								width: $width;
+							}
+						}
+					}
+
+					@if $type == offset {
+						@if $placeholder == true {
+							%#{$class} {&,&:first-child {margin-left: $width + $margin;}}
+						} @else {
+							.#{$class} {&,&:first-child {margin-left: $width + $margin;}}
+						}
+					}
+
+					@if $type == push {
+						@if $placeholder == true {
+							%#{$class} {left: $width + $margin;}
+						} @else {
+							.#{$class} {left: $width + $margin;}
+						}
+					}
+
+					@if $type == pull {
+						@if $placeholder == true {
+							%#{$class} {left: -1 * $width + $margin;}
+						} @else {
+							.#{$class} {left: -1 * $width + $margin;}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// visibility classes
+@mixin visibilityClasses() {
+	@each $bp in $bpNames {
+		$index: index($bpNames, $bp);
+		.visible-#{$bp} {
+			display: none !important;
+		}
+		.hidden-#{$bp} {
+			display: inherit !important;
+		}
+		@include mq(nth($bpSizes, $index) nth($bpSizes, $index + 1)) {
+			.visible-#{$bp} {
+				display: inherit !important;
+			}
+			.hidden-#{$bp} {
+				display: none !important;
+			}
+		}
+	}
+}
+
+@mixin fixed($float: left, $width: 300px) {
+	@extend %column;
+	$width: $width + $gutter + $padding;
+	@include rem(width, $width);
+	@if $float == right or $float == 'right' {
+		float: right;
+	} @else {
+		float: left;
+	}
+}
+
+@mixin fluid($float: right, $left: 300px, $right: 300px) {
+	@extend %column;
+	$left: $left + $gutter + $padding;
+	$right: $right + $gutter + $padding;
+	@if $float == both or $float == 'both' {
+		@include rem(margin-left, $left);
+		@include rem(margin-right, $right);
+	} @else {
+		@if $float == left or $float == 'left' {
+			@include rem(margin-right, $right);
+		} @else {
+			@include rem(margin-left, $left);
+		}
+	}
+}
+
+// helpers
+@mixin placeholder($color) {
+	&:-moz-placeholder            { color: $color; } // Firefox 4-18
+	&::-moz-placeholder           { color: $color; } // Firefox 19+
+	&:-ms-input-placeholder       { color: $color; } // Internet Explorer 10+
+	&::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
+}
+
+@mixin content-columns($width, $count, $gap) {
+	-webkit-column-width: $width;
+	 -moz-column-width: $width;
+	      column-width: $width;
+	-webkit-column-count: $count;
+	 -moz-column-count: $count;
+	      column-count: $count;
+	-webkit-column-gap: $gap;
+	 -moz-column-gap: $gap;
+	      column-gap: $gap;
+}
+
+@mixin size($width: 0, $height: 0) {
+	@if $width != 0 {
+		@include rem(width, $width);
+	}
+	@if $height != 0 {
+		@include rem(height, $height);
+	}
+}
+
+@mixin square($width) {
+	@include rem(width, $width);
+	@include rem(height, $width);
+}
+
+// textareas
+@mixin resizable($direction: both) {
+	// horizontal, vertical, both
+	resize: $direction;
+	overflow: auto;
+}
+
+@mixin truncateText() {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@mixin fontFace($name, $path, $weight: normal, $style: normal) {
+	@font-face {
+		font-family: $name;
+		src: url($path + '.eot');
+		src: url($path + '.eot?#iefix') format('embedded-opentype'),
+		url($path + '.woff') format('woff'),
+		url($path + '.ttf') format('truetype'),
+		url($path + '.svg') format('svg');
+		font-weight: $weight;
+		font-style: $style;
+	}
+
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		@font-face {
+			font-family: $name;
+			src: url($path + '.svg') format('svg');
+			font-weight: $weight;
+			font-style: $style;
+		}
+	}
+}
