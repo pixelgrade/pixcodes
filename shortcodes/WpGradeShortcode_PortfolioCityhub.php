@@ -15,8 +15,11 @@ class WpGradeShortcode_PortfolioCityhub extends  WpGradeShortcode {
 	    // prepare categories
 	    $opts_cats = get_terms('portfolio_cat', array( 'fields' => 'all' ) );
 	    $all_categories = array();
-	    foreach( $opts_cats as $key => $opt_cat ) {
-		    $all_categories[$key] = $opt_cat->slug;
+
+	    if ( !empty($opts_cats) && !is_wp_error( $opts_cats )) {
+		    foreach( $opts_cats as $key => $opt_cat ) {
+			    $all_categories[$key] = $opt_cat->slug;
+		    }
 	    }
 
         $this->params = array(
