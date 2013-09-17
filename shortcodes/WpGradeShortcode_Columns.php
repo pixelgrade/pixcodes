@@ -79,25 +79,17 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
             if ($my_class == "narrow") $is_narrow = true;
         endforeach;
 
-        $output = '';
-        if ($is_narrow) {
-			$output .= '<div class="narrow">'.PHP_EOL;
-		}
-		
-		$output .= '<div class="row row-shortcode '.$class.'">'.PHP_EOL;
-		if ( !empty($bg_color) ) {
-			$output .= '<div class="row-background';
-			if ( !empty( $full_width ) )  $output .= ' full-width'; 
-			 $output .= '" style="background-color:'.$bg_color.';"></div>'.PHP_EOL;
-		   } 
-			$output .= $this->get_clean_content($content).PHP_EOL;
-		$output .= '</div>'.PHP_EOL;
-		
-		if ($is_narrow) {
-			$output .= '</div>'.PHP_EOL;
-		}
-		
-		return  $output;
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 
     public function add_column_shortcode($atts, $content){
@@ -109,10 +101,16 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
             'class' => ''
         ), $atts ) );
 
-        $output = '';
-        $output .= '<div class="span'.$size. ' ' .$class.'">'.PHP_EOL;
-        $output .= $this->get_clean_content( $content ).PHP_EOL;
-		$output .= '</div>'.PHP_EOL;
-        return $output;
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

@@ -60,32 +60,16 @@ class WpGradeShortcode_InfoBox extends  WpGradeShortcode {
              'subtitle' => ''
          ), $atts ) );
 
-        ob_start(); ?>
-
-        <div class="shc shc-infobox <?php 
-            switch ($align){
-                case 'align-left':{
-                    echo 'align-left border-left';
-                    break;
-                }
-                case 'align-right':{
-                    echo 'align-right border-right';
-                    break;
-                }
-                case 'align-center':{
-                    echo 'align-center border-left-right';
-                    break;
-                }                                
-
-                default: break;
-            };
-        ?>">
-            <h2 class="infobox-title"><?php echo $title; ?></h2>
-            <span class="infobox-subtitle"><?php echo $subtitle; ?></span>
-	        <span class="infobox-content"><?php echo $this->get_clean_content($content); ?></span>
-        </div>
-
-        <?php
-		return ob_get_clean();
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

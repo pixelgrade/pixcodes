@@ -610,6 +610,17 @@ class WpGradeShortcode_Icon extends  WpGradeShortcode {
 		if (substr($name, 0, strlen($prefix)) == $prefix) {
 			$name = substr($name, strlen($prefix));
 		}
-        return '<i class="shc '.$type.' '.$size.' ' .$class. ' icon-'.$name.'"></i>';
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

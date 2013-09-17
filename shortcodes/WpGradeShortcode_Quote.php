@@ -39,23 +39,17 @@ class WpGradeShortcode_Quote extends  WpGradeShortcode {
 			'author' => '',
 			'link' => '',
         ), $atts ) );
-        ob_start(); 
-		?><div class="testimonial shc">
-            <blockquote>
-                <?php echo $this->get_clean_content($content);
-                if(!empty($author)) {
-					echo '<div class="testimonial_author">'; 
-					if(!empty($link)) {
-						echo '<a href="'.$link.'">';
-					}
-					echo '<span class="author_name">'.$author.'</span>';
-                    if(!empty($link)) {
-						echo '</a>';
-                    }
-					echo '</div>';
-				} ?>
-			</blockquote>
-		</div><?php 
-		return ob_get_clean();
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

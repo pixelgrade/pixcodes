@@ -36,7 +36,7 @@ class WP_GitHub_Updater {
 	/**
 	 * GitHub Updater version
 	 */
-	const VERSION = 1.6;
+	const VERSION = 33;
 
 	/**
 	 * @var $config the config for the updater

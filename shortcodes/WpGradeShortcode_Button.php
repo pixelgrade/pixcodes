@@ -51,6 +51,7 @@ class WpGradeShortcode_Button extends  WpGradeShortcode {
     }
 
     public function add_shortcode($atts, $content){
+
         extract( shortcode_atts( array(
 			'link' => '',
 			'class' => '',
@@ -58,8 +59,17 @@ class WpGradeShortcode_Button extends  WpGradeShortcode {
 			'size' => '',
 			'newtab' => '',
         ), $atts ) );
-        ob_start(); ?>
-			<a href="<?php if ( !empty($link) ) echo $link ?>" class="btn <?php if ( !empty($size) && ($size == 'small' || $size == 'large') ) echo 'btn-'.$size ?> <?php if ( !empty($class) ) echo $class ?>" <?php if ( !empty($id) ) echo 'id="'.$id.'"' ?> <?php if ( !empty( $newtab ) ) echo 'target="_blank"'; ?>><?php echo $this->get_clean_content($content); ?></a>
-        <?php return ob_get_clean();
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

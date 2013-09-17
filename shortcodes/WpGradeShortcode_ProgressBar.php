@@ -43,20 +43,17 @@ class WpGradeShortcode_ProgressBar extends WpGradeShortcode {
 			'progress' => '50%',
 			'markers' => true,
         ), $atts ) );
-        ob_start(); ?>
-        <div class="progressbar">
-            <?php if ($title): ?>
-                <div class="progressbar-title"><?php echo $title; ?></div>
-            <?php endif; ?>
-            <div class="progressbar-bar">
-                <div class="progressbar-progress" data-value="<?php echo $progress ?>">
-                    <div class="progressbar-tooltip"><?php echo $progress ?></div>
-                </div>
-                <?php if ($markers == 'on') for ($i = 1; $i<=4; $i++): ?>
-                    <div class="progressbar-marker" style="width:<?php echo $i*20 ?>%"></div>
-                <?php endfor; ?>
-            </div>
-        </div>
-        <?php return ob_get_clean();
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

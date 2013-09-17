@@ -45,7 +45,17 @@ class WpGradeShortcode_Circle extends  WpGradeShortcode {
             'value' => '',
             'offset' => '',
         ), $atts ) );
-		
-		return '<input class="dial" type="text" value="'.$value.'" data-text="'.$title.'" data-fgcolor="'.$color.'" data-angleoffset="'.$offset.'" />';
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

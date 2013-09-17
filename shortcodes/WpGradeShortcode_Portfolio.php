@@ -2,7 +2,7 @@
 
 if (!defined('ABSPATH')) die('-1');
 
-class WpGradeShortcode_PortfolioFuse extends  WpGradeShortcode {
+class WpGradeShortcode_Portfolio extends  WpGradeShortcode {
 
     public function __construct($settings = array()) {
 
@@ -15,11 +15,19 @@ class WpGradeShortcode_PortfolioFuse extends  WpGradeShortcode {
 	    // prepare categories
 	    $opts_cats = get_terms('portfolio_cat', array( 'fields' => 'all' ) );
 	    $all_categories = array();
-	    foreach( $opts_cats as $key => $opt_cat ) {
-		    $all_categories[$key] = $opt_cat->slug;
+
+	    if ( !empty($opts_cats) && !is_wp_error( $opts_cats )) {
+		    foreach( $opts_cats as $key => $opt_cat ) {
+			    $all_categories[$key] = $opt_cat->slug;
+		    }
 	    }
 
         $this->params = array(
+	        'title' => array(
+		        'type' => 'text',
+		        'name' => 'Title',
+		        'admin_class' => 'span12'
+	        ),
             'number' => array(
                 'type' => 'text',
                 'name' => 'Number of Items',
@@ -86,8 +94,9 @@ class WpGradeShortcode_PortfolioFuse extends  WpGradeShortcode {
         $number = -1;
         $orderby = 'menu_order';
         $order = 'ASC';
-	    $class = '';
+	    $class = $title = '';
          extract( shortcode_atts( array(
+	         'title' => '',
              'number' => '-1',
              'order' => 'ASC',
              'orderby' => 'menu_order',
@@ -97,63 +106,16 @@ class WpGradeShortcode_PortfolioFuse extends  WpGradeShortcode {
 	         'category' => ''
          ), $atts ) );
 
-        ob_start();
-
-        $query_args = array(
-            'post_type' => 'portfolio',
-            'posts_per_page' => $number,
-            'orderby' => $orderby,
-            'order' => $order
-        );
-
-         if ( !empty( $include ) ) {
-             $include_array = explode( ',', $include );
-             $query_args['post__in'] = $include_array;
-         }
-
-         if ( !empty( $exclude ) ) {
-             $exclude_array = explode( ',', $exclude );
-             $query_args['post__not_in'] = $exclude_array;
-         }
-
-	    if ( !empty($category) ) {
-
-		    $category = strtolower($category);
-		    if ( strpos($category, ',') !== false ) {
-			    $category = explode( ',', $category);
-		    }
-
-		    $query_args['tax_query'] = array(
-			    'relation' => 'OR',
-			    array(
-				    'taxonomy' => 'portfolio_cat',
-				    'field' => 'slug',
-				    'terms' => $category
-			    ),
-		    );
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
 	    }
-
-        $query = new WP_Query($query_args);
-
-	    if ( !empty( $query ) ) :
-		    echo '<div class="unwrap">';
-			    while ( $query->have_posts() ) : $query->the_post();
-			    global $post; ?>
-
-			    <div class="portfolio-row row" >
-				    <?php
-				    $rows = get_post_meta( $post->ID, WPGRADE_PREFIX .'portfolio_rows', true);
-				    $rows = json_decode($rows, true);
-
-				    if ( !empty($rows) ) {
-					    // get only the first row
-					    wpgrade_get_portfolio_row( (array)$rows[0], true);
-				    } ?>
-			    </div>
-
-			    <?php endwhile;
-		    echo '</div>';
-	    endif;wp_reset_query();
-        return ob_get_clean();
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }
