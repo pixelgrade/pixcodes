@@ -83,9 +83,9 @@ class WpGradeShortcode_Tabs extends  WpGradeShortcode {
 	    /**
 	     * Template localization between plugin and theme
 	     */
-	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    $located = locate_template("templates/shortcodes/tab.php", false, false);
 	    if(!$located) {
-		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+		    $located = dirname(__FILE__).'/templates/tab.php';
 	    }
 	    // load it
 	    ob_start();

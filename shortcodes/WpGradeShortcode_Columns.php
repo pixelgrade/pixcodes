@@ -82,9 +82,9 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
 	    /**
 	     * Template localization between plugin and theme
 	     */
-	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    $located = locate_template("templates/shortcodes/row.php", false, false);
 	    if(!$located) {
-		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+		    $located = dirname(__FILE__).'/templates/row.php';
 	    }
 	    // load it
 	    ob_start();
@@ -104,9 +104,9 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
 	    /**
 	     * Template localization between plugin and theme
 	     */
-	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    $located = locate_template("templates/shortcodes/col.php", false, false);
 	    if(!$located) {
-		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+		    $located = dirname(__FILE__).'/templates/col.php';
 	    }
 	    // load it
 	    ob_start();
