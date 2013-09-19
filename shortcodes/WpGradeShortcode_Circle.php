@@ -34,6 +34,9 @@ class WpGradeShortcode_Circle extends  WpGradeShortcode {
             ),
         );
 
+	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
+
         add_shortcode('circle', array( $this, 'add_shortcode') );
     }
 
