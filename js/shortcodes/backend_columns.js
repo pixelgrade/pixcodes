@@ -55,7 +55,7 @@
             });
 
 //            getValues();
-        }
+        };
 
         initializeSlider();
         $(document).on('change', '[name="cols_nr"]', initializeSlider);
@@ -71,7 +71,7 @@
             $(self).attr('class', 'span' + (span+1));
             $(dim).attr('class', 'span' + (span+1));
             $(dim).children('span').text((span+1)+'x');
-        }
+        };
 
         var shrinkColumn = function(index) {
             var self = $('.grid_cols_content li').get(index);
@@ -80,7 +80,7 @@
             $(self).attr('class', 'span' + (span-1));
             $(dim).attr('class', 'span' + (span-1));
             $(dim).children('span').text((span-1)+'x');
-        }
+        };
 
         $('.l_pxg_modal').on('touchstart mousedown', '.details_content.active .grid_cols_slider .handle:not(.read-only)', function(e) {
             var event = e.originalEvent,
@@ -146,22 +146,30 @@
             e.preventDefault();
             var params = $(this).next('#data_params').data('params'),
                 form_params =  $(this).serializeArray(),
-                params_String = '';
+                params_String = '',
+	            extend_shortcode = '';
 
             $.each(form_params, function(i,e){
-                if ( e.value !== '' ) { // don't include the empty params and the content param
 
-                    if ( e.name == 'bg_color' ) { e.value = e.value.replace(  '#', ''); }
+	            if ( e.name == 'inner' ) { // for inner param, we create a second level shortcode like row_inner
+		            extend_shortcode = '_inner';
+		            return;
+	            }
+
+                if ( e.value !== '' ) { // don't include the empty params and the content param
+                    if ( e.name == 'bg_color' ) {
+	                    e.value = e.value.replace(  '#', '');
+                    }
                     params_String += ' '+ e.name + '="'+ e.value +'"';
                 }
             });
 
-            var output = '<p>[row '+ params_String +']</p>';
+            var output = '<p>[row'+ extend_shortcode +' '+ params_String +']</p>';
 
             $.each(getValues(), function(i,e){ // get each column and their params
-                output += '<p>[col size="'+e+'"]</p><p>Content goes here</p><p>[/col]</p>';
+                output += '<p>[col'+ extend_shortcode +' size="'+e+'"]</p><p>Content goes here</p><p>[/col'+ extend_shortcode +']</p>';
             });
-            output += '<p>[/row]</p>';
+            output += '<p>[/row'+ extend_shortcode +']</p>';
             editor.selection.setContent(output);
 
             $('#pixelgrade_shortcodes_modal').trigger('reveal:close');

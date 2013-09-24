@@ -44,6 +44,16 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
                 'type' => 'slider',
                 'name' => 'Drag handlers to change the columns width.'
             ),
+	        'inner' => array(
+		        'type' => 'switch',
+		        'name' => 'Inner Row?',
+		        'admin_class' => 'span3'
+	        ),
+	        array(
+		        'type' => 'info',
+		        'value' => 'You can create level 2 rows by checking this checkbox.',
+		        'admin_class' => 'span8 push1'
+	        ),
             'class' => array(
                 'type' => 'tags',
                 'name' => 'Custom CSS Class',
@@ -58,6 +68,10 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
 
         add_shortcode('col', array( $this, 'add_column_shortcode') );
         add_shortcode('row', array( $this, 'add_row_shortcode') );
+
+	    // Create second level shortcodes
+	    add_shortcode('col_inner', array( $this, 'add_column_shortcode') );
+	    add_shortcode('row_inner', array( $this, 'add_row_shortcode') );
     }
 
     public function add_row_shortcode($atts, $content){
