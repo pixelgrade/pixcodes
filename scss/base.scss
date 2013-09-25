@@ -216,17 +216,20 @@ Modal Styling
 				border-right:1px solid $grayDarker;
 				border-bottom:1px solid $grayDarker;
 
-				// &:nth-last-of-type(-n+3) {
-				// 	border-bottom:none;
-				// }
+				&:nth-last-of-type(-n+3) {
+					border-bottom:none;
+				}
 				&:nth-child(3n) {
 					border-right:none;
 				}
+
+				&:hover {}
 
 				a {
 					display:block;
 					padding:18px 15px;
 					&:hover {
+						cursor:pointer;
 						background:$gray;
 					}
 				}
@@ -486,28 +489,31 @@ Modal Styling
 
 		//keep tabs vertical
 		&.ui-tabs-vertical, &.ui-slider-vertical {
-			width: 55em;
+			width: 100%;
 			.ui-tabs-nav, .ui-slider-nav {
-				padding: 0 .1em .2em .2em; float: left; width: 6em;
+				padding: 0; 
+				float: left; 
+				width: 16.66%;
 				li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
 				li a { display:block; }
 				li.ui-tabs-active {
 					//padding-bottom: 0;
 					padding-right: .1em;
 					border-right-width: 1px;
-					border-right-width: 1px;
+					border-right-width: 1px; 
 				}
 			}
 
 			.ui-tabs-panel {
 				padding: 1em 1em 1em 0;
-				width: 36em;
-				margin-left: 82px;
+				width: 83.33333%;
+				float:left;
+				// margin-left: 82px;
 			}
 
 			.tabs-heads, .slider-heads {
 				li {
-					width: 80px;
+					width: 100%;
 					padding: 5px;
 					padding: 5px;
 					border-left: 1px solid #ccc;
@@ -516,7 +522,7 @@ Modal Styling
 					@include border-top-left-radius(4px);
 					@include border-bottom-left-radius(4px);
 
-					&.ui-state-active {
+					&.ui-state-active, &:hover {
 						background-color: #f6f5f1;
 					}
 

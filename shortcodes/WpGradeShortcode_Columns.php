@@ -46,7 +46,7 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
             ),
 	        'inner' => array(
 		        'type' => 'switch',
-		        'name' => 'Inner Row?',
+		        'name' => 'Inner Row ?',
 		        'admin_class' => 'span3'
 	        ),
 	        array(

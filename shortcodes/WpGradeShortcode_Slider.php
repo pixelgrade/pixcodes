@@ -24,19 +24,25 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
         $this->icon = "icon-code";
 
         $this->params = array(
-	        'arrows' => array(
-		        'type' => 'switch',
-		        'name' => 'Use Arrows?',
-		        'admin_class' => 'span5 push1'
-	        ),
-            'bullets' => array(
-		        'type' => 'switch',
-		        'name' => 'Use Bullets?',
-		        'admin_class' => 'span6'
-	        ),
             'slider' => array(
                 'type' => 'slider',
                 'name' => 'Slider',
+            ),
+            'navigation_style' => array(
+                'type' => 'select',
+                'name' => 'Navigation Style',
+                'options' => array('arrows' => 'Arrows', 'bullets' => 'Bullets', 'both' => 'Arrows and Bullets', 'none' => 'None'),
+                'admin_class' => 'span10 push2'
+            ),
+            'arrows' => array(
+                'type' => 'switch',
+                'name' => 'Use Arrows for Slider Navigation ?',
+                'admin_class' => 'span12 inline'
+            ),
+            'bullets' => array(
+                'type' => 'switch',
+                'name' => 'Use Bullets ?',
+                'admin_class' => 'span12 inline'
             ),
         );
 
@@ -96,9 +102,9 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
 	    /**
 	     * Template localization between plugin and theme
 	     */
-	    $located = locate_template("templates/shortcodes/slide.php", false, false);
+	    $located = locate_template("templates/shortcodes/slider.php", false, false);
 	    if(!$located) {
-		    $located = dirname(__FILE__).'/templates/slide.php';
+		    $located = dirname(__FILE__).'/templates/slider.php';
 	    }
 	    // load it
 	    ob_start();
