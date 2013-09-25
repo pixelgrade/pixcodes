@@ -26,8 +26,7 @@
                     // add new tab content
 
                     var content = '<div id="t'+new_index+'" class="slide" data-tab="'+new_index+'">'+
-                        '<input type="text" class="tab_title" placeholder="Title"/>'+
-                        '<textarea class="tab_content" placeholder="Content" rows="10"></textarea>'+
+                        '<textarea class="slide_content" placeholder="Content" rows="10"></textarea>'+
                         '</div>';
                     $(ui.newPanel).before(content);
 
@@ -56,32 +55,13 @@
 		        }
 	        });
 
-            output = '<p>[slider '+ mainParamsString +']</p>';
-            $(this).find('.ui-tabs-panel').each(function(i,el){
+            output = '<p>[slider'+ mainParamsString +']</p>';
+            $(this).find('.param-slider .ui-tabs-panel').each(function(i,el){
 
-                var params_string = false,
-                    title = $(el).find('input.tab_title').val(),
-                    icon = $(el).find('input.tab_icon').val(),
-                    content = $(el).find('textarea.tab_content').val();
-
-
-                if ( typeof title !== 'undefined' ) {
-                    params_string = ' title="'+ title +'"';
-                }
-
-                if ( typeof icon !== 'undefined' ) {
-                    params_string += ' icon="'+ icon +'"';
-                }
-
-                if ( params_string && typeof content !== 'undefined' ) {
-
-                    output += '<p>[slide';
-                    if ( params_string ) {
-                        output += params_string + ']</p>';
-                    } else {
-                        output += ']</p>';
-                    }
-
+                var content = $(el).find('textarea.slide_content').val();
+	            console.log(el);
+                if ( typeof content !== 'undefined' ) {
+                    output += '<p>[slide]</p>';
                     if ( typeof content !== 'undefined' ) {
                         output += '<p>'+ content.replace(/\n/ig,"<br>") +'</p>' + '<p>[/slide]</p>';
                     } else {
@@ -92,7 +72,6 @@
 
             output += '<p>[/slider]</p>';
             editor.selection.setContent(output);
-
             $('#pixelgrade_shortcodes_modal').trigger('reveal:close');
         });
     });

@@ -10,8 +10,6 @@ if ( isset($param['admin_class'] ) ) $class = $param['admin_class']; ?>
     </ul>
 
     <div id="t1" class="slide" data-tab="1">
-        <input type="text" class="slide_title" placeholder="Title"/>
-<!--        <input type="text" class="tab_icon"placeholder="Font Awesome Icon Class" /><a class="tip_icon"  title="See the list with all icons classes" href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank"><i class="icon-external-link"></i></a>-->
         <textarea class="slide_content" placeholder="Content" rows="10"></textarea>
     </div>
 

@@ -48,7 +48,7 @@
                 params_String = '';
 
             output = '<p>[tabs]</p>';
-            $(this).find('.ui-tabs-panel').each(function(i,el){
+            $(this).find('.param-slider .ui-tabs-panel').each(function(i,el){
 
                 var params_string = false,
                     title = $(el).find('input.tab_title').val(),
