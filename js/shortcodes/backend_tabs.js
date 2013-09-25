@@ -48,7 +48,7 @@
                 params_String = '';
 
             output = '<p>[tabs]</p>';
-            $(this).find('.param-slider .ui-tabs-panel').each(function(i,el){
+            $(this).find('.param-tabs .ui-tabs-panel').each(function(i,el){
 
                 var params_string = false,
                     title = $(el).find('input.tab_title').val(),
@@ -60,7 +60,7 @@
                     params_string = ' title="'+ title +'"';
                 }
 
-                if ( typeof icon !== 'undefined' ) {
+                if ( typeof icon !== 'undefined' && icon != '' ) {
                     params_string += ' icon="'+ icon +'"';
                 }
 
