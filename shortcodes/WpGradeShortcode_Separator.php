@@ -2,11 +2,11 @@
 
 if (!defined('ABSPATH')) die('-1');
 
-class WpGradeShortcode_Divider extends  WpGradeShortcode {
+class WpGradeShortcode_Separator extends  WpGradeShortcode {
 
     public function __construct($settings = array()) {
         $this->self_closed = true;
-        $this->name = "Divider";
+        $this->name = "Separator";
         $this->code = "hr";
         $this->icon = "icon-fire";
         $this->direct = false;
@@ -46,8 +46,8 @@ class WpGradeShortcode_Divider extends  WpGradeShortcode {
 
 	    // allow the theme or other plugins to "hook" into this shorcode's params
 	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
-//var_dump(apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params));
-        add_shortcode('hr', array( $this, 'add_shortcode') );
+      //var_dump(apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params));
+      add_shortcode('hr', array( $this, 'add_shortcode') );
     }
 
     public function add_shortcode($atts, $content) {

@@ -13,37 +13,43 @@ class WpGradeShortcode_Button extends  WpGradeShortcode {
 	    $this->one_line = true;
 
         $this->params = array(
-            'link' => array(
-                'type' => 'text',
-                'name' => 'Link',
-                'admin_class' => 'span6'
-            ),
             'label' => array(
                 'type' => 'text',
-                'name' => 'Label',
-                'admin_class' => 'span5 push1',
+                'name' => 'Label Text',
+                'admin_class' => 'span6',
                 'is_content' => true
             ),
-            'class' => array(
+            'link' => array(
                 'type' => 'text',
-                'name' => 'Class',
-                'admin_class' => 'span6'
-            ),
-            'id' => array(
-                'type' => 'text',
-                'name' => 'ID',
+                'name' => 'Link URL',
                 'admin_class' => 'span5 push1'
             ),
             'size' => array(
                 'type' => 'select',
-                'name' => 'Size',
-                'options' => array('' => '-- Select Size --', 'small' => 'Small', 'medium' => 'Medium', 'large' => 'Large'),
+                'name' => 'Button Size',
+                'options' => array('' => '-- Select Size --', 'small' => 'Small', 'large' => 'Large', 'huge' => 'Huge'),
                 'admin_class' => 'span6'
+            ),
+            'text_size' => array(
+                'type' => 'select',
+                'name' => 'Text Size',
+                'options' => array('' => '-- Select Size --', 'gamma' => 'Small', 'beta' => 'Large', 'alpha' => 'Huge'),
+                'admin_class' => 'span5 push1'
+            ),
+            'class' => array(
+                'type' => 'text',
+                'name' => 'Class',
+                'admin_class' => 'span3'
+            ),
+            'id' => array(
+                'type' => 'text',
+                'name' => 'ID',
+                'admin_class' => 'span2 push1'
             ),
 			'newtab' => array(
                 'type' => 'switch',
                 'name' => 'Open in a new tab?',
-                'admin_class' => 'span5 push1'
+                'admin_class' => 'span5 push2'
             ),
         );
 
@@ -60,6 +66,7 @@ class WpGradeShortcode_Button extends  WpGradeShortcode {
 			'class' => '',
 			'id' => '',
 			'size' => '',
+            'text_size' => '',
 			'newtab' => '',
         ), $atts ) );
 
