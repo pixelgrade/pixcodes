@@ -65,19 +65,18 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
     }
 
     public function add_slider_shortcode( $atts, $content ) {
+	    $arrows = '';
+	    $bullets = '';
+	    $autoheight = '';
+         extract( shortcode_atts( array(
+	         'arrows' => 'false',
+	         'bullets' => 'true',
+	         'autoheight' => 'true'
+         ), $atts ) );
 
-//         extract( shortcode_atts( array(
-//             'number' => '-1',
-//         ), $atts ) );
-
-        // prepare the icons first
-        preg_match_all ( '#<icon>(.*?)</icon>#', $this->get_clean_content( $content ), $icons );
-        if ( isset( $icons[1] ) ) {
-            $icons = $icons[1];
-        }
-		// prepare content
-	    preg_match_all ( '#<body>([\s\S]*?)</body>#', $this->get_clean_content( $content ), $contents );
-
+	    if ( $arrows == 'true' ) $arrows = 'data-arrows';
+	    if ( $bullets == 'true' ) $bullets = 'data-bullets';
+		if ( $autoheight == 'true' ) $autoheight = 'data-autoheight';
 	    /**
 	     * Template localization between plugin and theme
 	     */
@@ -92,12 +91,12 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
     }
 
     public function add_slide_shortcode( $atts, $content ) {
-        $title = '';
-		$icon = '';
-         extract( shortcode_atts( array(
-             'title' => '',
-             'icon' => ''
-         ), $atts ) );
+//        $title = '';
+//		$icon = '';
+//         extract( shortcode_atts( array(
+//             'title' => '',
+//             'icon' => ''
+//         ), $atts ) );
 
 	    /**
 	     * Template localization between plugin and theme
