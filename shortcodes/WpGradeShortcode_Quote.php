@@ -21,7 +21,7 @@ class WpGradeShortcode_Quote extends  WpGradeShortcode {
             'text_size' => array(
                 'type' => 'select',
                 'name' => 'Text size',
-                'options' => array('medium' => 'Medium', 'small' => 'Small', 'big' => 'Big'),
+                'options' => array('small' => 'Small', 'medium' => 'Medium', 'big' => 'Big'),
                 'admin_class' => 'span-12'
             ),            
             'author' => array(
