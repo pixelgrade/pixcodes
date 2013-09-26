@@ -12,11 +12,15 @@
     <?php if(!empty($author)) : ?>
 
         <?php if(!empty($link)) : ?>
-			<a href="<?php echo $link; ?>">
+            <a href="<?php echo $link; ?>">
         <?php endif ?>
 
-        <div class="testimonial__author-name"><?php echo $author; ?></div>
+            <div class="testimonial__author-name"><?php echo $author; ?></div>
         
+        <?php if(!empty($link)) : ?>
+            </a>
+        <?php endif ?>
+
         <?php if(!empty($author_title)) : ?>
             <div class="testimonial__author-title"><?php echo $author_title; ?></div>
         <?php endif; ?>
