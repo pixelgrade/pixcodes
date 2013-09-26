@@ -1,6 +1,9 @@
 <?php 
-    $classes = '';
+    
+    // get needed classes
+    $classes = 'pixcode  pixcode--separator  separator';
+    $classes.= !empty($style) ? ' separator--'.$style : '';
+    // create class attribute
+    $classes = $classes !== '' ? 'class="'.$classes.'"' : '';
 
-    if($style) { $classes = 'separator--' . $style; }
-?>
-<hr class="separator <?php echo $classes?>" />
+echo '<hr '.$classes.'/>';

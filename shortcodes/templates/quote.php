@@ -1,17 +1,25 @@
-<blockquote class="pixcode--testimonial">
-	<div class="quote__content testimonial--<?php echo $text_size; ?>-text">
-		<?php echo $this->get_clean_content($content); ?>
-	</div>
-	<?php if(!empty($author)) : ?>
-		<?php if(!empty($link)) :
-			echo '<a href="'.$link.'">';
-		endif;?>
-		<p class="author__name"><?php echo $author; ?></p>
-		<?php if(!empty($link)) :
-			echo '</a>';
-		endif;?>		
-	<?php if(!empty($author_title)) : ?>
-	<p class="author__title"><?php echo $author_title; ?></p>
-	<?php endif;
-	endif; ?>
+<?php
+    // get needed classes
+    $classes = 'pixcode  pixcode--testimonial  testimonial';
+    // $classes.= !empty($style) ? ' testimonial--'.$style : '';
+    // create class attribute
+    $classes = $classes !== '' ? 'class="'.$classes.'"' : '';
+
+?>
+<blockquote <?php echo $classes; ?>>
+    <div class="testimonial__content"><?php echo $this->get_clean_content($content); ?></div>
+
+    <?php if(!empty($author)) : ?>
+
+        <?php if(!empty($link)) : ?>
+			<a href="<?php echo $link; ?>">
+        <?php endif ?>
+
+        <div class="testimonial__author-name"><?php echo $author; ?></div>
+        
+        <?php if(!empty($author_title)) : ?>
+            <div class="testimonial__autho-title"><?php echo $author_title; ?></div>
+        <?php endif; ?>
+
+    <?php endif; ?>
 </blockquote>
