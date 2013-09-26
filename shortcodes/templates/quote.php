@@ -18,7 +18,7 @@
         <div class="testimonial__author-name"><?php echo $author; ?></div>
         
         <?php if(!empty($author_title)) : ?>
-            <div class="testimonial__autho-title"><?php echo $author_title; ?></div>
+            <div class="testimonial__author-title"><?php echo $author_title; ?></div>
         <?php endif; ?>
 
     <?php endif; ?>
