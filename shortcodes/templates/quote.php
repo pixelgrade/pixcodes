@@ -11,8 +11,8 @@
 
     <?php if(!empty($author)) : ?>
 
-        <?php if(!empty($link)) ?>
-			<a href="<?php echo $link; ?>">;
+        <?php if(!empty($link)) : ?>
+			<a href="<?php echo $link; ?>">
         <?php endif ?>
 
         <div class="testimonial__author-name"><?php echo $author; ?></div>
