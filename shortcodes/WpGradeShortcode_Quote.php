@@ -15,19 +15,25 @@ class WpGradeShortcode_Quote extends  WpGradeShortcode {
             'content_text' => array(
                 'type' => 'textarea',
                 'name' => 'Text',
-                'admin_class' => 'span12',
+                'admin_class' => 'span-12',
                 'is_content' => true
             ),
             'author' => array(
                 'type' => 'text',
                 'name' => 'Author',
-                'admin_class' => 'span6',
+                'admin_class' => 'span-6',
             ),
+
             'link' => array(
                 'type' => 'text',
-                'name' => 'Link',
-                'admin_class' => 'span5 push1'
+                'name' => 'Author link',
+                'admin_class' => 'span-6'
             ),
+            'author_title' => array(
+                'type' => 'text',
+                'name' => 'Author title',
+                'admin_class' => 'span-12',
+            ),            
         );
 
 	    // allow the theme or other plugins to "hook" into this shorcode's params
@@ -40,6 +46,7 @@ class WpGradeShortcode_Quote extends  WpGradeShortcode {
         extract( shortcode_atts( array(
 			'content_text' => '',
 			'author' => '',
+            'author_title' => '',
 			'link' => '',
         ), $atts ) );
 
