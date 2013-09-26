@@ -1,2 +1,3 @@
-<?php
-echo '<i class="shc '.$type.' '.$size.' ' .$class. ' icon-'.$name.'"></i>';
+<?php 
+
+echo '<i class="pixcode  pixcode--icon  icon-'.$name.'  '.$type.'  '.$size.'  '.$class.'"></i>';
