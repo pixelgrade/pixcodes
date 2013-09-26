@@ -66,10 +66,17 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
 	         'bullets' => 'true',
 	         'autoheight' => 'true'
          ), $atts ) );
-	    $navigation_style = 'data-autoheight ';
-	    if ( $navigation_style == 'arrows' ) $navigation_style .= 'data-arrows';
-	    if ( $navigation_style == 'bullets' ) $navigation_style .= 'data-bullets';
-		if ( $navigation_style == 'both' ) $navigation_style .= 'data-arrows data-bullets';
+
+	    if ( $navigation_style == 'arrows' ) {
+		    $navigation_style = 'data-arrows';
+	    } elseif ( $navigation_style == 'bullets' ) {
+		    $navigation_style = 'data-bullets';
+	    }elseif ( $navigation_style == 'both' ) {
+		    $navigation_style = 'data-arrows data-bullets';
+	    }
+
+	    $navigation_style .= ' data-autoheight';
+
 	    /**
 	     * Template localization between plugin and theme
 	     */
