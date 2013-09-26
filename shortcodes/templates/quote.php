@@ -8,6 +8,18 @@
 ?>
 <blockquote <?php echo $classes; ?>>
     <div class="testimonial__content"><?php echo $this->get_clean_content($content); ?></div>
-    <div class="testimonial__author-name"><?php echo $author; ?></div>
-    <div class="testimonial__autho-title">Theoritician</div>
+
+    <?php if(!empty($author)) : ?>
+
+        <?php if(!empty($link)) ?>
+			<a href="<?php echo $link; ?>">;
+        <?php endif ?>
+
+        <div class="testimonial__author-name"><?php echo $author; ?></div>
+        
+        <?php if(!empty($author_title)) : ?>
+            <div class="testimonial__autho-title"><?php echo $author_title; ?></div>
+        <?php endif; ?>
+
+    <?php endif; ?>
 </blockquote>

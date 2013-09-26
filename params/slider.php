@@ -1,32 +1,21 @@
 <?php
 $class= "span12";
 
-if ( isset($param['admin_class'] ) ) $class = $param['admin_class'];
-$is_content = '';
-if ( isset($param['is_content'] ) ) $is_content = 'class="is_shortcode_content"';  ?>
+if ( isset($param['admin_class'] ) ) $class = $param['admin_class']; ?>
 
-<div class="wpgrade_grid_row <?php echo $class; ?>" >
-    <label for="<?php echo $param['param_key'] ?>"><?php echo $param['name'] ?></label>
-    <ul class="ruler">
-        <li class="fixed active" data-name="handler-0">0</li>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li class="active" data-name="handler-1">4</li>
-        <li>5</li>
-        <li>6</li>
-        <li>7</li>
-        <li class="active" data-name="handler-2">8</li>
-        <li>9</li>
-        <li>10</li>
-        <li>11</li>
-        <li class="active" data-name="handler-3">12</li>
+<div class="<?php echo $class; ?> param-slider" >
+    <ul class="slider-heads">
+        <li data-index="1"><a href="#t1">Slide 1</a></li>
+        <li data-index="0"><a href="#t-last">New Slide</a></li>
     </ul>
 
-    <ul type="<?php echo $param['type'] ?>" name="<?php echo $param['param_key'] ?>" <?php echo $is_content ?> class="grid_cols_slider" >
-    </ul>
+    <div id="t1" class="slide" data-tab="1">
+        <textarea class="slide_content" placeholder="Content" rows="10"></textarea>
+    </div>
 
-    <ul class="grid_cols_dimensions grid_full"></ul>
-    <ul class="grid_cols_content grid_full"></ul>
+    <div id="t-last" class="slide" data-tab="0">
+        <p>Plast</p>
+    </div>
 
 </div>
+<input type="hidden" name="<?php echo $param['param_key'] ?>" />

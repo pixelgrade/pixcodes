@@ -41,12 +41,12 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
                 'admin_class' => 'span5 inline full_width_bg'
             ),
             'cols_slider' =>array(
-                'type' => 'slider',
+                'type' => 'grid',
                 'name' => 'Drag handlers to change the columns width.'
             ),
 	        'inner' => array(
 		        'type' => 'switch',
-		        'name' => 'Inner Row?',
+		        'name' => 'Inner Row ?',
 		        'admin_class' => 'span3'
 	        ),
 	        array(
