@@ -1,5 +1,5 @@
 <?php
-$return_string = '<div class="pixslider js-pixslider" ' . $arrows . ' ' . $bullets .' '. $autoheight .'>';
+$return_string = '<div class="pixslider js-pixslider" ' . $navigation_style .'>';
 
 $return_string .= do_shortcode($content);
 

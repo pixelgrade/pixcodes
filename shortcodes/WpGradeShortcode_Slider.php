@@ -34,16 +34,11 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
                 'options' => array('arrows' => 'Arrows', 'bullets' => 'Bullets', 'both' => 'Arrows and Bullets', 'none' => 'None'),
                 'admin_class' => 'span10 push2'
             ),
-            'arrows' => array(
-                'type' => 'switch',
-                'name' => 'Use Arrows for Slider Navigation ?',
-                'admin_class' => 'span12 inline'
-            ),
-            'bullets' => array(
-                'type' => 'switch',
-                'name' => 'Use Bullets ?',
-                'admin_class' => 'span12 inline'
-            ),
+//            'autoheight' => array(
+//                'type' => 'switch',
+//                'name' => 'Let slider autoheight?',
+//                'admin_class' => 'span10 push2'
+//            ),
         );
 
 	    // allow the theme or other plugins to "hook" into this shorcode's params
@@ -65,18 +60,16 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
     }
 
     public function add_slider_shortcode( $atts, $content ) {
-	    $arrows = '';
-	    $bullets = '';
-	    $autoheight = '';
+
          extract( shortcode_atts( array(
-	         'arrows' => 'false',
+	         'navigation_style' => 'arrow',
 	         'bullets' => 'true',
 	         'autoheight' => 'true'
          ), $atts ) );
-
-	    if ( $arrows == 'true' ) $arrows = 'data-arrows';
-	    if ( $bullets == 'true' ) $bullets = 'data-bullets';
-		if ( $autoheight == 'true' ) $autoheight = 'data-autoheight';
+	    $navigation_style = 'data-autoheight ';
+	    if ( $navigation_style == 'arrows' ) $navigation_style .= 'data-arrows';
+	    if ( $navigation_style == 'bullets' ) $navigation_style .= 'data-bullets';
+		if ( $navigation_style == 'both' ) $navigation_style .= 'data-arrows data-bullets';
 	    /**
 	     * Template localization between plugin and theme
 	     */
@@ -101,9 +94,9 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
 	    /**
 	     * Template localization between plugin and theme
 	     */
-	    $located = locate_template("templates/shortcodes/slider.php", false, false);
+	    $located = locate_template("templates/shortcodes/slide.php", false, false);
 	    if(!$located) {
-		    $located = dirname(__FILE__).'/templates/slider.php';
+		    $located = dirname(__FILE__).'/templates/slide.php';
 	    }
 	    // load it
 	    ob_start();
