@@ -1,5 +1,7 @@
 <blockquote class="pixcode--testimonial">
-	<?php echo $this->get_clean_content($content); ?>
+	<div class="quote__content testimonial--<?php echo $text_size; ?>-text">
+		<?php echo $this->get_clean_content($content); ?>
+	</div>
 	<?php if(!empty($author)) : ?>
 		<?php if(!empty($link)) :
 			echo '<a href="'.$link.'">';

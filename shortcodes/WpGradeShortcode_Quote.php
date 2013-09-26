@@ -18,6 +18,12 @@ class WpGradeShortcode_Quote extends  WpGradeShortcode {
                 'admin_class' => 'span-12',
                 'is_content' => true
             ),
+            'text_size' => array(
+                'type' => 'select',
+                'name' => 'Text size',
+                'options' => array('medium' => 'Medium', 'small' => 'Small', 'big' => 'Big'),
+                'admin_class' => 'span-12'
+            ),            
             'author' => array(
                 'type' => 'text',
                 'name' => 'Author',
@@ -45,6 +51,7 @@ class WpGradeShortcode_Quote extends  WpGradeShortcode {
     public function add_shortcode($atts, $content){
         extract( shortcode_atts( array(
 			'content_text' => '',
+            'text_size' => 'medium',
 			'author' => '',
             'author_title' => '',
 			'link' => '',
