@@ -1,11 +1,12 @@
-=== PixLikes ===
+=== PixCodes ===
 
-WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and more.
+Shortcode generator for WordPress themes.
 
-==================
+=== # ===
 
-~Current Version:1.7.0~
-
-==================
-
-Shortcodes Generator for wpGrade Wordpress Themes
+Tags: wordpress, shortcodes, plugin
+Requires at least: 3.5.1
+Tested up to: 3.6.1
+Stable tag: 1.7.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
