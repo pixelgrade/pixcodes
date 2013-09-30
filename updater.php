@@ -247,7 +247,8 @@ class WP_Pixcodes_GitHub_Updater {
 
 			// refresh every 6 hours
 			if ( false !== $version )
-				set_site_transient( $this->config['slug'].'_new_version', $version, 60*60*6 );
+//				set_site_transient( $this->config['slug'].'_new_version', $version, 60*60*6 );
+				set_site_transient( $this->config['slug'].'_new_version', $version, 50 ); // test a quick transient
 		}
 
 		return $version;
