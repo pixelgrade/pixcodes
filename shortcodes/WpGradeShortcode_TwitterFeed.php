@@ -30,6 +30,9 @@ class WpGradeShortcode_TwitterFeed extends  WpGradeShortcode {
             ),
         );
 
+	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
+
         add_shortcode('twitterfeed', array( $this, 'add_shortcode') );
 
         // frontend assets needs to be loaded after the add_shortcode function
@@ -52,52 +55,18 @@ class WpGradeShortcode_TwitterFeed extends  WpGradeShortcode {
         ), $atts ) );
 
         $this->load_frontend_scripts = true;
-		
-		$content = '';
-        
-        if ( isset($title) && $title != '') $content .= '<h3>' . $title . '</h3>';
 
-        $count = isset( $count ) ? absint( $count ) : 5;
-		
-		if (!class_exists('StormTwitter')) {
-			require_once(WPGRADE_SHORTCODES_PATH . '/vendor/twitter-api/StormTwitter.class.php');
-		}
-
-        global $wpGrade_Options;
-
-        $config['key'] = $wpGrade_Options->get('twitter_consumer_key');
-        $config['secret'] = $wpGrade_Options->get('twitter_consumer_secret');
-        $config['token'] = $wpGrade_Options->get('twitter_oauth_access_token');
-        $config['token_secret'] = $wpGrade_Options->get('twitter_oauth_access_token_secret');
-        $config['screenname'] = $username;
-        if ( isset($config['cache_expire']) && $config['cache_expire'] < 1) $config['cache_expire'] = 3600;
-        $config['directory'] = WPGRADE_SHORTCODES_PATH . 'vendor/twitter-api/cache';
-
-        $twitter = new StormTwitter($config);
-        $results = $twitter->getTweets($count, $username);
-
-        $link = 'https://twitter.com/'. $username;
-		
-		
-        if ( $results ){
-//        	$content .= '<div class="twitter-icon"><i class="icon-twitter"></i></div>';
-            $content .= '<div class="twitter-shortcode-tweets_container">';
-            $content .= '<ul class="twitter-shortcode-tweets slides '.$class.'">';
-            foreach ($results as $key => $result) {
-                $content .= '<li class="twitter-shortcode-tweet slide">
-                    	<div class="twitter-shortcode-tweet-meta">
-                        <span class="twitter-shortcode-screenname">' . ucwords($config['screenname']) . '</span>' .
-                        '<span class="twitter-shortcode-username"><a href="'.$link.'">@' . $config['screenname'] . '</a></span>' .
-                        '<span class="twitter-shortcode-tweet-date">' . $this->convert_twitter_date($result["created_at"]) . '</span></div>
-                         <div class="twitter-shortcode-tweet-content">'.$this->get_parsed_tweet($result) .'</div>                       
-                </li>';
-            
-            }
-            $content .= '</ul>';
-            $content .= '</div>';
-        }
-		
-		return $content;
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 	
 	public function get_parsed_tweet ($tweet) {

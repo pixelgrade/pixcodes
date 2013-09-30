@@ -47,8 +47,16 @@ class WpGradeShortcode_Icon extends  WpGradeShortcode {
               'name' => 'Select icon:',
               'icons' => array(
                   //Entypo
-                  "e-plus",
-                  "e-minus",
+                  "e-plus",     
+                  "e-minus",    
+                  "e-fivehundredpx",     
+                  "e-digg",
+                  "e-cc-1",
+                  "e-dribbble-1",
+                  "e-youtube",
+                  "e-googleplay",
+                  "e-soundcloud-1",
+                  "e-appnet",
                   "e-info",
                   "e-left-thin",
                   "e-up-thin",
@@ -117,6 +125,7 @@ class WpGradeShortcode_Icon extends  WpGradeShortcode {
                   "e-down",
                   "e-list-add",
                   "e-list",
+                  "e-deviantart",
                   "e-left-bold",
                   "e-right-bold",
                   "e-up-bold",
@@ -586,8 +595,10 @@ class WpGradeShortcode_Icon extends  WpGradeShortcode {
                   "th-large"
                 )
             )
-
         );
+
+	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
 
         add_shortcode('icon', array( $this, 'add_shortcode') );
     }
@@ -610,6 +621,17 @@ class WpGradeShortcode_Icon extends  WpGradeShortcode {
 		if (substr($name, 0, strlen($prefix)) == $prefix) {
 			$name = substr($name, strlen($prefix));
 		}
-        return '<i class="shc '.$type.' '.$size.' ' .$class. ' icon-'.$name.'"></i>';
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

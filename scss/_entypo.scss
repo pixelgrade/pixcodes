@@ -57,8 +57,17 @@ $fontPath:   "../fonts/entypo2" !default;
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
+
 .icon-e-plus:before { content: '\e816'; } /* '' */
 .icon-e-minus:before { content: '\e819'; } /* '' */
+.icon-e-fivehundredpx:before { content: '\e921'; } /* '' */
+.icon-e-digg:before { content: '\e922'; } /* '' */
+.icon-e-cc-1:before { content: '\e924'; } /* '' */
+.icon-e-dribbble-1:before { content: '\e923'; } /* '' */
+.icon-e-youtube:before { content: '\e920'; } /* '' */
+.icon-e-googleplay:before { content: '\e91f'; } /* '' */
+.icon-e-soundcloud-1:before { content: '\e91e'; } /* '' */
+.icon-e-appnet:before { content: '\e91c'; } /* '' */
 .icon-e-info:before { content: '\e81e'; } /* '' */
 .icon-e-left-thin:before { content: '\e88c'; } /* '' */
 .icon-e-up-thin:before { content: '\e88e'; } /* '' */
@@ -127,6 +136,7 @@ $fontPath:   "../fonts/entypo2" !default;
 .icon-e-down:before { content: '\e87f'; } /* '' */
 .icon-e-list-add:before { content: '\e8a6'; } /* '' */
 .icon-e-list:before { content: '\e8a5'; } /* '' */
+.icon-e-deviantart:before { content: '\e91d'; } /* '' */
 .icon-e-left-bold:before { content: '\e888'; } /* '' */
 .icon-e-right-bold:before { content: '\e889'; } /* '' */
 .icon-e-up-bold:before { content: '\e88a'; } /* '' */

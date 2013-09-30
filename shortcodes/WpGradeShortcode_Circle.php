@@ -34,6 +34,9 @@ class WpGradeShortcode_Circle extends  WpGradeShortcode {
             ),
         );
 
+	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
+
         add_shortcode('circle', array( $this, 'add_shortcode') );
     }
 
@@ -45,7 +48,17 @@ class WpGradeShortcode_Circle extends  WpGradeShortcode {
             'value' => '',
             'offset' => '',
         ), $atts ) );
-		
-		return '<input class="dial" type="text" value="'.$value.'" data-text="'.$title.'" data-fgcolor="'.$color.'" data-angleoffset="'.$offset.'" />';
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

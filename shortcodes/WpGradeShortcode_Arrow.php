@@ -20,8 +20,17 @@ class WpGradeShortcode_Arrow extends  WpGradeShortcode {
             'size' => '',
             'color' => '',
         ), $atts ) );
-        ob_start(); ?>
-           <span class="shc-arrow"></span>
-        <?php return ob_get_clean();
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

@@ -152,6 +152,7 @@ class WpGradeShortcode {
 
         echo ob_get_clean();
     }
+
 }
 global $wpgrade_shortcodes;
 $wpgrade_shortcodes = new WpGradeShortcode();

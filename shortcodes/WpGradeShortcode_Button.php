@@ -13,53 +13,73 @@ class WpGradeShortcode_Button extends  WpGradeShortcode {
 	    $this->one_line = true;
 
         $this->params = array(
-            'link' => array(
-                'type' => 'text',
-                'name' => 'Link',
-                'admin_class' => 'span6'
-            ),
             'label' => array(
                 'type' => 'text',
-                'name' => 'Label',
-                'admin_class' => 'span5 push1',
+                'name' => 'Label Text',
+                'admin_class' => 'span6',
                 'is_content' => true
             ),
-            'class' => array(
+            'link' => array(
                 'type' => 'text',
-                'name' => 'Class',
-                'admin_class' => 'span6'
-            ),
-            'id' => array(
-                'type' => 'text',
-                'name' => 'ID',
+                'name' => 'Link URL',
                 'admin_class' => 'span5 push1'
             ),
             'size' => array(
                 'type' => 'select',
-                'name' => 'Size',
-                'options' => array('' => '-- Select Size --', 'small' => 'Small', 'medium' => 'Medium', 'large' => 'Large'),
+                'name' => 'Button Size',
+                'options' => array('' => '-- Select Size --', 'small' => 'Small', 'large' => 'Large', 'huge' => 'Huge'),
                 'admin_class' => 'span6'
+            ),
+            'text_size' => array(
+                'type' => 'select',
+                'name' => 'Text Size',
+                'options' => array('' => '-- Select Size --', 'gamma' => 'Small', 'beta' => 'Large', 'alpha' => 'Huge'),
+                'admin_class' => 'span5 push1'
+            ),
+            'class' => array(
+                'type' => 'text',
+                'name' => 'Class',
+                'admin_class' => 'span3'
+            ),
+            'id' => array(
+                'type' => 'text',
+                'name' => 'ID',
+                'admin_class' => 'span2 push1'
             ),
 			'newtab' => array(
                 'type' => 'switch',
                 'name' => 'Open in a new tab?',
-                'admin_class' => 'span5 push1'
+                'admin_class' => 'span5 push2'
             ),
         );
+
+	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
 
         add_shortcode('button', array( $this, 'add_shortcode') );
     }
 
     public function add_shortcode($atts, $content){
+
         extract( shortcode_atts( array(
 			'link' => '',
 			'class' => '',
 			'id' => '',
 			'size' => '',
+            'text_size' => '',
 			'newtab' => '',
         ), $atts ) );
-        ob_start(); ?>
-			<a href="<?php if ( !empty($link) ) echo $link ?>" class="btn <?php if ( !empty($size) && ($size == 'small' || $size == 'large') ) echo 'btn-'.$size ?> <?php if ( !empty($class) ) echo $class ?>" <?php if ( !empty($id) ) echo 'id="'.$id.'"' ?> <?php if ( !empty( $newtab ) ) echo 'target="_blank"'; ?>><?php echo $this->get_clean_content($content); ?></a>
-        <?php return ob_get_clean();
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }

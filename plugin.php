@@ -3,7 +3,7 @@
 Plugin Name: PixCodes
 Plugin URI: http://pixelgrade.com
 Description: WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and more.
-Version: 2.0.0
+Version: 2.0.1
 Author: Pixelgrade Media
 Author URI: http://pixelgrade.com
 Author Email: contact@pixelgrade.com
@@ -81,7 +81,7 @@ class WpGradeShortcodes {
 				'readme' => 'README.md',
 //			'access_token' => '',
 			);
-			new WP_GitHub_Updater( $config );
+			new WP_Pixcodes_GitHub_Updater( $config );
 		}
 	}
 

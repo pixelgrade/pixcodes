@@ -15,20 +15,35 @@ class WpGradeShortcode_Quote extends  WpGradeShortcode {
             'content_text' => array(
                 'type' => 'textarea',
                 'name' => 'Text',
-                'admin_class' => 'span12',
+                'admin_class' => 'span-12',
                 'is_content' => true
             ),
+            'text_size' => array(
+                'type' => 'select',
+                'name' => 'Text size',
+                'options' => array('small' => 'Small', 'medium' => 'Medium', 'big' => 'Big'),
+                'admin_class' => 'span-12'
+            ),            
             'author' => array(
                 'type' => 'text',
                 'name' => 'Author',
-                'admin_class' => 'span6',
+                'admin_class' => 'span-6',
             ),
+
             'link' => array(
                 'type' => 'text',
-                'name' => 'Link',
-                'admin_class' => 'span5 push1'
+                'name' => 'Author link',
+                'admin_class' => 'span-6'
             ),
+            'author_title' => array(
+                'type' => 'text',
+                'name' => 'Author title',
+                'admin_class' => 'span-12',
+            ),            
         );
+
+	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
 
         add_shortcode('quote', array( $this, 'add_shortcode') );
     }
@@ -36,26 +51,22 @@ class WpGradeShortcode_Quote extends  WpGradeShortcode {
     public function add_shortcode($atts, $content){
         extract( shortcode_atts( array(
 			'content_text' => '',
+            'text_size' => 'medium',
 			'author' => '',
+            'author_title' => '',
 			'link' => '',
         ), $atts ) );
-        ob_start(); 
-		?><div class="testimonial shc">
-            <blockquote>
-                <?php echo $this->get_clean_content($content);
-                if(!empty($author)) {
-					echo '<div class="testimonial_author">'; 
-					if(!empty($link)) {
-						echo '<a href="'.$link.'">';
-					}
-					echo '<span class="author_name">'.$author.'</span>';
-                    if(!empty($link)) {
-						echo '</a>';
-                    }
-					echo '</div>';
-				} ?>
-			</blockquote>
-		</div><?php 
-		return ob_get_clean();
+
+	    /**
+	     * Template localization between plugin and theme
+	     */
+	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+	    if(!$located) {
+		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+	    }
+	    // load it
+	    ob_start();
+	    require $located;
+	    return ob_get_clean();
     }
 }
