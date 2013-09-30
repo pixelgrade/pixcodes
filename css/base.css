@@ -1456,6 +1456,11 @@ Modal Styling
 }
 
 /* '' */
+.icon-e-cc-1:before {
+  content: '\e924';
+}
+
+/* '' */
 .icon-e-dribbble-1:before {
   content: '\e923';
 }
@@ -1821,6 +1826,11 @@ Modal Styling
 }
 
 /* '' */
+.icon-e-deviantart:before {
+  content: '\e91d';
+}
+
+/* '' */
 .icon-e-left-bold:before {
   content: '\e888';
 }
