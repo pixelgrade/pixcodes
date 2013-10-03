@@ -51,28 +51,28 @@
         <ul class="team-member__social-links-list">
         	<?php if ( !empty($social_twitter) ) : ?>
                 <li class="team-member__social-link">
-                    <a class="team-member__social-link__link" href="#" target="_blank">
+                    <a class="team-member__social-link__link" href="<?php echo $social_twitter; ?>" target="_blank">
                         <i class="shc  shc--icon  icon-twitter"></i>
                     </a>
                 </li>
         	<?php endif; ?>
         	<?php if ( !empty($social_facebook) ) : ?>
                 <li class="team-member__social-link">
-                    <a class="team-member__social-link__link" href="#" target="_blank">
+                    <a class="team-member__social-link__link" href="<?php echo $social_facebook; ?>" target="_blank">
                         <i class="shc  shc--icon  icon-facebook"></i>
                     </a>
                 </li>
         	<?php endif; ?>
         	<?php if ( !empty($social_linkedin) ) : ?>
                 <li class="team-member__social-link">
-                    <a class="team-member__social-link__link" href="#" target="_blank">
+                    <a class="team-member__social-link__link" href="<?php echo $social_linkedin; ?>" target="_blank">
                         <i class="shc  shc--icon  icon-linkedin"></i>
                     </a>
                 </li>
         	<?php endif; ?>
         	<?php if ( !empty($social_pinterest) ) : ?>
                 <li class="team-member__social-link">
-                    <a class="team-member__social-link__link" href="#" target="_blank">
+                    <a class="team-member__social-link__link" href="<?php echo $social_pinterest; ?>" target="_blank">
                         <i class="shc  shc--icon  icon-pinterest"></i>
                     </a>
                 </li>
