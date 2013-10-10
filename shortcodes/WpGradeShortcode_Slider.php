@@ -34,6 +34,12 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
                 'options' => array('arrows' => 'Arrows', 'bullets' => 'Bullets', 'both' => 'Arrows and Bullets', 'none' => 'None'),
                 'admin_class' => 'span10 push2'
             ),
+            'custom_slider_transition' => array(
+                'type' => 'select',
+                'name' => 'Slider transition',
+                'options' => array('move' => 'Move/Drag', 'fade' => 'Fade'),
+                'admin_class' => 'span10 push2'
+            ),            
 //            'autoheight' => array(
 //                'type' => 'switch',
 //                'name' => 'Let slider autoheight?',
@@ -41,8 +47,8 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
 //            ),
         );
 
-	    // allow the theme or other plugins to "hook" into this shorcode's params
-	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
+        // allow the theme or other plugins to "hook" into this shorcode's params
+        $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
 
         add_shortcode('slider', array( $this, 'add_slider_shortcode') );
         add_shortcode('slide', array( $this, 'add_slide_shortcode') );
@@ -62,52 +68,53 @@ class WpGradeShortcode_Slider extends  WpGradeShortcode {
     public function add_slider_shortcode( $atts, $content ) {
 
          extract( shortcode_atts( array(
-	         'navigation_style' => 'arrow',
-	         'bullets' => 'true',
-	         'autoheight' => 'true'
+             'navigation_style' => 'arrow',
+             'bullets' => 'true',
+             'autoheight' => 'true',
+             'custom_slider_transition' => 'move'
          ), $atts ) );
 
-	    if ( $navigation_style == 'arrows' ) {
-		    $navigation_style = 'data-arrows';
-	    } elseif ( $navigation_style == 'bullets' ) {
-		    $navigation_style = 'data-bullets';
-	    }elseif ( $navigation_style == 'both' ) {
-		    $navigation_style = 'data-arrows data-bullets';
-	    }
+        if ( $navigation_style == 'arrows' ) {
+            $navigation_style = 'data-arrows';
+        } elseif ( $navigation_style == 'bullets' ) {
+            $navigation_style = 'data-bullets';
+        }elseif ( $navigation_style == 'both' ) {
+            $navigation_style = 'data-arrows data-bullets';
+        }
 
-	    $navigation_style .= ' data-autoheight';
+        $navigation_style .= ' data-autoheight';
 
-	    /**
-	     * Template localization between plugin and theme
-	     */
-	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
-	    if(!$located) {
-		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
-	    }
-	    // load it
-	    ob_start();
-	    require $located;
-	    return ob_get_clean();
+        /**
+         * Template localization between plugin and theme
+         */
+        $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
+        if(!$located) {
+            $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
+        }
+        // load it
+        ob_start();
+        require $located;
+        return ob_get_clean();
     }
 
     public function add_slide_shortcode( $atts, $content ) {
 //        $title = '';
-//		$icon = '';
+//      $icon = '';
 //         extract( shortcode_atts( array(
 //             'title' => '',
 //             'icon' => ''
 //         ), $atts ) );
 
-	    /**
-	     * Template localization between plugin and theme
-	     */
-	    $located = locate_template("templates/shortcodes/slide.php", false, false);
-	    if(!$located) {
-		    $located = dirname(__FILE__).'/templates/slide.php';
-	    }
-	    // load it
-	    ob_start();
-	    require $located;
-	    return ob_get_clean();
+        /**
+         * Template localization between plugin and theme
+         */
+        $located = locate_template("templates/shortcodes/slide.php", false, false);
+        if(!$located) {
+            $located = dirname(__FILE__).'/templates/slide.php';
+        }
+        // load it
+        ob_start();
+        require $located;
+        return ob_get_clean();
     }
 }
