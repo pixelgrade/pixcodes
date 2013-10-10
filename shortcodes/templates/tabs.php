@@ -7,7 +7,14 @@
         if ( !empty($titles) && isset($titles[1]) ) {
             foreach ( $titles[1] as $key => $title ) {
                 $ui_tabs_keys[$key] = uniqid( 'ui-tab-'.$key ); ?>
-                <li class="<?php if ($key == 0) { echo 'active'; } ?>"><?php echo '<a href="#'.$ui_tabs_keys[$key].'" data-toggle="tab">'.$title.'</a>'; ?></li>
+                <li class="<?php if ($key == 0) { echo 'active'; } ?>">
+	                <?php echo '<a href="#'.$ui_tabs_keys[$key].'" data-toggle="tab">';
+	                    if (!empty($icons[$key]) ) {
+		                    echo '<i class="pixcode pixcode--icon '. $icons[$key] .'"></i>';
+	                    }
+	                    echo $title;
+	                echo '</a>'; ?>
+                </li>
             <?php }
         } ?>
     </ul>
