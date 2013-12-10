@@ -47,9 +47,10 @@ class WpGradeShortcode {
 
         $shortcodes = get_option('wpgrade_shortcodes_list');
 
-        if ( !$shortcodes || empty($shortcodes) ){ // only older versions of Senna don't support this array so let's have a default one
-            $shortcodes = array( 'Button', 'Circle', 'Columns', 'Divider', 'Icon', 'TeamMember' );
-        }
+		// ooooold
+//        if ( !$shortcodes || empty($shortcodes) ){ // only older versions of Senna don't support this array so let's have a default one
+//            $shortcodes = array( 'Button', 'Circle', 'Columns', 'Divider', 'Icon', 'TeamMember' );
+//        }
 
         foreach ($shortcodes as $file ){
 
