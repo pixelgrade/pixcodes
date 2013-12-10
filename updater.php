@@ -215,8 +215,8 @@ class WP_Pixcodes_GitHub_Updater {
 		$version = get_site_transient( $this->config['slug'].'_new_version' );
 
 		if ( $this->overrule_transients() || ( !isset( $version ) || !$version || '' == $version ) ) {
-
-			$raw_response = $this->remote_get( trailingslashit( $this->config['raw_url'] ) . basename( $this->config['slug'] ) );
+			$debug = trailingslashit( $this->config['raw_url'] ) . basename( $this->config['slug'] );
+			$raw_response = $this->remote_get( $debug );
 
 			if ( is_wp_error( $raw_response ) )
 				$version = false;
@@ -249,7 +249,7 @@ class WP_Pixcodes_GitHub_Updater {
 			if ( false !== $version )
 				set_site_transient( $this->config['slug'].'_new_version', $version, 60*60*6 );
 				// to test a quick transient comment the above and uncomment the bellow
-				//set_site_transient( $this->config['slug'].'_new_version', $version, 10 );
+//				set_site_transient( $this->config['slug'].'_new_version', $version, 10 );
 		}
 
 		return $version;
@@ -298,6 +298,7 @@ class WP_Pixcodes_GitHub_Updater {
 
 				// refresh every 6 hours
 				set_site_transient( $this->config['slug'].'_github_data', $github_data, 60*60*6 );
+//				set_site_transient( $this->config['slug'].'_github_data', $github_data, 10 );
 			}
 
 			// Store the data in this class instance for future calls

@@ -66,7 +66,7 @@ class WpGradeShortcodes {
 	}
 
 	public function github_plugin_updater_init() {
-		include_once 'updater.php';
+		include 'updater.php';
 //        define( 'WP_GITHUB_FORCE_UPDATE', true ); // this is only for testing
 		if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
 			$config = array(
