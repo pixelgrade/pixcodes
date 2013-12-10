@@ -2,34 +2,34 @@
 
 if (!defined('ABSPATH')) die('-1');
 
-class WpGradeShortcode_AvarageScore extends  WpGradeShortcode {
+class WpGradeShortcode_AverageScore extends  WpGradeShortcode {
 
     public function __construct($settings = array()) {
-        $this->self_closed = false;
-        $this->name = "Avarage score";
-        $this->code = "avarage_score";
+        $this->self_closed = true;
+        $this->name = "Average score";
+        $this->code = "average_score";
         $this->icon = "icon-tasks";
-        $this->direct = false;
-	    $this->one_line = true;
+        $this->direct = true;
+//	    $this->one_line = true;
 
-        $this->params = array(
-			'score_note' => array(
-				'type' => 'text',
-				'name' => 'Text',
-				'admin_class' => 'span2'
-			),
-            'score_desc' => array(
-                'type' => 'textarea',
-                'name' => 'Description',
-                'admin_class' => 'span12',
-				'is_content' => true
-            ),
-        );
+//        $this->params = array(
+//			'score_note' => array(
+//				'type' => 'text',
+//				'name' => 'Text',
+//				'admin_class' => 'span2'
+//			),
+//            'score_desc' => array(
+//                'type' => 'textarea',
+//                'name' => 'Description',
+//                'admin_class' => 'span12',
+//				'is_content' => true
+//            ),
+//        );
 
 	    // allow the theme or other plugins to "hook" into this shorcode's params
 	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
 
-        add_shortcode('avarage_score', array( $this, 'add_shortcode') );
+        add_shortcode('average_score', array( $this, 'add_shortcode') );
     }
 
     public function add_shortcode($atts, $content){
