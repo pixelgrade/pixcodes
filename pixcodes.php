@@ -79,15 +79,15 @@ class WpGradeShortcodes {
 			$config = array(
 				'slug' => 'pixcodes/pixcodes.php',
 				'api_url' => 'https://api.github.com/repos/pixelgrade/pixcodes',
-				'raw_url' => 'https://raw.github.com/pixelgrade/pixcodes/test-update',
-				'github_url' => 'https://github.com/pixelgrade/pixcodes/tree/test-update',
-				'zip_url' => 'https://github.com/pixelgrade/pixcodes/archive/test-update.zip',
+				'raw_url' => 'https://raw.github.com/pixelgrade/pixcodes/update',
+				'github_url' => 'https://github.com/pixelgrade/pixcodes/tree/update',
+				'zip_url' => 'https://github.com/pixelgrade/pixcodes/archive/update.zip',
 				'sslverify' => false,
 				'requires' => '3.0',
 				'tested' => '3.3',
 				'readme' => 'README.md',
 				'textdomain' => 'pixcodes',
-				'debug_mode' => true
+				'debug_mode' => $debug
 				//'access_token' => '',
 			);
 			new WP_Pixcodes_GitHub_Updater( $config );
