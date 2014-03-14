@@ -52,6 +52,10 @@ class WpGradeShortcode {
 //            $shortcodes = array( 'Button', 'Circle', 'Columns', 'Divider', 'Icon', 'TeamMember' );
 //        }
 
+	    if ( empty( $shortcodes ) ) {
+			return false;
+	    }
+
         foreach ($shortcodes as $file ){
 
             $file_name = 'WpGradeShortcode_'. $file .'.php';

@@ -56,6 +56,11 @@ class WP_Pixcodes_GitHub_Updater {
 	 */
 	private $github_data;
 
+	/**
+	 * @var $result store the result here
+	 */
+	public $result;
+
 
 	/**
 	 * Class Constructor
@@ -74,6 +79,7 @@ class WP_Pixcodes_GitHub_Updater {
 			'access_token' => '',
 		);
 
+		$this->result = array();
 		$this->config = wp_parse_args( $config, $defaults );
 
 		// if the minimum config isn't set, issue a warning and bail
@@ -86,10 +92,11 @@ class WP_Pixcodes_GitHub_Updater {
 
 		$this->set_defaults();
 
-		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'api_check' ) );
+		// check for updates
+		add_action( 'in_admin_footer', array($this, 'load_custom_wp_admin_scripts' ) );
+		add_action('wp_ajax_check_for_'.$this->config['proper_folder_name'].'_updates', array($this, 'check_for_plugin_update'));
 
 		// Hook into the plugin details screen
-		add_filter( 'plugins_api', array( $this, 'get_plugin_info' ), 10, 3 );
 		add_filter( 'upgrader_post_install', array( $this, 'upgrader_post_install' ), 10, 3 );
 
 		// set timeout
@@ -97,6 +104,7 @@ class WP_Pixcodes_GitHub_Updater {
 
 		// set sslverify for zip download
 		add_filter( 'http_request_args', array( $this, 'http_request_sslverify' ), 10, 2 );
+
 	}
 
 	public function has_minimum_config() {
@@ -149,16 +157,6 @@ class WP_Pixcodes_GitHub_Updater {
 
 			$this->config['zip_url'] = $zip_url;
 		}
-
-
-		if ( ! isset( $this->config['new_version'] ) )
-			$this->config['new_version'] = $this->get_new_version();
-
-		if ( ! isset( $this->config['last_updated'] ) )
-			$this->config['last_updated'] = $this->get_date();
-
-		if ( ! isset( $this->config['description'] ) )
-			$this->config['description'] = $this->get_description();
 
 		$plugin_data = $this->get_plugin_data();
 		if ( ! isset( $this->config['plugin_name'] ) )
@@ -215,8 +213,8 @@ class WP_Pixcodes_GitHub_Updater {
 		$version = get_site_transient( $this->config['slug'].'_new_version' );
 
 		if ( $this->overrule_transients() || ( !isset( $version ) || !$version || '' == $version ) ) {
-			$debug = trailingslashit( $this->config['raw_url'] ) . basename( $this->config['slug'] );
-			$raw_response = $this->remote_get( $debug );
+
+			$raw_response = $this->remote_get( trailingslashit( $this->config['raw_url'] ) . basename( $this->config['slug'] ) );
 
 			if ( is_wp_error( $raw_response ) )
 				$version = false;
@@ -231,26 +229,21 @@ class WP_Pixcodes_GitHub_Updater {
 			else
 				$version = $matches[1];
 
-			// back compat for older readme version handling
-//			$raw_response = $this->remote_get( trailingslashit( $this->config['raw_url'] ) . $this->config['readme'] );
-//
-//			if ( is_wp_error( $raw_response ) )
-//				return $version;
-//
-//			preg_match( '#^\s*`*~Current Version\:\s*([^~]*)~#im', $raw_response['body'], $__version );
-//
-//			if ( isset( $__version[1] ) ) {
-//				$version_readme = $__version[1];
-//				if ( -1 == version_compare( $version, $version_readme ) )
-//					$version = $version_readme;
-//			}
-
 			// refresh every 6 hours
-			if ( false !== $version )
-				set_site_transient( $this->config['slug'].'_new_version', $version, 60*60*6 );
-			// to test a quick transient comment the above and uncomment the bellow
-//				set_site_transient( $this->config['slug'].'_new_version', $version, 10 );
+			if ( false !== $version ) {
+				// or refresh quick if we debug it
+				if ( isset ( $this->config['debug_mode'] ) && $this->config['debug_mode'] == 'true') {
+					// to test a quick transient comment the above and uncomment the bellow
+					set_site_transient( $this->config['slug'].'_new_version', $version, 10 );
+				} else {
+//					set_site_transient( $this->config['slug'].'_new_version', $version, 60*60*6 );
+					set_site_transient( $this->config['slug'].'_new_version', $version, 10 );
+				}
+
+			}
 		}
+
+		$this->result['github_version'] = $version;
 
 		return $version;
 	}
@@ -265,6 +258,7 @@ class WP_Pixcodes_GitHub_Updater {
 	 * @return mixed
 	 */
 	public function remote_get( $query ) {
+
 		if ( ! empty( $this->config['access_token'] ) )
 			$query = add_query_arg( array( 'access_token' => $this->config['access_token'] ), $query );
 
@@ -298,13 +292,13 @@ class WP_Pixcodes_GitHub_Updater {
 
 				// refresh every 6 hours
 				set_site_transient( $this->config['slug'].'_github_data', $github_data, 60*60*6 );
-//				set_site_transient( $this->config['slug'].'_github_data', $github_data, 10 );
 			}
 
 			// Store the data in this class instance for future calls
 			$this->github_data = $github_data;
 		}
 
+		$this->result['github_data'] = $github_data;
 		return $github_data;
 	}
 
@@ -355,6 +349,11 @@ class WP_Pixcodes_GitHub_Updater {
 	 */
 	public function api_check( $transient ) {
 
+		$this->result['transient'] = $transient;
+
+		if ( ! isset( $this->config['new_version'] ) )
+			$this->config['new_version'] = $this->get_new_version();
+
 		// Check if the transient contains the 'checked' information
 		// If not, just return its value without hacking it
 		if ( empty( $transient->checked ) )
@@ -373,7 +372,10 @@ class WP_Pixcodes_GitHub_Updater {
 			// If response is false, don't alter the transient
 			if ( false !== $response )
 				$transient->response[ $this->config['slug'] ] = $response;
+
 		}
+
+		$this->result['returned-transient'] = $transient;
 
 		return $transient;
 	}
@@ -390,6 +392,12 @@ class WP_Pixcodes_GitHub_Updater {
 	 */
 	public function get_plugin_info( $false, $action, $response ) {
 
+		if ( ! isset( $this->config['last_updated'] ) )
+			$this->config['last_updated'] = $this->get_date();
+
+		if ( ! isset( $this->config['description'] ) )
+			$this->config['description'] = $this->get_description();
+
 		// Check if this call API is for the right plugin
 		if ( !isset( $response->slug ) || $response->slug != $this->config['slug'] )
 			return false;
@@ -405,6 +413,8 @@ class WP_Pixcodes_GitHub_Updater {
 		$response->last_updated = $this->config['last_updated'];
 		$response->sections = array( 'description' => $this->config['description'] );
 		$response->download_link = $this->config['zip_url'];
+
+		$this->result['returned-plugin_info'] = $response;
 
 		return $response;
 	}
@@ -431,10 +441,54 @@ class WP_Pixcodes_GitHub_Updater {
 		$activate = activate_plugin( WP_PLUGIN_DIR.'/'.$this->config['slug'] );
 
 		// Output the update message
-		$fail  = __( 'The plugin has been updated, but could not be reactivated. Please reactivate it manually.', 'github_plugin_updater' );
-		$success = __( 'Plugin reactivated successfully.', 'github_plugin_updater' );
+		$fail  = __( 'The plugin has been updated, but could not be reactivated. Please reactivate it manually.', 'pixcodes' );
+		$success = __( 'Plugin reactivated successfully.', 'pixcodes' );
 		echo is_wp_error( $activate ) ? $fail : $success;
 		return $result;
 
+	}
+
+	/**
+	 * This function outputs a javascript which will make a simple ajax request
+	 */
+	public function load_custom_wp_admin_scripts(){ ?>
+		<script>
+			/** Check this plugin for updates from github */
+			(function ($) {
+				$(document).ready(function(){
+					var isdebug = ( QueryString.debug  && QueryString.debug  == 'true' ) ? true : false;
+					// check update
+					$.ajax({ type: "post",url: ajaxurl,data: { action: 'check_for_<?php echo $this->config['proper_folder_name']; ?>_updates', debug: isdebug },
+						success:function(response){
+							if (isdebug) {
+								var result = JSON.parse(response);
+								console.log(result);
+							}
+						}
+					});
+				});
+				var QueryString=function(){var e={};var t=window.location.search.substring(1);var n=t.split("&");for(var r=0;r<n.length;r++){var i=n[r].split("=");if(typeof e[i[0]]==="undefined"){e[i[0]]=i[1]}else if(typeof e[i[0]]==="string"){var s=[e[i[0]],i[1]];e[i[0]]=s}else{e[i[0]].push(i[1])}}return e}();
+			})(jQuery);
+		</script>
+	<?php }
+
+	function check_for_plugin_update(){
+
+		add_filter( 'plugins_api', array( $this, 'get_plugin_info' ), 10, 3 );
+
+		// get the transient
+		$transient = get_option('_site_transient_update_plugins');
+
+		// check if there are updates
+		$new_transient = $this->api_check( $transient );
+
+		//update the transient and wordpress should
+		$updated = update_option('_site_transient_update_plugins', $new_transient, $transient);
+
+		if ( isset( $_POST['debug'] ) && $_POST['debug']  == 'true' ) {
+			echo json_encode(array('updated' => $updated, 'transient' => $new_transient));
+		}
+
+		die(0);
 	}
 }

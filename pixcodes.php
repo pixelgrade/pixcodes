@@ -3,7 +3,7 @@
 Plugin Name: PixCodes
 Plugin URI: http://pixelgrade.com
 Description: WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and more.
-Version: 2.0.7
+Version: 2.1.0
 Author: Pixelgrade Media
 Author URI: http://pixelgrade.com
 Author Email: contact@pixelgrade.com
@@ -66,6 +66,7 @@ class WpGradeShortcodes {
 	}
 
 	public function github_plugin_updater_init() {
+
 		include 'updater.php';
 //        define( 'WP_GITHUB_FORCE_UPDATE', true ); // this is only for testing
 		if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
@@ -76,17 +77,17 @@ class WpGradeShortcodes {
 			}
 
 			$config = array(
-				'slug' => 'pixtypes/pixtypes.php',
-				'api_url' => 'https://api.github.com/repos/pixelgrade/pixtypes',
-				'raw_url' => 'https://raw.github.com/pixelgrade/pixtypes/test-update',
-				'github_url' => 'https://github.com/pixelgrade/pixtypes/tree/test-update',
-				'zip_url' => 'https://github.com/pixelgrade/pixtypes/archive/test-update.zip',
+				'slug' => 'pixcodes/pixcodes.php',
+				'api_url' => 'https://api.github.com/repos/pixelgrade/pixcodes',
+				'raw_url' => 'https://raw.github.com/pixelgrade/pixcodes/test-update',
+				'github_url' => 'https://github.com/pixelgrade/pixcodes/tree/test-update',
+				'zip_url' => 'https://github.com/pixelgrade/pixcodes/archive/test-update.zip',
 				'sslverify' => false,
 				'requires' => '3.0',
 				'tested' => '3.3',
 				'readme' => 'README.md',
-				'textdomain' => 'pixtypes',
-				'debug_mode' => $debug
+				'textdomain' => 'pixcodes',
+				'debug_mode' => true
 				//'access_token' => '',
 			);
 			new WP_Pixcodes_GitHub_Updater( $config );
