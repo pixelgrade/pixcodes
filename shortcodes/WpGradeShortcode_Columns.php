@@ -49,7 +49,7 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
 		        'name' => 'Inner Row ?',
 		        'admin_class' => 'span3'
 	        ),
-	        array(
+	        'inner_info' => array(
 		        'type' => 'info',
 		        'value' => 'You can create level 2 rows by checking this checkbox.',
 		        'admin_class' => 'span8 push1'

@@ -11,6 +11,8 @@ class WpGradeShortcode_Separator extends  WpGradeShortcode {
         $this->icon = "icon-fire";
         $this->direct = false;
 
+	    $this->direct = apply_filters('pixcodes_filter_direct_for_' . strtolower($this->name), $this->direct);
+
         $this->params = array(
 	        'align' => array(
 		        'type' => 'select',
