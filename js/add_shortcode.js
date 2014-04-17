@@ -179,7 +179,8 @@ editor = '';
                 plugin_url = url;
                 ed.addButton('wpgrade', {
                     title : 'Add a shortcode',
-                    class: 'pixelgrade_shortcodes',
+//	                text : 'PixCodes',
+                    classes: 'btn pixelgrade_shortcodes',
                     onclick: function(){
                         $('.l_pxg_modal .btn_primary').addClass('disabled');
 						//let's clean up some more first
