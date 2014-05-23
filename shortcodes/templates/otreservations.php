@@ -3,9 +3,9 @@
 		<span class="otreservations-title"><?php echo $title ?></span>
 		<span class="otreservations-subtitle"><?php _e( 'Powered by OpenTable', 'pixcodes' ) ?></span>
 	</div>
+	<?php if (!empty($rid) && intval($rid)) : ?>
 	<form method="get" class="otw-widget-form" action="http://www.opentable.com/restaurant-search.aspx" target="_blank">
 		<div class="otw-wrapper">
-
 			<div class="otw-date-li otw-input-wrap">
 				<label for="date-otreservations"><?php echo (!empty($labels) ? __( 'Date', 'pixcodes' ) : '<i class="icon-calendar"></i>') ?></label>
 				<input id="date-otreservations" name="startDate" class="otw-reservation-date" type="text" value="" autocomplete="off">
@@ -52,11 +52,14 @@
 			<div class="otw-button-wrap">
 				<input type="submit" class="otreservations-submit" value="<?php _e( 'Find a Table', 'pixcodes' ); ?>" />
 			</div>
-			<input type="hidden" name="RestaurantID" class="RestaurantID" value="<?php echo $otrestaurant_id; ?>">
-			<input type="hidden" name="rid" class="rid" value="<?php echo $otrestaurant_id; ?>">
+			<input type="hidden" name="RestaurantID" class="RestaurantID" value="<?php echo $rid; ?>">
+			<input type="hidden" name="rid" class="rid" value="<?php echo $rid; ?>">
 			<input type="hidden" name="GeoID" class="GeoID" value="15">
 			<input type="hidden" name="txtDateFormat" class="txtDateFormat" value="MM/dd/yyyy">
-			<input type="hidden" name="RestaurantReferralID" class="RestaurantReferralID" value="<?php echo $otrestaurant_id; ?>">
+			<input type="hidden" name="RestaurantReferralID" class="RestaurantReferralID" value="<?php echo $rid; ?>">
 		</div>
 	</form>
+	<?php else : ?>
+		<span class="otreservations-error"><?php _e('You need to provide us with a valid numeric OpenTable restaurant ID.', 'pixcodes') ?></span>
+	<?php endif; ?>
 </div>

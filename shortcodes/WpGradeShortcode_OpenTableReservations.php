@@ -15,7 +15,7 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 		$this->icon        = "icon-group";
 
 		$this->params = array(
-			'otrestaurant_id' => array(
+			'rid' => array(
 				'type'        => 'text',
 				'name'        => 'OpenTable Restaurant ID',
 				'admin_class' => 'span6',
@@ -56,7 +56,7 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 	public function add_shortcode( $atts ) {
 
 		extract( shortcode_atts( array(
-			'otrestaurant_id' => '',
+			'rid' => '',
 			'title'           => 'Make a Reservation',
 			'labels'          => '',
 			'class'           => '',
@@ -76,67 +76,5 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 		require $located;
 
 		return ob_get_clean();
-	}
-
-	public function get_parsed_tweet( $tweet ) {
-		// check if any entites exist and if so, replace then with hyperlinked versions
-		$tweet_text = $tweet['text'];
-		if ( ! empty( $tweet['entities']['urls'] ) || ! empty( $tweet['entities']['hashtags'] ) || ! empty( $tweet['entities']['user_mentions'] ) ) {
-			foreach ( $tweet['entities']['urls'] as $url ) {
-				$find       = $url['url'];
-				$replace    = '<a href="' . $find . '" target="_blank" rel="nofollow">' . $find . '</a>';
-				$tweet_text = str_replace( $find, $replace, $tweet_text );
-			}
-
-			foreach ( $tweet['entities']['hashtags'] as $hashtag ) {
-				$find       = '#' . $hashtag['text'];
-				$replace    = '<a href="http://twitter.com/#!/search/%23' . $hashtag['text'] . '" target="_blank" rel="nofollow">' . $find . '</a>';
-				$tweet_text = str_replace( $find, $replace, $tweet_text );
-			}
-
-			foreach ( $tweet['entities']['user_mentions'] as $user_mention ) {
-				$find       = "@" . $user_mention['screen_name'];
-				$replace    = '<a href="http://twitter.com/' . $user_mention['screen_name'] . '" target="_blank" rel="nofollow">' . $find . '</a>';
-				$tweet_text = str_ireplace( $find, $replace, $tweet_text );
-			}
-		}
-
-		return $tweet_text;
-	}
-
-	public function convert_twitter_date( $time ) {
-		$date = strtotime( $time );
-
-		//return util::human_time_diff($date);
-		return gbs_relative_time( $date );
-	}
-
-	public function gbs_relative_time( $timestamp ) {
-
-		$difference = current_time( 'timestamp' ) - $timestamp;
-
-		if ( $difference >= 60 * 60 * 24 * 365 ) { // if more than a year ago
-			$int = intval( $difference / ( 60 * 60 * 24 * 365 ) );
-			$r   = sprintf( _n( '%d year ago', '%d years ago', $int, wpGrade_txtd ), $int );
-		} elseif ( $difference >= 60 * 60 * 24 * 7 * 5 ) { // if more than five weeks ago
-			$int = intval( $difference / ( 60 * 60 * 24 * 30 ) );
-			$r   = sprintf( _n( '%d month ago', '%d months ago', $int, wpGrade_txtd ), $int );
-		} elseif ( $difference >= 60 * 60 * 24 * 7 ) { // if more than a week ago
-			$int = intval( $difference / ( 60 * 60 * 24 * 7 ) );
-			$r   = sprintf( _n( '%d week ago', '%d weeks ago', $int, wpGrade_txtd ), $int );
-		} elseif ( $difference >= 60 * 60 * 24 ) { // if more than a day ago
-			$int = intval( $difference / ( 60 * 60 * 24 ) );
-			$r   = sprintf( _n( '%d day ago', '%d days ago', $int, wpGrade_txtd ), $int );
-		} elseif ( $difference >= 60 * 60 ) { // if more than an hour ago
-			$int = intval( $difference / ( 60 * 60 ) );
-			$r   = sprintf( _n( '%d hour ago', '%d hours ago', $int, wpGrade_txtd ), $int );
-		} elseif ( $difference >= 60 ) { // if more than a minute ago
-			$int = intval( $difference / ( 60 ) );
-			$r   = sprintf( _n( '%d minute ago', '%d minutes ago', $int, wpGrade_txtd ), $int );
-		} else { // if less than a minute ago
-			$r = __( 'moments ago', wpGrade_txtd );
-		}
-
-		return $r;
 	}
 }
