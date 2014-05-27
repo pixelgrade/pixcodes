@@ -47,11 +47,6 @@ class WpGradeShortcode {
 
         $shortcodes = get_option('wpgrade_shortcodes_list');
 
-		// ooooold
-//        if ( !$shortcodes || empty($shortcodes) ){ // only older versions of Senna don't support this array so let's have a default one
-//            $shortcodes = array( 'Button', 'Circle', 'Columns', 'Divider', 'Icon', 'TeamMember' );
-//        }
-
 	    if ( empty( $shortcodes ) ) {
 			return false;
 	    }
@@ -128,21 +123,9 @@ class WpGradeShortcode {
     }
 
     public function get_clean_content($content){
-//	    $content = wpgrade_remove_spaces_around_shortcodes($content);
-//		$content = apply_filters( 'wptexturize', $content);
-//		$content = apply_filters( 'convert_smilies', $content);
-//		$content = apply_filters( 'convert_chars', $content);
-//		$content = wpautop( $content);
-//		$content = shortcode_unautop ($content);
-//		$content = apply_filters( 'prepend_attachment', $content);
 		$content = preg_replace('#<br class="pxg_removable" />#', '', $content); // remove our temp brs
 
         return do_shortcode( $content );
-
-	    //$output = apply_filters( 'wptexturize', $content);
-	    //$output = wpautop( $output, true );
-	    //$output = shortcode_unautop( $content);
-        //return $content;
     }
 
     public function render_param($param){

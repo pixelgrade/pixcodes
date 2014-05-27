@@ -54,7 +54,7 @@ editor = '';
 
                     if ( content_field.attr('type') === 'text' ){
                         content_field.attr('value', current_editor.selection.getContent());
-                    } else if ( content_field.attr('type') === 'textarea' ) {
+                    } else if ( content_field.attr('type') === 'textarea'  && current_editor.selection.getContent().length > 0 ) {
                         content_field.text( current_editor.selection.getContent() );
                     }
 
@@ -240,6 +240,9 @@ editor = '';
                 }
 
             });
+
+			//a little bit of cleanup to make sure we keep new lines when adding to TinyMce
+			shortcode_content = shortcode_content.replace(/(?:\r\n|\r|\n)/g, "<br />");
 
             if ( params.self_closed ) {
                 editor.selection.setContent('['+params.code+user_params_string+']');
