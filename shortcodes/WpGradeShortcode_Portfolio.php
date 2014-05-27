@@ -73,20 +73,11 @@ class WpGradeShortcode_Portfolio extends  WpGradeShortcode {
 	        ),
         );
 
-	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    // allow the theme or other plugins to "hook" into this shortcode's params
 	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
 
         add_shortcode('portfolio', array( $this, 'add_shortcode') );
 
-        // frontend assets needs to be loaded after the add_shortcode function
-        // $this->frontend_assets["js"] = array(
-        //     'columns' => array(
-        //         'name' => 'frontend_portfolio',
-        //         'path' => 'js/shortcodes/frontend_portfolio.js',
-        //         'deps'=> array( 'jquery' )
-        //     )
-        // );
-        // add_action('wp_footer', array($this, 'load_frontend_assets'));
     }
 
     public function add_shortcode($atts){

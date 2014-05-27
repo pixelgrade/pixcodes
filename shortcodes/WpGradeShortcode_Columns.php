@@ -63,7 +63,7 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
             ),
         );
 
-	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    // allow the theme or other plugins to "hook" into this shortcode's params
 	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
 
         add_shortcode('col', array( $this, 'add_column_shortcode') );

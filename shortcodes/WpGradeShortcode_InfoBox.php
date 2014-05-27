@@ -37,21 +37,11 @@ class WpGradeShortcode_InfoBox extends  WpGradeShortcode {
 		    ),
         );
 
-	    // allow the theme or other plugins to "hook" into this shorcode's params
+	    // allow the theme or other plugins to "hook" into this shortcode's params
 	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
 
         // add_shortcode('tabs', array( $this, 'add_tabs_shortcode') );
         add_shortcode('infobox', array( $this, 'add_infobox_shortcode') );
-
-        // frontend assets needs to be loaded after the add_shortcode function
-//        $this->frontend_assets["js"] = array(
-//            'tabs' => array(
-//                'name' => 'frontend_tabs',
-//                'path' => 'js/shortcodes/frontend_tabs.js',
-//                'deps'=> array( 'jquery' )
-//            )
-//        );
-//        add_action('wp_footer', array($this, 'load_frontend_assets'));
 
     }
 
