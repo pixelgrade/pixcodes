@@ -29,7 +29,10 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
 		        'admin_class' => 'span10 push1',
 		        'is_content' => true,
 		        'rows' => 5,
-		        'predefined' =>'##First Product Title
+		        'predefined' =>'#Section Title
+-----
+
+##First Product Title
 **Description of the first product
 ==$15
 
@@ -49,9 +52,9 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
     }
 
     public function add_restaurantmenu_shortcode( $atts, $content ) {
-//         extract( shortcode_atts( array(
-//             //no params here
-//         ), $atts ) );
+         extract( shortcode_atts( array(
+             //no params here
+         ), $atts ) );
 
 	    /**
 	     * Template localization between plugin and theme
