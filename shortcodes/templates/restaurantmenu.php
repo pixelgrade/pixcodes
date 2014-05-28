@@ -21,127 +21,131 @@ $menu = str_replace( "<p>", "", $menu );
  * and since we treat empty lines like a show stopper - new product
  * this is good enough for us - no need to un-autop and split by new line chars
  */
-$sections = preg_split( '#<\/p>#', $menu );
+$lines = preg_split( '#(<\/p>|<br \/>|<br\/>|<br>)#', $menu );
 //remove any empty array elements - empty strings
-$sections = array_filter( $sections, 'strlen' );
+$lines = array_filter( $lines, 'strlen' );
 
 //open the wrapper and let the show begin
 $output .= '<div class="menu-list">' . PHP_EOL;
 
-//remember if we have outputted the markup for the opening ul
+//remember if we have outputted the open tag
 $opened_list = false;
+$opened_product = false;
+$opened_description = false;
+$number_of_descriptions = 0;
 
-//now we go through each identified section of text and see what it is and mess it up
-foreach ( $sections as $key => $text ) {
-	//first we need to split the text by <br />s because WordPress adds these on newlines - so they are good markers
-	$lines = preg_split( '#<br \/>#', $text );
+//first lets clean the lines of empty characters
+foreach ( $lines as $key => $line ) {
+	$lines[$key] = trim($line);
+}
 
-	//first of all we need to do some lookahead to see if we have a product with subproducts - multiple description-price groups
-	$number_of_descriptions = 0;
-	foreach ( $lines as $key => $line ) {
-		if ( 0 === strpos( $line, DESCRIPTION_MARKER ) ) {
-			$number_of_descriptions++;
-		}
+//now go through each line and give it the appropriate markup
+foreach ( $lines as $key => $line ) {
+	/*
+	 * Now for the real hardwork
+	 * Go through each line and see its beginning to know how to treat it
+	 * The ----- is a special case as it has nothing else
+	 */
+	if ( $line == '---' || $line == '----' || $line == '-----' ) {
+		$output .= '<hr class="separator"/>' . PHP_EOL;
+
+		continue;
 	}
 
-	$opened_product = false;
-	$opened_description = false;
+	/*
+	 * Now to test for the front markers - from complex to simple
+	 */
 
-	//now go through each line and give it the appropriate markup
-	foreach ( $lines as $key => $line ) {
-		//first some cleaning
-		$line = trim( $line );
-
-		/*
-		 * Now for the real hardwork
-		 * Go through each line and see its beginning to know how to treat it
-		 * The ----- is a special case as it has nothing else
-		 */
-		if ( $line == '---' || $line == '----' || $line == '-----' ) {
-			$output .= '<hr class="separator"/>' . PHP_EOL;
-			continue;
+	//Product Title
+	if ( 0 === strpos( $line, TITLE_MARKER ) ) {
+		//since we have found a product we need to make sure that the product list is started
+		if ( false === $opened_list ) {
+			$output .= '<ul class="menu-list__items">' . PHP_EOL;
+			$opened_list = true;
 		}
 
-		/*
-		 * Now to test for the front markers - from complex to simple
-		 */
+		//close any previously opened products
+		if (true === $opened_product) {
+			$output .= '</li>' . PHP_EOL;
+			$opened_product = false;
+		}
+		//we have a new product so we better open a new wrapper
+		$output .= '<li class="menu-list__item">' . PHP_EOL;
+		$opened_product = true;
 
-		//Product Title
-		if ( 0 === strpos( $line, TITLE_MARKER ) ) {
-			//since we have found a product we need to make sure that the product list is started
-			if ( false === $opened_list ) {
-				$output .= '<ul class="menu-list__items">' . PHP_EOL;
-				$opened_list = true;
+		//now output the title without the first 2 characters
+		$output .= '<h4 class="menu-list__item-title">' .substr($line,2). '</h4>' . PHP_EOL;
+
+		// we need to do some look-ahead to see if we have a product with subproducts - multiple description-price groups
+		$number_of_descriptions = 0;
+		$idx = $key + 1;
+		while ($idx < count($lines) && 0 !== strpos( $lines[$idx], TITLE_MARKER )) {
+			if ( 0 === strpos( $lines[$idx], DESCRIPTION_MARKER ) ) {
+				$number_of_descriptions++;
 			}
 
-			//close any previously opened products
-			if (true === $opened_product) {
-				$output .= '</li>' . PHP_EOL;
-				$opened_product = false;
-			}
-			//we have a new product so we better open a new wrapper
-			$output .= '<li class="menu-list__item">' . PHP_EOL;
-			$opened_product = true;
-
-			//now output the title without the first 2 characters
-			$output .= '<h4 class="menu-list__item-title">' .substr($line,2). '</h4>' . PHP_EOL;
-			continue;
+			$idx++;
 		}
 
-		//Product description
-		if ( 0 === strpos( $line, DESCRIPTION_MARKER ) ) {
-			//first close any opened description
-			if (true === $opened_description) {
-				$output .= '</p>' . PHP_EOL;
-				$opened_description = false;
-			}
-			//output the description without the first 2 characters
-			$output .= '<p class="menu-list__item-desc">' .substr($line,2);
-			$opened_description = true;
+		continue;
+	}
 
-			if ($number_of_descriptions < 2) {
-				//we can safely close the description paragraph as the price will align with the product title not the description
-				$output .= '</p>' . PHP_EOL;
-				$opened_description = false;
-			}
-			continue;
+	//Product description
+	if ( 0 === strpos( $line, DESCRIPTION_MARKER ) ) {
+		//first close any opened description
+		if (true === $opened_description) {
+			$output .= '</p>' . PHP_EOL;
+			$opened_description = false;
+		}
+		//output the description without the first 2 characters
+		$output .= '<p class="menu-list__item-desc">' .substr($line,2);
+		$opened_description = true;
+
+		if ($number_of_descriptions < 2) {
+			//we can safely close the description paragraph as the price will align with the product title not the description
+			$output .= '</p>' . PHP_EOL;
+			$opened_description = false;
 		}
 
-		//Product price
-		if ( 0 === strpos( $line, PRICE_MARKER ) ) {
-			//output the price without the first 2 characters
-			$output .= '<span class="menu-list__item-price">' .substr($line,2). '</span>';
-			//close any opened description
-			if (true === $opened_description) {
-				$output .= '</p>' . PHP_EOL;
-				$opened_description = false;
-			}
-			continue;
+		continue;
+	}
+
+	//Product price
+	if ( 0 === strpos( $line, PRICE_MARKER ) ) {
+		//output the price without the first 2 characters
+		$output .= '<span class="menu-list__item-price">' .substr($line,2). '</span>';
+		//close any opened description
+		if (true === $opened_description) {
+			$output .= '</p>' . PHP_EOL;
+			$opened_description = false;
 		}
 
-		//Section Title
-		if ( 0 === strpos( $line, SECTION_MARKER ) ) {
-			//first we need to know if there are any lists, products or descriptions opened and close them
-			if (true === $opened_description) {
-				$output .= '</p>' . PHP_EOL;
-				$opened_description = false;
-			}
+		continue;
+	}
 
-			//close any previously opened products
-			if (true === $opened_product) {
-				$output .= '</li>' . PHP_EOL;
-				$opened_product = false;
-			}
-
-			if (true === $opened_list) {
-				$output .= '</ul>' . PHP_EOL;
-				$opened_list = false;
-			}
-
-			//now output the section title without the first character
-			$output .= '<h2 class="menu-list__title">' .substr($line,1). '</h2>' . PHP_EOL;
-			continue;
+	//Section Title
+	if ( 0 === strpos( $line, SECTION_MARKER ) ) {
+		//first we need to know if there are any lists, products or descriptions opened and close them
+		if (true === $opened_description) {
+			$output .= '</p>' . PHP_EOL;
+			$opened_description = false;
 		}
+
+		//close any previously opened products
+		if (true === $opened_product) {
+			$output .= '</li>' . PHP_EOL;
+			$opened_product = false;
+		}
+
+		if (true === $opened_list) {
+			$output .= '</ul>' . PHP_EOL;
+			$opened_list = false;
+		}
+
+		//now output the section title without the first character
+		$output .= '<h2 class="menu-list__title">' .substr($line,1). '</h2>' . PHP_EOL;
+
+		continue;
 	}
 }
 
