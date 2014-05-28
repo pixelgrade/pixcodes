@@ -56,9 +56,12 @@ class WpGradeShortcode_Separator extends WpGradeShortcode {
 
 	public function add_shortcode( $atts, $content ) {
 		extract( shortcode_atts( array(
-			'style' => ''
+			'align' => '',
+			'size' => '',
+			'weight' => '',
+			'color' => '',
+			'style' => '',
 		), $atts ) );
-
 		/**
 		 * Template localization between plugin and theme
 		 */

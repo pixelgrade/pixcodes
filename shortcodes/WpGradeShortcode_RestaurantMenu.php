@@ -15,7 +15,7 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
         $this->params = array(
 	        'restaurantmenu_info' => array(
 		        'type' => 'info',
-		        'value' => '<p>We have devised the menu system to be as flexible and straight forward as possible. We rely on <strong>a couple of markers</strong> to identify the <strong>4 sections</strong> of each menu product.</p>
+		        'value' => '<p>We have devised the menu system to be as flexible and straightforward as possible. We rely on <strong>a couple of markers</strong> to identify the <strong>4 sections</strong> of each menu product.</p>
 		        <p>First there is the <strong>section title marker</strong>: <strong>#</strong>Section Title Here</p>
 		        <p>Then there is the <strong>title marker</strong>: <strong>##</strong>Product Title Here</p>
 		        <p>After you should add the <strong>description</strong>: <strong>**</strong>Product Description Here</p>
@@ -54,8 +54,8 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
 ##Second Product Title
 **Description of the second product (no price)
 
-##Third Product Title
-==$23.99
+##Third Product Title (no description)
+==$23
 
 ##Fourth Product Title
 **Subproduct 1
@@ -65,8 +65,14 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
 **Subproduct 3
 ==$29.99
 
+##Fifth Product Title (just title)
+
 #Anouther Section Title
------',
+-----
+
+##Another Product Title
+**Another product description
+==$2993',
 	        ),
         );
 
