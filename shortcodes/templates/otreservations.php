@@ -1,6 +1,6 @@
-<div class="pixcode  pixcode--otreservations  otreservations  <?php echo $class ?>">
+<x></x><div class="pixcode  pixcode--otreservations  otreservations  <?php echo $class ?>">
 	<div class="otreservation-title-wrapper">
-		<span class="otreservations-title"><?php echo $title ?></span>
+		<h4 class="otreservations-title"><?php echo $title ?></h4>
 		<span class="otreservations-subtitle"><?php _e( 'Powered by OpenTable', 'pixcodes' ) ?></span>
 	</div>
 	<?php if (!empty($rid) && intval($rid)) : ?>
