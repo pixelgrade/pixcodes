@@ -18,22 +18,22 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 			'rid' => array(
 				'type'        => 'text',
 				'name'        => 'OpenTable Restaurant ID',
-				'admin_class' => 'span6',
+				'admin_class' => 'span4',
 			),
 			'title'           => array(
 				'type'        => 'text',
 				'name'        => 'Title',
-				'admin_class' => 'span6',
+				'admin_class' => 'span7 push1',
 			),
 			'labels'          => array(
 				'type'        => 'switch',
-				'name'        => 'Show Text Labels?',
-				'admin_class' => 'span5 push1',
+				'name'        => 'Replace Icons with Text?',
+				'admin_class' => 'span4',
 			),
 			'class'           => array(
 				'type'        => 'text',
 				'name'        => 'Class',
-				'admin_class' => 'span6',
+				'admin_class' => 'span7 push1',
 			),
 		);
 
