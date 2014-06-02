@@ -68,6 +68,7 @@ class WpGradeShortcode_Button extends  WpGradeShortcode {
 			'size' => '',
             'text_size' => '',
 			'newtab' => '',
+            'style' => '',
         ), $atts ) );
 
 	    /**
