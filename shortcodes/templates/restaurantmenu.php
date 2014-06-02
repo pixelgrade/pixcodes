@@ -1,10 +1,22 @@
 <?php
 //initialize things
 $output = '';
-define( 'SECTION_MARKER', '#' );
-define( 'TITLE_MARKER', '##' );
-define( 'DESCRIPTION_MARKER', '**' );
-define( 'PRICE_MARKER', '==' );
+
+if ( ! defined( 'SECTION_MARKER' ) ) {
+	define( 'SECTION_MARKER', '#' );
+}
+
+if ( ! defined( 'TITLE_MARKER' ) ) {
+	define( 'TITLE_MARKER', '##' );
+}
+
+if ( ! defined( 'DESCRIPTION_MARKER' ) ) {
+	define( 'DESCRIPTION_MARKER', '**' );
+}
+
+if ( ! defined( 'PRICE_MARKER' ) ) {
+	define( 'PRICE_MARKER', '==' );
+}
 
 
 /* Lets get to parsing the hell out of the received content so we can have something to eat */
@@ -29,14 +41,14 @@ $lines = array_filter( $lines, 'strlen' );
 $output .= '<div class="menu-list">' . PHP_EOL;
 
 //remember if we have outputted the open tag
-$opened_list = false;
-$opened_product = false;
-$opened_description = false;
+$opened_list            = false;
+$opened_product         = false;
+$opened_description     = false;
 $number_of_descriptions = 0;
 
 //first lets clean the lines of empty characters
 foreach ( $lines as $key => $line ) {
-	$lines[$key] = trim($line);
+	$lines[ $key ] = trim( $line );
 }
 
 //now go through each line and give it the appropriate markup
@@ -65,7 +77,7 @@ foreach ( $lines as $key => $line ) {
 		}
 
 		//close any previously opened products
-		if (true === $opened_product) {
+		if ( true === $opened_product ) {
 			$output .= '</li>' . PHP_EOL;
 			$opened_product = false;
 		}
@@ -74,17 +86,17 @@ foreach ( $lines as $key => $line ) {
 		$opened_product = true;
 
 		//now output the title without the first 2 characters
-		$output .= '<h4 class="menu-list__item-title">' .substr($line,2). '</h4>' . PHP_EOL;
+		$output .= '<h4 class="menu-list__item-title">' . substr( $line, 2 ) . '</h4>' . PHP_EOL;
 
 		// we need to do some look-ahead to see if we have a product with subproducts - multiple description-price groups
 		$number_of_descriptions = 0;
-		$idx = $key + 1;
-		while ($idx < count($lines) && 0 !== strpos( $lines[$idx], TITLE_MARKER )) {
-			if ( 0 === strpos( $lines[$idx], DESCRIPTION_MARKER ) ) {
-				$number_of_descriptions++;
+		$idx                    = $key + 1;
+		while ( $idx < count( $lines ) && 0 !== strpos( $lines[ $idx ], TITLE_MARKER ) ) {
+			if ( 0 === strpos( $lines[ $idx ], DESCRIPTION_MARKER ) ) {
+				$number_of_descriptions ++;
 			}
 
-			$idx++;
+			$idx ++;
 		}
 
 		continue;
@@ -93,15 +105,15 @@ foreach ( $lines as $key => $line ) {
 	//Product description
 	if ( 0 === strpos( $line, DESCRIPTION_MARKER ) ) {
 		//first close any opened description
-		if (true === $opened_description) {
+		if ( true === $opened_description ) {
 			$output .= '</p>' . PHP_EOL;
 			$opened_description = false;
 		}
 		//output the description without the first 2 characters
-		$output .= '<p class="menu-list__item-desc">' .substr($line,2);
+		$output .= '<p class="menu-list__item-desc">' . substr( $line, 2 );
 		$opened_description = true;
 
-		if ($number_of_descriptions < 2) {
+		if ( $number_of_descriptions < 2 ) {
 			//we can safely close the description paragraph as the price will align with the product title not the description
 			$output .= '</p>' . PHP_EOL;
 			$opened_description = false;
@@ -113,9 +125,9 @@ foreach ( $lines as $key => $line ) {
 	//Product price
 	if ( 0 === strpos( $line, PRICE_MARKER ) ) {
 		//output the price without the first 2 characters
-		$output .= '<span class="menu-list__item-price">' .substr($line,2). '</span>';
+		$output .= '<span class="menu-list__item-price">' . substr( $line, 2 ) . '</span>';
 		//close any opened description
-		if (true === $opened_description) {
+		if ( true === $opened_description ) {
 			$output .= '</p>' . PHP_EOL;
 			$opened_description = false;
 		}
@@ -126,24 +138,24 @@ foreach ( $lines as $key => $line ) {
 	//Section Title
 	if ( 0 === strpos( $line, SECTION_MARKER ) ) {
 		//first we need to know if there are any lists, products or descriptions opened and close them
-		if (true === $opened_description) {
+		if ( true === $opened_description ) {
 			$output .= '</p>' . PHP_EOL;
 			$opened_description = false;
 		}
 
 		//close any previously opened products
-		if (true === $opened_product) {
+		if ( true === $opened_product ) {
 			$output .= '</li>' . PHP_EOL;
 			$opened_product = false;
 		}
 
-		if (true === $opened_list) {
+		if ( true === $opened_list ) {
 			$output .= '</ul>' . PHP_EOL;
 			$opened_list = false;
 		}
 
 		//now output the section title without the first character
-		$output .= '<h2 class="menu-list__title">' .substr($line,1). '</h2>' . PHP_EOL;
+		$output .= '<h2 class="menu-list__title">' . substr( $line, 1 ) . '</h2>' . PHP_EOL;
 
 		continue;
 	}
@@ -151,18 +163,18 @@ foreach ( $lines as $key => $line ) {
 
 //some last sanity check - no loose ends
 //close any previously opened descriptions
-if (true === $opened_description) {
+if ( true === $opened_description ) {
 	$output .= '</p>' . PHP_EOL;
 	$opened_description = false;
 }
 
 //close any previously opened products
-if (true === $opened_product) {
+if ( true === $opened_product ) {
 	$output .= '</li>' . PHP_EOL;
 	$opened_product = false;
 }
 
-if (true === $opened_list) {
+if ( true === $opened_list ) {
 	$output .= '</ul>' . PHP_EOL;
 	$opened_list = false;
 }
