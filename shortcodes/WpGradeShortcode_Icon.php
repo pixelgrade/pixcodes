@@ -859,7 +859,9 @@ class WpGradeShortcode_Icon extends  WpGradeShortcode {
             'name' => '',
             'type' => '',
             'size' => '',
-	        'class' => ''
+	        'class' => '',
+            'link' => '',
+            'link_target_blank' => '',
         ), $atts ) );
 
 		// replace the , with a space
