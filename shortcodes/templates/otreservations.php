@@ -1,4 +1,4 @@
-<x></x><div class="pixcode  pixcode--otreservations  otreservations  <?php echo $class ?>">
+<div class="pixcode  pixcode--otreservations  otreservations  <?php echo $class ?>">
 	<div class="otreservation-title-wrapper">
 		<h4 class="otreservations-title"><?php echo $title ?></h4>
 		<span class="otreservations-subtitle"><?php _e( 'Powered by OpenTable', 'pixcodes' ) ?></span>
