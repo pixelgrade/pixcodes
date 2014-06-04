@@ -81,7 +81,8 @@ class WpGradeShortcode_Columns extends  WpGradeShortcode {
         extract( shortcode_atts( array(
             'bg_color' => '',
             'full_width' => '',
-            'class' => ''
+            'class' => '',
+            'thick_gutter' => '',
         ), $atts ) );
 
         if ( !empty($bg_color) ) {
