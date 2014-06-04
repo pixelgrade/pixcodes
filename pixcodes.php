@@ -172,9 +172,9 @@ class WpGradeShortcodes {
 	}
 
 	function wpgrade_remove_spaces_around_shortcodes( $content ) {
-		$content = shortcode_unautop($content);
-
 		$array = array(
+			'<p>[' => '[',
+			']</p>' => ']',
 			']<br />' => ']'
 		);
 
