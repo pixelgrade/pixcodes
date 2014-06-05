@@ -17,7 +17,7 @@ class WpGradeShortcode_Button extends  WpGradeShortcode {
                 'type' => 'text',
                 'name' => 'Label Text',
                 'admin_class' => 'span6',
-                'is_content' => true
+                'is_content' => true,
             ),
             'link' => array(
                 'type' => 'text',
@@ -60,16 +60,14 @@ class WpGradeShortcode_Button extends  WpGradeShortcode {
     }
 
     public function add_shortcode($atts, $content){
-
-        extract( shortcode_atts( array(
-			'link' => '',
-			'class' => '',
-			'id' => '',
-			'size' => '',
-            'text_size' => '',
-			'newtab' => '',
-            'style' => '',
-        ), $atts ) );
+	    //create an array with only the registered params - dynamic since we filter them and have no way of knowing for sure
+	    $extract_params = array();
+	    if (isset($this->params)) {
+		    foreach ($this->params as $key => $value) {
+			    $extract_params[$key] = '';
+		    }
+	    }
+	    extract( shortcode_atts( $extract_params, $atts ) );
 
 	    /**
 	     * Template localization between plugin and theme

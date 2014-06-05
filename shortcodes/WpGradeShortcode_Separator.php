@@ -55,13 +55,15 @@ class WpGradeShortcode_Separator extends WpGradeShortcode {
 	}
 
 	public function add_shortcode( $atts, $content ) {
-		extract( shortcode_atts( array(
-			'align' => '',
-			'size' => '',
-			'weight' => '',
-			'color' => '',
-			'style' => '',
-		), $atts ) );
+		//create an array with only the registered params - dynamic since we filter them and have no way of knowing for sure
+		$extract_params = array();
+		if (isset($this->params)) {
+			foreach ($this->params as $key => $value) {
+				$extract_params[$key] = '';
+			}
+		}
+		extract( shortcode_atts( $extract_params, $atts ) );
+
 		/**
 		 * Template localization between plugin and theme
 		 */

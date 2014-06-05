@@ -854,15 +854,14 @@ class WpGradeShortcode_Icon extends  WpGradeShortcode {
     }
 
     public function add_shortcode($atts, $content){
-
-        extract( shortcode_atts( array(
-            'name' => '',
-            'type' => '',
-            'size' => '',
-	        'class' => '',
-            'link' => '',
-            'link_target_blank' => '',
-        ), $atts ) );
+		//create an array with only the registered params - dynamic since we filter them and have no way of knowing for sure
+	    $extract_params = array();
+	    if (isset($this->params)) {
+		    foreach ($this->params as $key => $value) {
+			    $extract_params[$key] = '';
+		    }
+	    }
+	    extract( shortcode_atts( $extract_params, $atts ) );
 
 		// replace the , with a space
 	    $classes = explode(',',$class);
