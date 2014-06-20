@@ -77,6 +77,13 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
 **Another product description
 ==$2993',
 	        ),
+	        //can't use style because WordPress thinks its bad mojo
+	        'type' => array(
+		        'type' => 'select',
+		        'name' => 'Menu Style',
+		        'options' => array('' => 'Regular', 'dotted' => 'Dotted'),
+		        'admin_class' => 'span10 push1'
+	        ),
         );
 
 	    // allow the theme or other plugins to "hook" into this shortcode's params
@@ -87,9 +94,14 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
     }
 
     public function add_restaurantmenu_shortcode( $atts, $content ) {
-         extract( shortcode_atts( array(
-             //no params here
-         ), $atts ) );
+	    //create an array with only the registered params - dynamic since we filter them and have no way of knowing for sure
+	    $extract_params = array();
+	    if (isset($this->params)) {
+		    foreach ($this->params as $key => $value) {
+			    $extract_params[$key] = '';
+		    }
+	    }
+	    extract( shortcode_atts( $extract_params, $atts ) );
 
 	    /**
 	     * Template localization between plugin and theme

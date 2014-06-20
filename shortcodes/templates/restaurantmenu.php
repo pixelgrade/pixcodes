@@ -26,7 +26,14 @@ if ( ! defined( 'HIGHLIGHT_MARKER' ) ) {
 /* Lets get to parsing the hell out of the received content so we can have something to eat */
 
 //fist make sure no loose ends or beginnings
+//Clean Slate operation under way
 $menu = trim( $this->get_clean_content( $content ) );
+
+//some special styles
+$menu_style_class = '';
+if (isset($type) && !empty($type)) {
+	$menu_style_class = 'menu-list__' . $type;
+}
 
 //remove <p> - we just need the </p>s to split by
 $menu = str_replace( "<p>", "", $menu );
@@ -42,7 +49,7 @@ $lines = preg_split( '#(<\/p>|<br \/>|<br\/>|<br>)#', $menu );
 $lines = array_filter( $lines, 'strlen' );
 
 //open the wrapper and let the show begin
-$output .= '<div class="menu-list">' . PHP_EOL;
+$output .= '<div class="menu-list ' . $menu_style_class . '">' . PHP_EOL;
 
 //remember if we have outputted the open tag
 $opened_list            = false;
