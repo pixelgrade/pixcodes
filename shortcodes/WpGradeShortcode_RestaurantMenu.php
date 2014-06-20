@@ -15,11 +15,12 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
         $this->params = array(
 	        'restaurantmenu_info' => array(
 		        'type' => 'info',
-		        'value' => '<p>We have devised the menu system to be as flexible and straightforward as possible. We rely on <strong>a couple of markers</strong> to identify the <strong>4 sections</strong> of each menu product.</p>
+		        'value' => '<p>We have devised the menu system to be as flexible and straightforward as possible. We rely on <strong>a couple of markers</strong> to identify the <strong>5 sections</strong> of each menu product.</p>
 		        <p>First there is the <strong>section title marker</strong>: <strong>#</strong>Section Title Here</p>
 		        <p>Then there is the <strong>title marker</strong>: <strong>##</strong>Product Title Here</p>
 		        <p>After you should add the <strong>description</strong>: <strong>**</strong>Product Description Here</p>
 		        <p>Last you should add the <strong>price</strong>: <strong>==</strong>Product Price Here</p>
+		        <p>There is also a special <strong>highlight marker</strong>: <strong>++</strong>Highlight Text Here</p>
 		        <p>The only one that is <strong>necessary</strong> to keep the system running is the <strong>Title</strong>, <strong>the Description and Price are optional</strong>. At the same time you can have <strong>multiple</strong> Description and Price groups in case you have <strong>subproducts</strong>.</p>
 		        <p>Here is a sample text to get you started (simply <strong>hit insert</strong> and we will add it for you):</p>
 		        <pre>
@@ -30,6 +31,7 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
 **Description of the first product
 ==$15
 
+++Product Hightlight
 ##Second Product Title
 **Description of the second product (no price)
 
@@ -51,6 +53,7 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
 **Description of the first product
 ==$15
 
+++Our Choice
 ##Second Product Title
 **Description of the second product (no price)
 
