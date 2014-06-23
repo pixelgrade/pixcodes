@@ -127,19 +127,35 @@ foreach ( $lines as $key => $line ) {
 			$opened_product_highlight = true;
 		}
 
-		//now output the title without the first 2 characters
-		$output .= '<h4 class="menu-list__item-title">' . substr( $line, 2 ) . '</h4>' . PHP_EOL;
-
 		// we need to do some look-ahead to see if we have a product with subproducts - multiple description-price groups
 		$number_of_descriptions = 0;
+		$number_of_prices = 0;
 		$idx                    = $key + 1;
 		while ( $idx < count( $lines ) && 0 !== strpos( $lines[ $idx ], TITLE_MARKER ) ) {
 			if ( 0 === strpos( $lines[ $idx ], DESCRIPTION_MARKER ) ) {
 				$number_of_descriptions ++;
 			}
 
+            if ( 0 === strpos( $lines[ $idx ], PRICE_MARKER ) ) {
+                $number_of_prices ++;
+            }
+
 			$idx ++;
 		}
+
+        $output .= '<h4 class="menu-list__item-title">';
+
+        //now output the title without the first 2 characters
+
+        //check if there is only one description and one price => show the dots
+        if( $number_of_descriptions == 1 && $number_of_prices == 1  && isset($type) && !empty($type)){
+            $output .= '<span class="item_title">' . substr( $line, 2 ) . '</span><span class="dots"></span>';
+        } else if( $number_of_descriptions == 0 && $number_of_prices == 1  && isset($type) && !empty($type) ) {
+            $output .= '<span class="item_title">' . substr( $line, 2 ) . '</span><span class="dots"></span>';
+        } else
+        $output .= substr( $line, 2 );
+
+        $output .= '</h4>' . PHP_EOL;
 
 		continue;
 	}
@@ -152,7 +168,7 @@ foreach ( $lines as $key => $line ) {
 			$opened_description = false;
 		}
 		//output the description without the first 2 characters
-		$output .= '<p class="menu-list__item-desc">' . substr( $line, 2 );
+		$output .= '<p class="menu-list__item-desc"><span class="desc__content">' . substr( $line, 2 ) . '</span>';
 		$opened_description = true;
 
 		if ( $number_of_descriptions < 2 ) {
@@ -167,6 +183,7 @@ foreach ( $lines as $key => $line ) {
 	//Product price
 	if ( 0 === strpos( $line, PRICE_MARKER ) ) {
 		//output the price without the first 2 characters
+        if (isset($type) && !empty($type)) $output .= '<span class="dots 2"></span>';
 		$output .= '<span class="menu-list__item-price">' . substr( $line, 2 ) . '</span>';
 		//close any opened description
 		if ( true === $opened_description ) {
