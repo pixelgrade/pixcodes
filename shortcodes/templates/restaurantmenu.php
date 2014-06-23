@@ -183,7 +183,7 @@ foreach ( $lines as $key => $line ) {
 	//Product price
 	if ( 0 === strpos( $line, PRICE_MARKER ) ) {
 		//output the price without the first 2 characters
-        if (isset($type) && !empty($type)) $output .= '<span class="dots 2"></span>';
+        if (isset($type) && !empty($type)) $output .= '<span class="dots"></span>';
 		$output .= '<span class="menu-list__item-price">' . substr( $line, 2 ) . '</span>';
 		//close any opened description
 		if ( true === $opened_description ) {
