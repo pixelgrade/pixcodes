@@ -147,13 +147,12 @@ foreach ( $lines as $key => $line ) {
 
         //now output the title without the first 2 characters
 
-        //check if there is only one description and one price => show the dots
-        if( $number_of_descriptions == 1 && $number_of_prices == 1  && isset($type) && !empty($type)){
+        //check if there is a description at most and at least a price => show the dots
+        if( $number_of_descriptions < 2 && $number_of_prices > 0  && isset($type) && $type == 'dotted' ) {
             $output .= '<span class="item_title">' . substr( $line, 2 ) . '</span><span class="dots"></span>';
-        } else if( $number_of_descriptions == 0 && $number_of_prices == 1  && isset($type) && !empty($type) ) {
-            $output .= '<span class="item_title">' . substr( $line, 2 ) . '</span><span class="dots"></span>';
-        } else
-        $output .= substr( $line, 2 );
+        }  else {
+	        $output .= substr( $line, 2 );
+        }
 
         $output .= '</h4>' . PHP_EOL;
 
@@ -183,7 +182,7 @@ foreach ( $lines as $key => $line ) {
 	//Product price
 	if ( 0 === strpos( $line, PRICE_MARKER ) ) {
 		//output the price without the first 2 characters
-        if (isset($type) && !empty($type)) $output .= '<span class="dots"></span>';
+        if ( isset($type) && $type == 'dotted' ) $output .= '<span class="dots"></span>';
 		$output .= '<span class="menu-list__item-price">' . substr( $line, 2 ) . '</span>';
 		//close any opened description
 		if ( true === $opened_description ) {
