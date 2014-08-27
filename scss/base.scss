@@ -381,7 +381,7 @@ Modal Styling
 		width: 580px;
 		background: #ffffff;
 		position: absolute;
-		z-index: 99;
+		z-index: 9999;
 
 		#wpgrade_shortcodes {
 			overflow: visible;
@@ -417,7 +417,7 @@ Modal Styling
 		}
 		.wp-picker-holder {
 			position: absolute;
-			z-index: 100;
+			z-index: 10000;
 		}
 	}
 
@@ -428,7 +428,7 @@ Modal Styling
 	width: 100%;
 	background: #fff;
 	background: rgba(0,0,0,.8);
-	z-index: 98;
+	z-index: 9998;
 	display: none;
 	top: 0;
 	left: 0;
