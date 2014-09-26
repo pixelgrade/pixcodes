@@ -21,7 +21,7 @@ class WpGradeShortcode_Tabs extends  WpGradeShortcode {
         $this->direct = false;
         $this->name = "Tabs";
         $this->code = "tabs";
-        $this->icon = "icon-folder-close";
+        $this->icon = "icon-folder";
 
         $this->params = array(
             'tabs' => array(
