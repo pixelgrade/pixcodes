@@ -105,7 +105,6 @@ foreach ( $lines as $key => $line ) {
 				$output .= '</div>' . PHP_EOL;
 
 				//empty it so everybody knows we no longer have a highlight
-				$opened_product_highlight_title = '';
 				$opened_product_highlight = false;
 			}
 
@@ -125,6 +124,7 @@ foreach ( $lines as $key => $line ) {
 			$output .= '<span class="menu-list__item-highlight-title">' . $opened_product_highlight_title . '</span>' . PHP_EOL;
 
 			$opened_product_highlight = true;
+			$opened_product_highlight_title = ''; // since we outputed it make it empty
 		}
 
 		// we need to do some look-ahead to see if we have a product with subproducts - multiple description-price groups
