@@ -132,7 +132,7 @@ editor = '';
                 var toggle_details = function () {
                     $('.l_pxg_modal').toggleClass('s_active');
                 };
-				
+
 				//Show the .details_container - display:block
                 var disable_details = function () {
                     $('.l_pxg_modal').removeClass('s_active');
@@ -168,7 +168,7 @@ editor = '';
                 var trigger_submit_btn = function ($button) {
                     $button.trigger('click');
                 };
-				
+
                 $(document).trigger('shortcodes_modal:ready');
 
             } // end of ajax success
@@ -195,7 +195,7 @@ editor = '';
                         get_current_editor_selected_content = function(){
                             return editor;
                         };
-						
+
                         window.send_to_editor_clone = window.send_to_editor;
 
                     }
@@ -251,6 +251,10 @@ editor = '';
             } else {
 		        editor.selection.setContent('<p>['+params.code+user_params_string+']</p><p>'+ shortcode_content +'</p><p>[/'+params.code+']</p>');
 	        }
+
+			// dirty little trick, force the editor to run its own wpautop which I cannot reproduce :|
+			switchEditors.switchto(document.getElementById( editor.id + '-html' ));
+			switchEditors.switchto(document.getElementById( editor.id + '-tmce' ));
 
             modal_selector.trigger('reveal:close');
         }); // end of submit form
