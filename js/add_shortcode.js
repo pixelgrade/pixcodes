@@ -30,7 +30,8 @@ editor = '';
 					window.send_to_editor = window.send_to_editor_clone;
 					$( '.l_pxg_modal .btn_primary' ).removeClass( 'disabled' );
 					var this_btn = $( '.btn.back' );
-					this_btn.removeClass( 'active' )
+					this_btn.removeClass( 'active' );
+					$('body').removeClass('pixcodes_select_tags_opened');
 				} );
 
 				//Back Button Click
@@ -102,15 +103,6 @@ editor = '';
 						}
 					} );
 
-					//$( '.details_container select' ).each( function() {
-					//	if ( $( this ).hasClass( 'select2-offscreen' ) ) {
-					//		$( this ).select2( "destroy" );
-					//		$( this ).select2();
-					//	} else {
-					//		$( this ).select2();
-					//	}
-					//} );
-
 					$( '.details_container .input-tags input' ).each( function() {
 
 						var options = $( this ).data( 'options' );
@@ -120,6 +112,15 @@ editor = '';
 						} else {
 							$( this ).select2( {tags: options} );
 						}
+
+						//$( this ).on("select2-opening", function() {
+						//	$('body').addClass('pixcodes_select_tags_opened');
+						//	console.log("open");
+						//});
+						//$( this ).on("select2-close", function() {
+						//	console.log("close");
+						//	$('body').removeClass('pixcodes_select_tags_opened');
+						//});
 					} );
 				} );
 
@@ -183,8 +184,10 @@ editor = '';
 					classes: 'btn pixelgrade_shortcodes',
 					onclick: function() {
 						$( '.l_pxg_modal .btn_primary' ).addClass( 'disabled' );
+						$( 'body' ).addClass( 'pixcodes_select_tags_opened' );
 						//let's clean up some more first
 						$( '.l_pxg_modal' ).removeClass( 's_active' );
+
 						modal_selector.reveal( {
 							animation: 'fadeAndPop',                   //fade, fadeAndPop, none
 							animationspeed: 400,                       //how fast animtions are
