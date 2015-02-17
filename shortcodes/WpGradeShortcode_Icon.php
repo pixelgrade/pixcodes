@@ -49,6 +49,7 @@ class WpGradeShortcode_Icon extends  WpGradeShortcode {
                   //Entypo
                   "e-plus",     
                   "e-minus",    
+                  "e-tripadvisor",     
                   "e-fivehundredpx",     
                   "e-digg",
                   "e-cc-1",
