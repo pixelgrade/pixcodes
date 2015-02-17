@@ -11,7 +11,7 @@ Modal Styling
 //Shortcodes
 @import 'icons';
 
-#pixelgrade_shortcodes_modal { 
+#pixelgrade_shortcodes_modal {
   *, *:before, *:after {@include box-sizing(border-box)};
 	// @import 'mixins';
 	@import 'grid';
@@ -27,7 +27,7 @@ Modal Styling
 	}
 
 	//General
-	&.l_pxg_modal { 
+	&.l_pxg_modal {
 		font-size:13px;
 		font-family:Arial, sans-serif;
 		color:$base;
@@ -491,8 +491,8 @@ Modal Styling
 		&.ui-tabs-vertical, &.ui-slider-vertical {
 			width: 100%;
 			.ui-tabs-nav, .ui-slider-nav {
-				padding: 0; 
-				float: left; 
+				padding: 0;
+				float: left;
 				width: 16.66%;
 				li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
 				li a { display:block; }
@@ -500,7 +500,7 @@ Modal Styling
 					//padding-bottom: 0;
 					padding-right: .1em;
 					border-right-width: 1px;
-					border-right-width: 1px; 
+					border-right-width: 1px;
 				}
 			}
 
@@ -535,6 +535,8 @@ Modal Styling
 			.tab, .slide {
 				border: 1px solid #ccc;
 				min-height: 300px;
+				min-width: 450px;
+				max-width: 83%;
 				@include border-top-right-radius(4px);
 				@include border-bottom-left-radius(4px);
 				@include border-bottom-right-radius(4px);

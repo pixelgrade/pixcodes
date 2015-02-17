@@ -59,7 +59,6 @@
             $(this).find('.param-slider .ui-tabs-panel').each(function(i,el){
 
                 var content = $(el).find('textarea.slide_content').val();
-	            console.log(el);
                 if ( typeof content !== 'undefined' ) {
                     output += '<p>[slide]</p>';
                     if ( typeof content !== 'undefined' ) {
