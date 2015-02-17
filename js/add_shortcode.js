@@ -112,15 +112,6 @@ editor = '';
 						} else {
 							$( this ).select2( {tags: options} );
 						}
-
-						//$( this ).on("select2-opening", function() {
-						//	$('body').addClass('pixcodes_select_tags_opened');
-						//	console.log("open");
-						//});
-						//$( this ).on("select2-close", function() {
-						//	console.log("close");
-						//	$('body').removeClass('pixcodes_select_tags_opened');
-						//});
 					} );
 				} );
 
@@ -200,7 +191,6 @@ editor = '';
 						};
 
 						window.send_to_editor_clone = window.send_to_editor;
-
 					}
 				} );
 			}
