@@ -4,7 +4,7 @@ WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and 
 
 === # ===
 
-~Current Version:2.2.11~
+~Current Version:2.3.0~
 
 === # ===
 
