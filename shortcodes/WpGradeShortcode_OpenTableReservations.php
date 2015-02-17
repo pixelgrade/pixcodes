@@ -66,6 +66,7 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 			'title'           => 'Make a Reservation',
 			'labels'          => '',
 			'class'           => '',
+			'domain_ext'      => 'com'
 		), $atts ) );
 
 		$this->load_frontend_scripts = true;
