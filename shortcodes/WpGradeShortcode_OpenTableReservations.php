@@ -25,16 +25,22 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 				'name'        => 'Title',
 				'admin_class' => 'span7 push1',
 			),
-			'labels'          => array(
-				'type'        => 'switch',
-				'name'        => 'Replace Icons with Text?',
-				'admin_class' => 'span4',
+			'domain_ext' => array(
+				'type' => 'select',
+				'name' => 'Country',
+				'options' => array('' => 'Global / U.S', 'de' => 'Deutsch', 'co.uk' => 'Uk', 'jp' => 'Japan', 'com.mx' => 'Mexico'),
+				'admin_class' => 'span4'
 			),
 			'class'           => array(
 				'type'        => 'text',
 				'name'        => 'Class',
 				'admin_class' => 'span7 push1',
 			),
+			'labels'          => array(
+				'type'        => 'switch',
+				'name'        => 'Replace Icons with Text?',
+				'admin_class' => 'span4',
+			)
 		);
 
 		// allow the theme or other plugins to "hook" into this shortcode's params

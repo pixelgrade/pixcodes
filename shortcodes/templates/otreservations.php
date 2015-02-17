@@ -4,7 +4,7 @@
 		<span class="otreservations-subtitle"><?php _e( 'Powered by OpenTable', 'pixcodes' ) ?></span>
 	</div>
 	<?php if (!empty($rid) && intval($rid)) : ?>
-	<form method="get" class="otw-widget-form" action="http://www.opentable.com/restaurant-search.aspx" target="_blank">
+	<form method="get" class="otw-widget-form" action="http://www.opentable.<?php echo $domain_ext;?>/restaurant-search.aspx" target="_blank">
 		<div class="otw-wrapper">
 			<div class="otw-date-li otw-input-wrap">
 				<label for="date-otreservations"><?php echo (!empty($labels) ? __( 'Date', 'pixcodes' ) : '<i class="icon-calendar"></i>') ?></label>
@@ -35,16 +35,16 @@
 			<div class="otw-party-size-wrap otw-input-wrap">
 				<label for="party-otreservations"><?php echo (!empty($labels) ? __( 'Party Size', 'pixcodes' ) : '<i class="icon-user"></i>') ?></label>
 				<select id="party-otreservations" name="partySize" class="otw-party-size-select selectpicker">
-					<option value="1">1 Person</option>
-					<option value="2" selected="selected">2 People</option>
-					<option value="3">3 People</option>
-					<option value="4">4 People</option>
-					<option value="5">5 People</option>
-					<option value="6">6 People</option>
-					<option value="7">7 People</option>
-					<option value="8">8 People</option>
-					<option value="9">9 People</option>
-					<option value="10">10 People</option>
+					<option value="1"><?php _e('1 Person', 'pixcodes_txtd'); ?></option>
+					<option value="2" selected="selected"><?php _e('2 People', 'pixcodes_txtd'); ?></option>
+					<option value="3"><?php _e('3 People', 'pixcodes_txtd'); ?></option>
+					<option value="4"><?php _e('4 People', 'pixcodes_txtd'); ?></option>
+					<option value="5"><?php _e('5 People', 'pixcodes_txtd'); ?></option>
+					<option value="6"><?php _e('6 People', 'pixcodes_txtd'); ?></option>
+					<option value="7"><?php _e('7 People', 'pixcodes_txtd'); ?></option>
+					<option value="8"><?php _e('8 People', 'pixcodes_txtd'); ?></option>
+					<option value="9"><?php _e('9 People', 'pixcodes_txtd'); ?></option>
+					<option value="10"><?php _e('10 People', 'pixcodes_txtd'); ?></option>
 				</select>
 
 			</div>
