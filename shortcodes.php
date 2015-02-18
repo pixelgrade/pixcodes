@@ -49,7 +49,23 @@ class WpGradeShortcode {
 		$shortcodes = get_option( 'wpgrade_shortcodes_list' );
 
 		if ( empty( $shortcodes ) ) {
-			return false;
+			$shortcodes = array(
+				'Arrow',
+				'AverageScore',
+				'Button',
+				'Columns',
+				'Heading',
+				'Icon',
+				'InfoBox',
+				'OpenTableReservations',
+				'ProgressBar',
+				'Quote',
+				'RestaurantMenu',
+				'Separator',
+				'Slider',
+				'Tabs',
+				'TeamMember',
+			);
 		}
 
 		foreach ( $shortcodes as $file ) {

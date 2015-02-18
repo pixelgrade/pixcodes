@@ -4,16 +4,16 @@
 
 		<div class="team-member__image">
 
-    		<?php if ( !empty($imagelink) ) : ?>	
+    		<?php if ( !empty($imagelink) ) : ?>
 
                 <a href="<?php echo $imagelink ?>" class="team-member__image__link" title="More about <?php echo !empty($name) ? $name : ''; ?>">
-                    <div class="team-member__image__container">                        
+                    <div class="team-member__image__container">
                         <img src="<?php echo $image; ?>" alt="<?php echo !empty($name) ? $name : ''; ?>">
                     </div>
                     <div class="team-member__profile">
                         <div class="team-member__profile__table">
                             <span class="team-member__profile__cell">
-                               <i class="shc big icon-link"></i>                                      
+                               <i class="shc big icon-link"></i>
                             </span>
                         </div>
                     </div>
@@ -27,13 +27,13 @@
                     </div>
                 </div>
 
-            <?php endif; ?> 
+            <?php endif; ?>
 
         </div>
-    <?php endif; ?> 
+    <?php endif; ?>
 
     <div class="team-member__header">
-		<?php if ( !empty($name) ) : ?>    	
+		<?php if ( !empty($name) ) : ?>
     	   <h5 class="team-member__name"><?php echo $name; ?></h5>
     	<?php endif; ?>
     	<?php if ( !empty($title) ) : ?>
@@ -46,7 +46,7 @@
     </div>
 
     <hr class="separator separator--striped"/>
-    
+
     <div class="team-member__footer">
         <ul class="team-member__social-links-list">
         	<?php if ( !empty($social_twitter) ) : ?>
@@ -79,4 +79,4 @@
         	<?php endif; ?>
         </ul>
     </div>
-</div>   
+</div>

@@ -7,23 +7,6 @@ Version: 2.3.0
 Author: Pixelgrade Media
 Author URI: http://pixelgrade.com
 Author Email: contact@pixelgrade.com
-License:
-
-  Copyright 2013 contact@pixelgrade.com
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -66,40 +49,10 @@ class WpGradeShortcodes {
 	public function wpgrade_init_plugin() {
 		$this->plugin_textdomain();
 		$this->add_wpgrade_shortcodes_button();
-		$this->github_plugin_updater_init();
-	}
-
-	public function github_plugin_updater_init() {
-
-		include 'updater.php';
-//        define( 'WP_GITHUB_FORCE_UPDATE', true ); // this is only for testing
-		if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
-
-			$debug = false;
-			if ( isset( $_GET['debug'] ) && $_GET['debug'] == 'true' ) {
-				$debug = true;
-			}
-
-			$config = array(
-				'slug'       => 'pixcodes/pixcodes.php',
-				'api_url'    => 'https://api.github.com/repos/pixelgrade/pixcodes',
-				'raw_url'    => 'https://raw.github.com/pixelgrade/pixcodes/update',
-				'github_url' => 'https://github.com/pixelgrade/pixcodes/tree/update',
-				'zip_url'    => 'https://github.com/pixelgrade/pixcodes/archive/update.zip',
-				'sslverify'  => false,
-				'requires'   => '3.0',
-				'tested'     => '3.3',
-				'readme'     => 'README.md',
-				'textdomain' => 'pixcodes',
-				'debug_mode' => $debug
-				//'access_token' => '',
-			);
-			new WP_Pixcodes_GitHub_Updater( $config );
-		}
 	}
 
 	public function plugin_textdomain() {
-		$domain = 'wpgrade_txtd';
+		$domain = 'pixcodes_txtd';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 		load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
