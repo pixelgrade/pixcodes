@@ -1,6 +1,6 @@
 === PixCodes ===
 
-WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and more.
+WordPress shortcodes plugin. Loaded with shortcodes, awesomeness and more.
 
 === # ===
 
