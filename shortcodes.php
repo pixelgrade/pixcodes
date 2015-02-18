@@ -51,7 +51,6 @@ class WpGradeShortcode {
 		if ( empty( $shortcodes ) ) {
 			$shortcodes = array(
 				'Arrow',
-				'AverageScore',
 				'Button',
 				'Columns',
 				'Heading',

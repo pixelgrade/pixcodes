@@ -10,7 +10,7 @@ class WpGradeShortcode_InfoBox extends  WpGradeShortcode {
         $this->direct = false;
         $this->name = "InfoBox";
         $this->code = "infobox";
-        $this->icon = "icon-info-sign";
+        $this->icon = "icon-info";
 
         $this->params = array(
             'title' => array(
