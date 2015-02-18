@@ -1,20 +1,22 @@
-=== Pixcodes ===
-Contributors: euthelup, babbardel
-Tags: customizer, css, editor, live, preview, customise
+=== PixCodes ===
+Contributors: euthelup, babbardel, pixelgrade
+Tags: shortcodes, insert
 Requires at least: 3.8.0
 Tested up to: 4.1
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Customify is a Theme Customizer Booster that you can easily use to add Fonts, Colors, Live CSS Editor and other options to your theme.
+PixCodes offers you an interface to add simple shortcodes into editor.
+
+The awsome part is that you can filter any shortcode parameter or overwrite any shortcode template with your theme
 
 == Description ==
 
-With [Pixcodes](https://github.com/pixelgrade/pixcodes) you can have a shorcode insert interface.
+With [PixCodes](https://github.com/pixelgrade/pixcodes) you can have a shortcode insert interface.
 
 == Installation ==
 
-1. Install Pixcodes either via the WordPress.org plugin directory, or by uploading the files to your `/wp-content/plugins/` directory
-2. After activating Pixcodes go to `Appearance → Pixcodes` and have fun with the new felds
-3. For further instructions and how to setup your own fields, read our [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/dev/README.md)
+1. Install PixCodes either via the WordPress.org plugin directory, or by uploading the files to your `/wp-content/plugins/` directory
+2. After activating PixCodes go to any edit page and see the PixCodes in the editor toolbar
+3. For further instructions and how to filter parameters or overwrite templates, read our [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/dev/README.md)
