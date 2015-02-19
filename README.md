@@ -1,6 +1,4 @@
-***PixCodes***
-
-Is a WordPress plugin which offers you a nice "Add shortcode" button in your editor which opens a modal with a list of shortcodes to add in editor.
+***PixCodes*** Is a WordPress plugin which offers you a nice "Add shortcode" button in your editor which opens a modal with a list of shortcodes to add in editor.
 
 PixCodes is build to be controlled by the theme, we needed a plugin which allows the themes to select which shortcodes they support and provide style for.
 
