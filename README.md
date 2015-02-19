@@ -2,7 +2,7 @@
 
 PixCodes is build to be controlled by the theme, we needed a plugin which allows the themes to select which shortcodes they support and provide style for.
 
-So beside having awesome shortcodes insert interface, PixCodes offers you a way for theme developers to: 
+So beside having an awesome shortcodes insert interface, PixCodes offers you a way for theme developers to: 
 - Select which shortcodes you want.[>>>](#select_shortcodes)
 - Edit the HTML markup of each shortcode.[>>>](#overwrite_templates)
 - Add/remove attributes.[>>>](#edit_params)
@@ -37,7 +37,7 @@ Now check again the PixCodes modal.
 
 **Shortcode Templates<a name="overwrite_templates"></a>**
 
-Each shortcode has his own template in the plugin's folder `shortcodes/templates` the awesome part of this templates is that you can overwrite them inside your theme.
+Each shortcode has his own template in the plugin's folder `shortcodes/templates` the awesome part of this is that you can overwrite them inside your theme.
 
 So if you don't like the html template of the button just copy your shortcode file from `pixcodes/shortcodes/templates/button.php` into your theme at `theme/templates/shortcodes/button.php`.
 
