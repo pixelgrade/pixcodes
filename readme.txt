@@ -1,5 +1,5 @@
 === PixCodes ===
-Contributors: euthelup, babbardel, pixelgrade
+Contributors: euthelup, babbardel, pixelgrade, cristianfrumusanu
 Tags: shortcodes, insert
 Requires at least: 3.8.0
 Tested up to: 4.1
@@ -7,9 +7,9 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PixCodes offers you an interface to add simple shortcodes into editor.
+PixCodes offers you a nice interface to add shortcodes into editor.
 
-The awsome part is that you can filter any shortcode parameter or overwrite any shortcode template with your theme
+The awesome part is that you can filter any shortcode parameter or overwrite any shortcode template with your theme
 
 == Description ==
 
