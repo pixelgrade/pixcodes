@@ -18,3 +18,9 @@ before_script:
 script:
   - nyx version
   - nyx check:php .
+
+notifications:
+  email:
+    recipients:
+    - andrei.lupu@pixelgrade.com
+    on_failure: always
