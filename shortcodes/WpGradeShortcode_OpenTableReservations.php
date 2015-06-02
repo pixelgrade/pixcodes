@@ -66,7 +66,8 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 			'title'           => 'Make a Reservation',
 			'labels'          => '',
 			'class'           => '',
-			'domain_ext'      => 'com'
+			'domain_ext'      => 'com',
+			'date_format'     => 'MM/DD/YYYY', //this can be overwritten by the user
 		), $atts ) );
 
 		$this->load_frontend_scripts = true;

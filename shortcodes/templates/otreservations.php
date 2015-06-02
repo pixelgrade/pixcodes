@@ -55,7 +55,7 @@
 			<input type="hidden" name="RestaurantID" class="RestaurantID" value="<?php echo $rid; ?>">
 			<input type="hidden" name="rid" class="rid" value="<?php echo $rid; ?>">
 			<input type="hidden" name="GeoID" class="GeoID" value="15">
-			<input type="hidden" name="txtDateFormat" class="txtDateFormat" value="MM/dd/yyyy">
+			<input type="hidden" name="txtDateFormat" class="txtDateFormat" value="<?php echo ! empty( $date_format ) ? $date_format : "MM/DD/YYYY"; ?>">
 			<input type="hidden" name="RestaurantReferralID" class="RestaurantReferralID" value="<?php echo $rid; ?>">
 		</div>
 	</form>

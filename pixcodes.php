@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: PixCodes
-Plugin URI: http://pixelgrade.com
+Plugin URI: https://pixelgrade.com
 Description: WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and more.
-Version: 2.3.0
-Author: Pixelgrade Media
-Author URI: http://pixelgrade.com
+Version: 2.3.1
+Author: PixelGrade
+Author URI: https://pixelgrade.com
 Author Email: contact@pixelgrade.com
 */
 
