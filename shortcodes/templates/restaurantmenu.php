@@ -130,8 +130,8 @@ foreach ( $lines as $key => $line ) {
 		// we need to do some look-ahead to see if we have a product with subproducts - multiple description-price groups
 		$number_of_descriptions = 0;
 		$number_of_prices = 0;
-		$idx                    = $key + 1;
-		while ( $idx < count( $lines ) && 0 !== strpos( $lines[ $idx ], TITLE_MARKER ) ) {
+		$idx = $key + 1;
+		while ( $idx < count( $lines ) && 0 !== strpos( $lines[ $idx ], TITLE_MARKER ) && 0 !== strpos( $lines[ $idx ], SECTION_MARKER ) ) {
 			if ( 0 === strpos( $lines[ $idx ], DESCRIPTION_MARKER ) ) {
 				$number_of_descriptions ++;
 			}
