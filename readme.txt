@@ -2,8 +2,8 @@
 Contributors: euthelup, babbardel, pixelgrade, cristianfrumusanu
 Tags: shortcodes, insert, columns, sliders, tabs, buttons
 Requires at least: 3.8.0
-Tested up to: 4.1
-Stable tag: 1.0.0
+Tested up to: 4.2.2
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,3 +26,8 @@ Here is a [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/wp
 1. Install PixCodes either via the WordPress.org plugin directory, or by uploading the files to your `/wp-content/plugins/` directory
 2. After activating PixCodes go to any edit page and see the PixCodes in the editor toolbar
 3. For further instructions and how to filter parameters or overwrite templates, read our [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/dev/README.md)
+
+== Changelog ==
+
+= 2.3.1 =
+* Small improvements to the OpenTable shortcode
