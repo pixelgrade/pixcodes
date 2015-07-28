@@ -433,6 +433,7 @@ Modal Styling
 	top: 0;
 	left: 0;
 }
+
 .mce-pixelgrade_shortcodes button{
 	background: url(../images/open_modal.png)  3px 3px no-repeat !important;
 }
@@ -482,6 +483,11 @@ Modal Styling
 			display:block;
 		}
 	}
+}
+
+// this is an old image uploder and soon we will remove it. but until then, shim this
+#TB_window {
+	z-index: 1000500;
 }
 
 #wpgrade_shortcodes_form_modified {
