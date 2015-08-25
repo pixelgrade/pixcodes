@@ -1,9 +1,9 @@
 === PixCodes ===
 Contributors: euthelup, babbardel, pixelgrade, cristianfrumusanu
 Tags: shortcodes, insert, columns, sliders, tabs, buttons
-Requires at least: 3.9.0
-Tested up to: 4.2.3
-Stable tag: 2.3.2
+Requires at least: 4.0.0
+Tested up to: 4.3.0
+Stable tag: 2.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ The awesome part is that you can filter any shortcode parameters or overwrite an
 
 We believe that shortcodes functionality should be offered by a plugin and the style should be provided by themes.
 
-Here is a [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/wporg/README.md) about how you can configure some plugin settings and output.
+Here is a [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/master/README.md) about how you can configure some plugin settings and output.
 
 == Installation ==
 
@@ -28,6 +28,9 @@ Here is a [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/wp
 3. For further instructions and how to filter parameters or overwrite templates, read our [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/dev/README.md)
 
 == Changelog ==
+
+= 2.3.3 =
+* Fix: Shorcode insertion for WordPress 4.3
 
 = 2.3.2 =
 * Fix: Image Uploder (in TeamMember shortcode)
