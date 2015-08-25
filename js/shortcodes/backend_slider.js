@@ -72,9 +72,8 @@
             output += '<p>[/slider]</p>';
             editor.selection.setContent(output);
 
-			// dirty little trick, force the editor to run its own wpautop which I cannot reproduce :|
-			switchEditors.switchto(document.getElementById( editor.id + '-html' ));
-			switchEditors.switchto(document.getElementById( editor.id + '-tmce' ));
+            // ensure the editor is on visual
+            switchEditors.go( editor.id, 'tmce' );
 
             $('#pixelgrade_shortcodes_modal').trigger('reveal:close');
         });
