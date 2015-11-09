@@ -64,6 +64,7 @@ class WpGradeShortcode {
 				'Slider',
 				'Tabs',
 				'TeamMember',
+				'PixFields'
 			);
 		}
 
