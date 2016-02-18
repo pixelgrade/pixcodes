@@ -36,4 +36,6 @@ class WpGradeShortcode_Arrow extends WpGradeShortcode {
 
 		return ob_get_clean();
 	}
+
+
 }

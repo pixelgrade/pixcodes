@@ -42,6 +42,7 @@ class WpGradeShortcode {
 			'js'  => array(),
 			'css' => array()
 		);
+
 	}
 
 	public function autoload() {
@@ -91,7 +92,122 @@ class WpGradeShortcode {
 			if ( $shortcode->direct == false ) {
 				$this->shortcodes[ $shortcode_class ]["params"] = $shortcode->params;
 			}
+
+			if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+				$this->register_shortcode_ui( $this->shortcodes[ $shortcode_class ] );
+			}
 		}
+	}
+
+	function register_shortcode_ui ( $args ) {
+
+		$ui_args = array(
+			'label'         => $args['name'],
+			'listItemImage' => 'dashicons-media-image'
+		);
+
+//		if ( ! $args['self_closed'] ) {
+//			$ui_args['inner_content'] = array(
+//				'label'        => esc_html__( 'Quote', 'shortcode-ui' ),
+//				'description'  => esc_html__( 'Include a statement from someone famous.', 'shortcode-ui' ),
+//			);
+//		}
+
+		if ( is_array( $args['params'] ) && ! empty( $args['params'] ) ) {
+
+			foreach ( $args['params'] as $key => $param ) {
+
+
+
+				if ( 'label' === $param['type'] || 'info' === $param['type'] ) {
+					continue;
+				}
+
+//
+//				echo  '<pre style="margin-left: 180px">';
+//				var_dump($key);
+//				var_dump( $param );
+//				echo  '</pre>';
+
+				$this_param_args = array(
+					'attr'        => $key,
+					'type'        => $param['type'],
+					/*
+					 * These arguments are passed to the instantiation of the media library:
+					 * 'libraryType' - Type of media to make available.
+					 * 'addButton' - Text for the button to open media library.
+					 * 'frameTitle' - Title for the modal UI once the library is open.
+					 */
+					//					'libraryType' => array( 'image' ),
+					//					'addButton'   => $param['name'],
+					//					'frameTitle'  => $param['name'],
+				);
+
+				if ( isset( $param['name'] ) ) {
+					$this_param_args['label'] = $param['name'];
+				}
+
+
+				if ( isset( $param['is_content'] ) ) {
+					$ui_args['inner_content']['label'] = $param['name'];
+					$ui_args['inner_content']['description'] = esc_html__( 'The inner content', 'shortcode-ui' );
+					continue;
+				}
+
+				if ( ( 'select' === $param['type'] || 'radio' === $param['type'] ) && isset( $param['options'] ) ){
+					$this_param_args['options'] = $param['options'];
+				}
+
+				if ( ( 'tags' === $param['type'] ) && isset( $param['options'] ) ){
+					$this_param_args['options'] = array_flip(  $param['options'] );
+				}
+
+
+
+				if ( 'switch' === $param['type'] ){
+					$this_param_args['type'] = 'checkbox';
+				}
+
+				if ( 'size' === $param['type'] ) {
+					$this_param_args['type'] = 'range';
+				}
+
+				if ( 'icon_list' === $param['type'] && isset( $param['icons'] ) ){
+					$this_param_args['type'] = 'select';
+					$this_param_args['options'] = $param['icons'];/// array_fill_keys( array_flip ( $param['icons'] ), $key );
+//					echo  '<pre style="margin-left: 180px">';
+//
+//					var_dump( $this_param_args );
+//					echo  '</pre>';
+
+
+				}
+
+				$ui_args['attrs'][] = $this_param_args;
+
+
+				//				array(
+//					'label'  => esc_html__( 'Citation Source', 'shortcode-ui' ),
+//					'attr'   => 'source',
+//					'type'   => 'text',
+//					'encode' => true,
+//					'meta'   => array(
+//						'placeholder' => esc_html__( 'Test placeholder', 'shortcode-ui' ),
+//						'data-test'   => 1,
+//					),
+//				),
+//				array(
+//					'label' => esc_html__( 'Select Page', 'shortcode-ui' ),
+//					'attr' => 'page',
+//					'type' => 'post_select',
+//					'query' => array( 'post_type' => 'page' ),
+//					'multiple' => true,
+//				),
+
+			}
+		}
+
+		shortcode_ui_register_for_shortcode( $args['code'], $ui_args );
 	}
 
 	public function get_shortcodes() {

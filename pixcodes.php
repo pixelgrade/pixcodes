@@ -149,6 +149,8 @@ class WpGradeShortcodes {
 		return $shortcodes;
 	}
 
+
+
 } // end class
 
 $WpGradeShortcodes = new WpGradeShortcodes();
