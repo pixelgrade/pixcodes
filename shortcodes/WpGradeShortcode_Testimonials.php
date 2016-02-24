@@ -15,6 +15,9 @@ class WpGradeShortcode_Testimonials extends WpGradeShortcode {
 		$this->code        = "testimonials";
 		$this->icon        = "icon-group";
 
+		$this->shortcake_support = true;
+		$this->shortcake_icon    = 'dashicons-testimonial';
+
 		$this->params = array(
 			'number'  => array(
 				'type'        => 'text',
@@ -29,11 +32,12 @@ class WpGradeShortcode_Testimonials extends WpGradeShortcode {
 			'orderby' => array(
 				'type'        => 'select',
 				'name'        => 'Order By',
-				'options'     => array( ''      => '-- Default --',
-				                        'date'  => 'Date',
-				                        'title' => 'Title',
-				                        'rand'  => 'Random'
-								),
+				'options'     => array(
+					''      => '-- Default --',
+					'date'  => 'Date',
+					'title' => 'Title',
+					'rand'  => 'Random'
+				),
 				'admin_class' => 'span6'
 			),
 			'order'   => array(
@@ -91,16 +95,19 @@ class WpGradeShortcode_Testimonials extends WpGradeShortcode {
 			'exclude' => '',
 		), $atts ) );
 
+		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
+		$theme_path = $theme_path . $this->code . 'php';
 		/**
 		 * Template localization between plugin and theme
 		 */
-		$located = locate_template( "templates/shortcodes/{$this->code}.php", false, false );
+		$located = locate_template( $theme_path, false, false );
 		if ( ! $located ) {
 			$located = dirname( __FILE__ ) . '/templates/' . $this->code . '.php';
 		}
 		// load it
 		ob_start();
 		require $located;
+
 		return ob_get_clean();
 	}
 }

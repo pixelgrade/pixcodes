@@ -7,11 +7,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WpGradeShortcode_Heading extends WpGradeShortcode {
 
 	public function __construct( $settings = array() ) {
-		$this->self_closed = true;
-		$this->name        = "Heading";
-		$this->code        = "heading";
-		$this->icon        = "icon-header";
-		$this->direct      = false;
+		$this->self_closed       = true;
+		$this->name              = "Heading";
+		$this->code              = "heading";
+		$this->icon              = "icon-header";
+		$this->direct            = false;
+		$this->shortcake_support = true;
+		$this->shortcake_icon    = 'dashicons-editor-insertmore';
 
 		$this->params = array(
 			'subtitle' => array(
@@ -19,7 +21,7 @@ class WpGradeShortcode_Heading extends WpGradeShortcode {
 				'name'        => 'Subtitle',
 				'admin_class' => 'span7 push1'
 			),
-			'title' => array(
+			'title'    => array(
 				'type'        => 'text',
 				'name'        => 'Title',
 				'admin_class' => 'span7 push1'
@@ -35,17 +37,19 @@ class WpGradeShortcode_Heading extends WpGradeShortcode {
 	public function add_shortcode( $atts, $content ) {
 		//create an array with only the registered params - dynamic since we filter them and have no way of knowing for sure
 		$extract_params = array();
-		if (isset($this->params)) {
-			foreach ($this->params as $key => $value) {
-				$extract_params[$key] = '';
+		if ( isset( $this->params ) ) {
+			foreach ( $this->params as $key => $value ) {
+				$extract_params[ $key ] = '';
 			}
 		}
 		extract( shortcode_atts( $extract_params, $atts ) );
 
+		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
+		$theme_path = $theme_path . $this->code . 'php';
 		/**
 		 * Template localization between plugin and theme
 		 */
-		$located = locate_template( "templates/shortcodes/{$this->code}.php", false, false );
+		$located = locate_template( $theme_path, false, false );
 		if ( ! $located ) {
 			$located = dirname( __FILE__ ) . '/templates/' . $this->code . '.php';
 		}

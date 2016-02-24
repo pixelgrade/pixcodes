@@ -1,21 +1,26 @@
 <?php
 
-if (!defined('ABSPATH')) die('-1');
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 
-class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
+class WpGradeShortcode_RestaurantMenu extends WpGradeShortcode {
 
-    public function __construct($settings = array()) {
+	public function __construct( $settings = array() ) {
 
-        $this->self_closed = false;
-        $this->direct = false;
-        $this->name = "Restaurant Menu";
-        $this->code = "restaurantmenu";
-        $this->icon = "icon-list-alt";
+		$this->self_closed = false;
+		$this->direct      = false;
+		$this->name        = "Restaurant Menu";
+		$this->code        = "restaurantmenu";
+		$this->icon        = "icon-list-alt";
 
-        $this->params = array(
-	        'restaurantmenu_info' => array(
-		        'type' => 'info',
-		        'value' => '<p>We have devised the menu system to be as flexible and straightforward as possible. We rely on <strong>a couple of markers</strong> to identify the <strong>5 sections</strong> of each menu product.</p>
+		$this->shortcake_support = true;
+		$this->shortcake_icon    = 'dashicons-list-view';
+
+		$this->params = array(
+			'restaurantmenu_info' => array(
+				'type'        => 'info',
+				'value'       => '<p>We have devised the menu system to be as flexible and straightforward as possible. We rely on <strong>a couple of markers</strong> to identify the <strong>5 sections</strong> of each menu product.</p>
 		        <p>First there is the <strong>section title marker</strong>: <strong>#</strong>Section Title Here</p>
 		        <p>Then there is the <strong>title marker</strong>: <strong>##</strong>Product Title Here</p>
 		        <p>After you should add the <strong>description</strong>: <strong>**</strong>Product Description Here</p>
@@ -38,15 +43,15 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
 ##Third Product Title
 ==$23.99
 		        </pre>',
-		        'admin_class' => 'span10 push1'
-	        ),
-	        'content_text' => array(
-		        'type' => 'textarea',
-		        'name' => '',
-		        'admin_class' => 'span10 push1 hidden',
-		        'is_content' => true,
-		        'rows' => 5,
-		        'predefined' =>'#Section Title
+				'admin_class' => 'span10 push1'
+			),
+			'content_text'        => array(
+				'type'        => 'textarea',
+				'name'        => '',
+				'admin_class' => 'span10 push1 hidden',
+				'is_content'  => true,
+				'rows'        => 5,
+				'predefined'  => '#Section Title
 -----
 
 ##First Product Title
@@ -76,44 +81,48 @@ class WpGradeShortcode_RestaurantMenu extends  WpGradeShortcode {
 ##Another Product Title
 **Another product description
 ==$2993',
-	        ),
-	        //can't use style because WordPress thinks its bad mojo
-	        'type' => array(
-		        'type' => 'select',
-		        'name' => 'Menu Style',
-		        'options' => array('' => 'Regular', 'dotted' => 'Dotted'),
-		        'admin_class' => 'span10 push1'
-	        ),
-        );
+			),
+			//can't use style because WordPress thinks its bad mojo
+			'type'                => array(
+				'type'        => 'select',
+				'name'        => 'Menu Style',
+				'options'     => array( '' => 'Regular', 'dotted' => 'Dotted' ),
+				'admin_class' => 'span10 push1'
+			),
+		);
 
-	    // allow the theme or other plugins to "hook" into this shortcode's params
-	    $this->params = apply_filters('pixcodes_filter_params_for_' . strtolower($this->name), $this->params);
+		// allow the theme or other plugins to "hook" into this shortcode's params
+		$this->params = apply_filters( 'pixcodes_filter_params_for_' . strtolower( $this->name ), $this->params );
 
-        add_shortcode('restaurantmenu', array( $this, 'add_restaurantmenu_shortcode') );
+		add_shortcode( 'restaurantmenu', array( $this, 'add_restaurantmenu_shortcode' ) );
 
-    }
+	}
 
-    public function add_restaurantmenu_shortcode( $atts, $content ) {
-	    //create an array with only the registered params - dynamic since we filter them and have no way of knowing for sure
-	    $extract_params = array();
-	    if (isset($this->params)) {
-		    foreach ($this->params as $key => $value) {
-			    $extract_params[$key] = '';
-		    }
-	    }
-	    extract( shortcode_atts( $extract_params, $atts ) );
+	public function add_restaurantmenu_shortcode( $atts, $content ) {
+		//create an array with only the registered params - dynamic since we filter them and have no way of knowing for sure
+		$extract_params = array();
+		if ( isset( $this->params ) ) {
+			foreach ( $this->params as $key => $value ) {
+				$extract_params[ $key ] = '';
+			}
+		}
+		extract( shortcode_atts( $extract_params, $atts ) );
 
-	    /**
-	     * Template localization between plugin and theme
-	     */
-	    $located = locate_template("templates/shortcodes/{$this->code}.php", false, false);
-	    if(!$located) {
-		    $located = dirname(__FILE__).'/templates/'.$this->code.'.php';
-	    }
+		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
+		$theme_path = $theme_path . $this->code . 'php';
+		/**
+		 * Template localization between plugin and theme
+		 */
+		$located = locate_template( $theme_path, false, false );
+		if ( ! $located ) {
+			$located = dirname( __FILE__ ) . '/templates/' . $this->code . '.php';
+		}
 
-	    // load it
-	    ob_start();
-	    require $located;
-	    return ob_get_clean();
-    }
+
+		// load it
+		ob_start();
+		require $located;
+
+		return ob_get_clean();
+	}
 }

@@ -7,12 +7,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WpGradeShortcode_Button extends WpGradeShortcode {
 
 	public function __construct( $settings = array() ) {
-		$this->self_closed = false;
-		$this->name        = __( "Button", 'pixcodes_txtd' );
-		$this->code        = "button";
-		$this->icon        = "icon-bookmark";
-		$this->direct      = false;
-		$this->one_line    = true;
+		$this->self_closed       = false;
+		$this->name              = __( "Button", 'pixcodes_txtd' );
+		$this->code              = "button";
+		$this->icon              = "icon-bookmark";
+		$this->direct            = false;
+		$this->one_line          = true;
+		$this->shortcake_support = true;
+		$this->shortcake_icon    = 'dashicons-editor-bold';
 
 		$this->params = array(
 			'label'     => array(
@@ -81,10 +83,12 @@ class WpGradeShortcode_Button extends WpGradeShortcode {
 		}
 		extract( shortcode_atts( $extract_params, $atts ) );
 
+		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
+		$theme_path = $theme_path . $this->code . 'php';
 		/**
 		 * Template localization between plugin and theme
 		 */
-		$located = locate_template( "templates/shortcodes/{$this->code}.php", false, false );
+		$located = locate_template( $theme_path, false, false );
 		if ( ! $located ) {
 			$located = dirname( __FILE__ ) . '/templates/' . $this->code . '.php';
 		}

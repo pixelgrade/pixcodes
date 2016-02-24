@@ -14,29 +14,38 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 		$this->code        = "otreservations";
 		$this->icon        = "icon-group";
 
+		$this->shortcake_support = true;
+		$this->shortcake_icon    = 'dashicons-groups';
+
 		$this->params = array(
-			'rid' => array(
+			'rid'        => array(
 				'type'        => 'text',
 				'name'        => 'OpenTable Restaurant ID',
 				'admin_class' => 'span4',
 			),
-			'title'           => array(
+			'title'      => array(
 				'type'        => 'text',
 				'name'        => 'Title',
 				'admin_class' => 'span7 push1',
 			),
 			'domain_ext' => array(
-				'type' => 'select',
-				'name' => 'Country',
-				'options' => array('' => 'Global / U.S.', 'de' => 'Germany', 'co.uk' => 'United Kingdom', 'jp' => 'Japan', 'com.mx' => 'Mexico'),
+				'type'        => 'select',
+				'name'        => 'Country',
+				'options'     => array(
+					''       => 'Global / U.S.',
+					'de'     => 'Germany',
+					'co.uk'  => 'United Kingdom',
+					'jp'     => 'Japan',
+					'com.mx' => 'Mexico'
+				),
 				'admin_class' => 'span4'
 			),
-			'class'           => array(
+			'class'      => array(
 				'type'        => 'text',
 				'name'        => 'Class',
 				'admin_class' => 'span7 push1',
 			),
-			'labels'          => array(
+			'labels'     => array(
 				'type'        => 'switch',
 				'name'        => 'Replace Icons with Text?',
 				'admin_class' => 'span4',
@@ -62,20 +71,22 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 	public function add_shortcode( $atts ) {
 
 		extract( shortcode_atts( array(
-			'rid' => '',
-			'title'           => 'Make a Reservation',
-			'labels'          => '',
-			'class'           => '',
-			'domain_ext'      => 'com',
-			'date_format'     => 'MM/DD/YYYY', //this can be overwritten by the user
+			'rid'         => '',
+			'title'       => 'Make a Reservation',
+			'labels'      => '',
+			'class'       => '',
+			'domain_ext'  => 'com',
+			'date_format' => 'MM/DD/YYYY', //this can be overwritten by the user
 		), $atts ) );
 
 		$this->load_frontend_scripts = true;
 
+		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
+		$theme_path = $theme_path . $this->code . 'php';
 		/**
 		 * Template localization between plugin and theme
 		 */
-		$located = locate_template( "templates/shortcodes/{$this->code}.php", false, false );
+		$located = locate_template( $theme_path, false, false );
 		if ( ! $located ) {
 			$located = dirname( __FILE__ ) . '/templates/' . $this->code . '.php';
 		}

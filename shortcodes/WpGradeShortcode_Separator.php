@@ -13,6 +13,9 @@ class WpGradeShortcode_Separator extends WpGradeShortcode {
 		$this->icon        = "icon-fire";
 		$this->direct      = false;
 
+		$this->shortcake_support = true;
+		$this->shortcake_icon    = 'dashicons-minus';
+
 		$this->direct = apply_filters( 'pixcodes_filter_direct_for_' . strtolower( $this->name ), $this->direct );
 
 		$this->params = array(
@@ -64,10 +67,12 @@ class WpGradeShortcode_Separator extends WpGradeShortcode {
 		}
 		extract( shortcode_atts( $extract_params, $atts ) );
 
+		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
+		$theme_path = $theme_path . $this->code . 'php';
 		/**
 		 * Template localization between plugin and theme
 		 */
-		$located = locate_template( "templates/shortcodes/{$this->code}.php", false, false );
+		$located = locate_template( $theme_path, false, false );
 		if ( ! $located ) {
 			$located = dirname( __FILE__ ) . '/templates/' . $this->code . '.php';
 		}

@@ -7,12 +7,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WpGradeShortcode_AverageScore extends WpGradeShortcode {
 
 	public function __construct( $settings = array() ) {
-		$this->self_closed = true;
-		$this->name        = __( "Average score", 'pixcodes_txtd' );
-		$this->code        = "average_score";
-		$this->icon        = "icon-tasks";
-		$this->direct      = true;
-		//	    $this->one_line = true;
+		$this->self_closed       = true;
+		$this->name              = __( "Average score", 'pixcodes_txtd' );
+		$this->code              = "average_score";
+		$this->icon              = "icon-tasks";
+		$this->direct            = true;
+
+		$this->shortcake_support = true;
+		$this->shortcake_icon    = 'dashicons-star-half';
+
+		//    $this->one_line = true;
 
 		//        $this->params = array(
 		//			'score_note' => array(
@@ -41,10 +45,12 @@ class WpGradeShortcode_AverageScore extends WpGradeShortcode {
 			//			'score_desc' => ''
 		), $atts ) );
 
+		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
+		$theme_path = $theme_path . $this->code . 'php';
 		/**
 		 * Template localization between plugin and theme
 		 */
-		$located = locate_template( "templates/shortcodes/{$this->code}.php", false, false );
+		$located = locate_template( $theme_path, false, false );
 		if ( ! $located ) {
 			$located = dirname( __FILE__ ) . '/templates/' . $this->code . '.php';
 		}

@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WpGradeShortcodes {
 
 	protected static $plugin_dir;
+
 	public $plugin_url;
 
 	function __construct() {
@@ -44,6 +45,11 @@ class WpGradeShortcodes {
 		//prevent certain shortcodes from getting their content texturized
 		add_filter( 'no_texturize_shortcodes', array( $this, 'wpgrade_shortcodes_to_exempt_from_wptexturize' ) );
 
+		// @todo add these in future
+//		add_filter( 'mce_buttons_2', array( $this, 'add_mce_buttons'  ) );
+
+//		add_filter( 'tiny_mce_before_init', array( $this, 'add_font_sizes' ) );
+
 	} // end constructor
 
 	public function wpgrade_init_plugin() {
@@ -71,6 +77,74 @@ class WpGradeShortcodes {
 
 		return $buttons;
 	} // end register_admin_assets
+
+	function add_mce_buttons( $buttons ) {
+
+		$add_font_family = apply_filters('pixcodes_editor_add_family_selector', false);
+
+		if ( $add_font_family ) {
+			array_unshift( $buttons, 'fontselect' ); // Add Font Select
+			add_action( 'tiny_mce_before_init', array( $this, 'restrict_font_choices' ), 1 );
+		}
+
+		$editor_fonts_sizes = apply_filters('pixcodes_editor_font_sizes_list', '');
+
+		// Add Font Size Select if there are sizes
+		if ( ! empty( $editor_fonts_sizes ) ) {
+			array_unshift( $buttons, 'fontsizeselect' );
+		}
+		return $buttons;
+	}
+
+	function add_font_sizes( $initArray ){
+
+		$editor_fonts_sizes = apply_filters('pixcodes_editor_font_sizes_list', '');
+		if ( ! empty( $editor_fonts_sizes ) ) {
+			$initArray['fontsize_formats'] = $editor_fonts_sizes;
+		}
+		return $initArray;
+	}
+
+	function restrict_font_choices ( $initArray ) {
+		global $pixcustomify_plugin;
+
+		$theme_advanced_fonts = array();
+		$customify_options = $pixcustomify_plugin::get_options();
+
+
+		foreach ( $customify_options as $option ) {
+			if ( $option['type'] === 'typography' ) {
+
+				if ( ! empty( $option['value'] ) ) {
+					if ( is_string( $option['value'] ) ) {
+						$val = (array) json_decode( $option['value'], true );
+					} elseif ( is_array( $option['value'] ) ) {
+						$val = $option['value'];
+					}
+
+					$variants = '';
+					if ( isset( $val['selected_variants'] ) && ! empty( $val['selected_variants'] )  ) {
+						$variants = $val['selected_variants'][0];
+					}
+
+					$to_insert = $val['font_family'] . ' ' . $variants . '=' . $val['font_family'];
+
+					if ( ! isset( $val['font_family'] ) || array_key_exists( $to_insert, $theme_advanced_fonts ) || in_array( $to_insert, $theme_advanced_fonts ) ) {
+						continue;
+					}
+					$theme_advanced_fonts[] = $to_insert;
+				}
+			}
+		}
+
+		$init['theme_advanced_buttons2_add_before'] = 'styleselect';
+		$init['theme_advanced_buttons2_add_before'] = 'fontselect';
+		$initArray['theme_advanced_styles'] = $theme_advanced_fonts;
+		$initArray['theme_advanced_fontss'] = $theme_advanced_fonts;
+
+		$initArray['font_formats'] = implode( ';', $theme_advanced_fonts ) . 'Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats';
+		return $initArray;
+	}
 
 	/**
 	 * Registers and enqueues plugin-specific styles.Usually we base on the theme style and this is empty

@@ -7,11 +7,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WpGradeShortcode_Circle extends WpGradeShortcode {
 
 	public function __construct( $settings = array() ) {
-		$this->self_closed = true;
-		$this->name        = __( "Circle Knob", 'pixcodes_txtd' );
-		$this->code        = "circle";
-		$this->icon        = "icon-circle-blank";
-		$this->direct      = false;
+		$this->self_closed       = true;
+		$this->name              = __( "Circle Knob", 'pixcodes_txtd' );
+		$this->code              = "circle";
+		$this->icon              = "icon-circle-blank";
+		$this->direct            = false;
+		$this->shortcake_support = true;
+		$this->shortcake_icon    = 'dashicons-marker';
 
 		$this->params = array(
 			'title'  => array(
@@ -51,10 +53,12 @@ class WpGradeShortcode_Circle extends WpGradeShortcode {
 			'offset' => '',
 		), $atts ) );
 
+		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
+		$theme_path = $theme_path . $this->code . 'php';
 		/**
 		 * Template localization between plugin and theme
 		 */
-		$located = locate_template( "templates/shortcodes/{$this->code}.php", false, false );
+		$located = locate_template( $theme_path, false, false );
 		if ( ! $located ) {
 			$located = dirname( __FILE__ ) . '/templates/' . $this->code . '.php';
 		}
