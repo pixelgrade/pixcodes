@@ -35,6 +35,8 @@ if (isset($type) && !empty($type)) {
 	$menu_style_class = 'menu-list__' . $type;
 }
 
+$menu = wpautop( $menu );
+
 //remove <p> - we just need the </p>s to split by
 $menu = str_replace( "<p>", "", $menu );
 
