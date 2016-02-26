@@ -134,7 +134,7 @@ class WpGradeShortcode {
 					 * 'frameTitle' - Title for the modal UI once the library is open.
 					 */
 					//					'libraryType' => array( 'image' ),
-										'addButton'   => 'what?',
+										//'addButton'   => 'what?',
 					//					'frameTitle'  => $param['name'],
 				);
 
