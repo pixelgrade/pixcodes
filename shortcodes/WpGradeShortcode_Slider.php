@@ -92,7 +92,7 @@ class WpGradeShortcode_Slider extends WpGradeShortcode {
 		$navigation_style .= ' data-autoheight';
 
 		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
-		$theme_path = $theme_path . $this->code . 'php';
+		$theme_path = $theme_path . $this->code . '.php';
 		/**
 		 * Template localization between plugin and theme
 		 */

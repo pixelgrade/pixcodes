@@ -62,7 +62,7 @@ class WpGradeShortcode_TwitterFeed extends WpGradeShortcode {
 		$this->load_frontend_scripts = true;
 
 		$theme_path = apply_filters( 'pixcodes_theme_templates_path_filter', "templates/shortcodes/", $this->code );
-		$theme_path = $theme_path . $this->code . 'php';
+		$theme_path = $theme_path . $this->code . '.php';
 		/**
 		 * Template localization between plugin and theme
 		 */
