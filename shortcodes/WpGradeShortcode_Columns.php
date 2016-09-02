@@ -74,7 +74,45 @@ class WpGradeShortcode_Columns extends WpGradeShortcode {
 		// Create second level shortcodes
 		add_shortcode( 'col_inner', array( $this, 'add_column_shortcode' ) );
 		add_shortcode( 'row_inner', array( $this, 'add_row_shortcode' ) );
+
+		add_filter( 'mce_external_plugins', array( $this, 'add_grider_tinymce_plugin' ) );
+
+
+		add_action( 'admin_footer', array( $this, 'wp_print_grider_tinymce_templates' ) );
+		
+		// hook this function for admin actions
+		add_action( "wp_ajax_custom_action", array( $this, "listen_for_ajax") );
+		// for public actions use `nopriv_` before action name
+		// add_action( "wp_ajax_nopriv_custom_action", "listen_for_ajax");
 	}
+
+	function wp_print_grider_tinymce_templates() {?>
+		<script type="text/html" id="tmpl-pixcodes-grider-row">
+			<div class="row {{data.classes}}" data-mce-resize="false" data-mce-placeholder="1">
+				{{{data.content}}}
+			</div>
+		</script>
+
+		<script type="text/html" id="tmpl-pixcodes-grider-col">
+			<div class="col {{data.classes}}" data-mce-resize="false" data-mce-placeholder="1">
+				{{{data.content}}}
+			</div>
+		</script>
+	<?php }
+
+// this function will be called.
+	function listen_for_ajax() {
+
+		if ( ! empty( $_POST['param1'] ) ) {
+
+			$upercased = strtoupper( $_POST['param1']);
+
+			wp_send_json_success( $upercased );
+		}
+
+		wp_send_json_error('no param');
+	}
+
 
 	public function add_row_shortcode( $atts, $content ) {
 		$class    = '';
@@ -136,5 +174,12 @@ class WpGradeShortcode_Columns extends WpGradeShortcode {
 		require $located;
 
 		return ob_get_clean();
+	}
+
+	function add_grider_tinymce_plugin( $plugin_array ){
+
+		$plugin_array['pixcodes_grider'] = WPGRADE_SHORTCODES_URL . 'js/grider.js';
+
+		return $plugin_array;
 	}
 }
