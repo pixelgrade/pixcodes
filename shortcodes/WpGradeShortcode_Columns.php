@@ -77,42 +77,71 @@ class WpGradeShortcode_Columns extends WpGradeShortcode {
 
 		add_filter( 'mce_external_plugins', array( $this, 'add_grider_tinymce_plugin' ) );
 
+		add_filter( 'pixcodes_mce_sh_col_size_classes', array( $this, 'mce_sh_col_size_classes' ) );
 
 		add_action( 'admin_footer', array( $this, 'wp_print_grider_tinymce_templates' ) );
-		
+
+		add_action( 'admin_head', array( $this, 'my_add_styles_admin' ) );
+
 		// hook this function for admin actions
-		add_action( "wp_ajax_custom_action", array( $this, "listen_for_ajax") );
+
 		// for public actions use `nopriv_` before action name
 		// add_action( "wp_ajax_nopriv_custom_action", "listen_for_ajax");
 	}
 
-	function wp_print_grider_tinymce_templates() {?>
-		<script type="text/html" id="tmpl-pixcodes-grider-row">
-			<div class="row {{data.classes}}" data-mce-resize="false" data-mce-placeholder="1">
-				{{{data.content}}}
-			</div>
-		</script>
+	function mce_sh_col_size_classes( $classes ){
 
-		<script type="text/html" id="tmpl-pixcodes-grider-col">
-			<div class="col {{data.classes}}" data-mce-resize="false" data-mce-placeholder="1">
-				{{{data.content}}}
-			</div>
-		</script>
-	<?php }
+		$classes =  array(
+			1  => 'lap-one-twelfth',
+			2  => 'lap-two-twelfths',
+			3  => 'lap-three-twelfths',
+			4  => 'lap-four-twelfths',
+			5  => 'lap-five-twelfths',
+			6  => 'lap-six-twelfths',
+			7  => 'lap-seven-twelfths',
+			8  => 'lap-eight-twelfths',
+			9  => 'lap-nine-twelfths',
+			10 => 'lap-ten-twelfths',
+			11 => 'lap-eleven-twelfths',
+			12 => 'lap-one-whole',
+		);
 
-// this function will be called.
-	function listen_for_ajax() {
-
-		if ( ! empty( $_POST['param1'] ) ) {
-
-			$upercased = strtoupper( $_POST['param1']);
-
-			wp_send_json_success( $upercased );
-		}
-
-		wp_send_json_error('no param');
+		return $classes;
 	}
 
+	function my_add_styles_admin() {
+		global $current_screen;
+		$type = $current_screen->post_type;
+
+		if ( is_admin()) { ?>
+			<script type="text/javascript">
+				var pixccodes_sh_col_classes = JSON.parse( '<?php echo json_encode( apply_filters( 'pixcodes_mce_sh_col_size_classes', array() ) ) ?>' );
+			</script>
+			<?php
+		}
+	}
+
+	function wp_print_grider_tinymce_templates() {
+		$row_classes = array(
+			'pixcode',
+			'pixcode--grid',
+			'grid'
+		);
+		$col_classes = array(
+			'grid__item'
+		); ?>
+<script type="text/html" id="tmpl-pixcodes-grider-row">
+<div class="{{data.classes}} <?php echo join( ' ', apply_filters( 'pixcodes_mce_sh_row_classes', $row_classes ) );?>" {{data.atts}} data-mce-resize="false" data-mce-placeholder="1">
+	{{{data.content}}}
+</div>
+</script>
+
+<script type="text/html" id="tmpl-pixcodes-grider-col">
+<div class="{{data.classes}} <?php echo join( ' ', apply_filters( 'pixcodes_mce_sh_col_classes', $col_classes ) );?>" {{data.atts}} data-mce-resize="false" data-mce-placeholder="1">
+	<p>{{{data.content}}}</p>
+</div>
+</script>
+<?php }
 
 	public function add_row_shortcode( $atts, $content ) {
 		$class    = '';
