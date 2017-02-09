@@ -1,0 +1,240 @@
+# Copyright (C) 2017 PixCodes
+# This file is distributed under the same license as the PixCodes package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PixCodes 2.3.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pixcodes\n"
+"POT-Creation-Date: 2017-02-09 13:55:13+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: shortcodes/WpGradeShortcode_Arrow.php:12
+msgid "Arrow"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_AverageScore.php:11
+msgid "Average score"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:11
+msgid "Button"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:20
+msgid "Label Text"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:26
+msgid "Link URL"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:31
+msgid "Button Size"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:33
+#: shortcodes/WpGradeShortcode_Button.php:44
+msgid "-- Select Size --"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:34
+#: shortcodes/WpGradeShortcode_Button.php:45
+msgid "Small"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:35
+#: shortcodes/WpGradeShortcode_Button.php:46
+msgid "Large"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:36
+#: shortcodes/WpGradeShortcode_Button.php:47
+msgid "Huge"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:42
+msgid "Text Size"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:53
+msgid "Class"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:58
+msgid "ID"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Button.php:63
+msgid "Open in a new tab?"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Circle.php:11
+msgid "Circle Knob"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Circle.php:19
+msgid "Title (inside of circle knob)"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Circle.php:24
+msgid "Color (knob color in HEX format)"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Circle.php:29
+msgid "Value (0 to 100)"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_Circle.php:34
+msgid "Offset Angle (starting angle in degrees - default=0)"
+msgstr ""
+
+#: shortcodes/WpGradeShortcode_TwitterFeed.php:110
+msgid "%d year ago"
+msgid_plural "%d years ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: shortcodes/WpGradeShortcode_TwitterFeed.php:113
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: shortcodes/WpGradeShortcode_TwitterFeed.php:116
+msgid "%d week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: shortcodes/WpGradeShortcode_TwitterFeed.php:119
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: shortcodes/WpGradeShortcode_TwitterFeed.php:122
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: shortcodes/WpGradeShortcode_TwitterFeed.php:125
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: shortcodes/WpGradeShortcode_TwitterFeed.php:127
+msgid "moments ago"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:4
+msgid "Powered by OpenTable"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:10
+msgid "Date"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:14
+msgid "Time"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:36
+msgid "Party Size"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:38
+msgid "1 Person"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:39
+msgid "2 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:40
+msgid "3 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:41
+msgid "4 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:42
+msgid "5 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:43
+msgid "6 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:44
+msgid "7 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:45
+msgid "8 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:46
+msgid "9 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:47
+msgid "10 People"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:53
+msgid "Find a Table"
+msgstr ""
+
+#: shortcodes/templates/otreservations.php:63
+msgid "You need to provide us with a valid numeric OpenTable restaurant ID."
+msgstr ""
+
+#: views/shortcodes-modal.php:19
+msgid "Back"
+msgstr ""
+
+#: views/shortcodes-modal.php:20
+msgid "Choose shortcode:"
+msgstr ""
+
+#: views/shortcodes-modal.php:61
+msgid "Submit"
+msgstr ""
+
+#: views/shortcodes-modal.php:73
+msgid "Cancel"
+msgstr ""
+
+#: views/shortcodes-modal.php:74
+msgid "or"
+msgstr ""
+
+#: views/shortcodes-modal.php:75
+msgid "Insert"
+msgstr ""
+#. Plugin Name of the plugin/theme
+msgid "PixCodes"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://pixelgrade.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "WordPress shortcodes plugin everywhere. Loaded with shortcodes, awesomeness and more."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "PixelGrade"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://pixelgrade.com"
+msgstr ""
