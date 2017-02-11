@@ -8,6 +8,7 @@
         zoom: 1;
         *display: inline;
         vertical-align: middle;
+        z-index: 9999999;
     }
 
     .select2-container .select2-choice {

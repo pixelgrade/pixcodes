@@ -103,7 +103,7 @@ editor = '';
 						}
 					} );
 
-					$( '.details_container .input-tags input' ).each( function() {
+					$( '.details_container .input-tags select' ).each( function() {
 
 						var options = $( this ).data( 'options' );
 						if ( $( this ).hasClass( 'select2-offscreen' ) ) {
