@@ -44,7 +44,7 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 		);
 
 		// allow the theme or other plugins to "hook" into this shortcode's params
-		$this->params = apply_filters( 'pixcodes_filter_params_for_' . strtolower( $this->name ), $this->params );
+		$this->params = apply_filters( 'pixcodes_filter_params_for_' . preg_replace('/\s+/', '_', strtolower( $this->name ) ), $this->params );
 
 		add_shortcode( 'otreservations', array( $this, 'add_shortcode' ) );
 
