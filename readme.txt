@@ -1,7 +1,7 @@
 === PixCodes ===
-Contributors: euthelup, babbardel, pixelgrade, cristianfrumusanu
+Contributors: pixelgrade, vlad.olaru, babbardel
 Tags: shortcodes, insert, columns, sliders, tabs, buttons
-Requires at least: 4.2.0
+Requires at least: 4.9.0
 Tested up to: 4.3.0
 Stable tag: 2.3.4
 License: GPLv2 or later
