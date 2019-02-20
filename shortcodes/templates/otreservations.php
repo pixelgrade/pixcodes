@@ -1,3 +1,6 @@
+<?php if(!empty($disable_weekends)){
+    $class = $class . " disable-weekends";
+} ?>
 <div class="pixcode  pixcode--otreservations  otreservations  <?php echo $class ?>">
 	<div class="otreservation-title-wrapper">
 		<h4 class="otreservations-title"><?php echo $title ?></h4>

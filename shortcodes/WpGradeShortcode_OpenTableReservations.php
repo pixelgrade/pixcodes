@@ -40,7 +40,12 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 				'type'        => 'switch',
 				'name'        => 'Replace Icons with Text?',
 				'admin_class' => 'span4',
-			)
+			),
+			'disable_weekends'          => array(
+				'type'        => 'switch',
+				'name'        => 'Disable Weekends?',
+				'admin_class' => 'span4',
+			),
 		);
 
 		// allow the theme or other plugins to "hook" into this shortcode's params
@@ -68,6 +73,7 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 			'class'           => '',
 			'domain_ext'      => 'com',
 			'date_format'     => 'MM/DD/YYYY', //this can be overwritten by the user
+			'disable_weekends' => false,
 		), $atts ) );
 
 		$this->load_frontend_scripts = true;
