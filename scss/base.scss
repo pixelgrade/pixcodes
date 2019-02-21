@@ -279,6 +279,9 @@ Modal Styling
 		input[type="checkbox"],
 		input[type="radio"] {
 			width: auto;
+			float: left;
+			margin-top: 0;
+			margin-bottom: 0;
 		}
 		select {
 			height: 32px;

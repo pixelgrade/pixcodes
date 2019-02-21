@@ -44,7 +44,7 @@ class WpGradeShortcode_OpenTableReservations extends WpGradeShortcode {
 			'disable_weekends'          => array(
 				'type'        => 'switch',
 				'name'        => 'Disable Weekends?',
-				'admin_class' => 'span4',
+				'admin_class' => 'span7 push1',
 			),
 		);
 
