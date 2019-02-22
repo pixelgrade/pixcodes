@@ -30,6 +30,10 @@ Here is a [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/ma
 
 == Changelog ==
 
+= 2.3.5 =
+* Checked and made sure that the plugin works with the latest WordPress version (5.1)
+* Fixed some edged cases for the OpenTable shortcode
+
 = 2.3.4 =
 * Update Select2 version to 4.0.3
 
