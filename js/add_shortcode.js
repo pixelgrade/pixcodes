@@ -1,6 +1,37 @@
 editor = '';
 (function($) {
 
+	tinymce.create( 'tinymce.plugins.wpgrade', {
+		init: function( ed, url ) {
+			plugin_url = url;
+			ed.addButton( 'wpgrade', {
+				title: 'Add a shortcode',
+				// text : 'PixCodes',
+				classes: 'btn pixelgrade_shortcodes',
+				onclick: function() {
+					$( '.l_pxg_modal .btn_primary' ).addClass( 'disabled' );
+					$( 'body' ).addClass( 'pixcodes_select_tags_opened' );
+					//let's clean up some more first
+					$( '.l_pxg_modal' ).removeClass( 's_active' );
+
+					modal_selector.reveal( {
+						animation: 'fadeAndPop',                   //fade, fadeAndPop, none
+						animationspeed: 400,                       //how fast animtions are
+						closeonbackgroundclick: true,              //if you click background will modal close?
+						dismissmodalclass: 'close'    //the class of a button or element that will close an open modal
+					} );
+					editor = ed;
+					get_current_editor_selected_content = function() {
+						return editor;
+					};
+
+					window.send_to_editor_clone = window.send_to_editor;
+				}
+			} );
+		}
+	} );
+	tinymce.PluginManager.add( 'wpgrade', tinymce.plugins.wpgrade );
+
 	$( document ).ready( function() {
 
 		$( 'body' ).append( '<div id="pixelgrade_shortcodes_modal"  class="reveal-modal l_pxg_modal">' );
@@ -165,37 +196,6 @@ editor = '';
 
 			} // end of ajax success
 		} );
-
-		tinymce.create( 'tinymce.plugins.wpgrade', {
-			init: function( ed, url ) {
-				plugin_url = url;
-				ed.addButton( 'wpgrade', {
-					title: 'Add a shortcode',
-					// text : 'PixCodes',
-					classes: 'btn pixelgrade_shortcodes',
-					onclick: function() {
-						$( '.l_pxg_modal .btn_primary' ).addClass( 'disabled' );
-						$( 'body' ).addClass( 'pixcodes_select_tags_opened' );
-						//let's clean up some more first
-						$( '.l_pxg_modal' ).removeClass( 's_active' );
-
-						modal_selector.reveal( {
-							animation: 'fadeAndPop',                   //fade, fadeAndPop, none
-							animationspeed: 400,                       //how fast animtions are
-							closeonbackgroundclick: true,              //if you click background will modal close?
-							dismissmodalclass: 'close'    //the class of a button or element that will close an open modal
-						} );
-						editor = ed;
-						get_current_editor_selected_content = function() {
-							return editor;
-						};
-
-						window.send_to_editor_clone = window.send_to_editor;
-					}
-				} );
-			}
-		} );
-		tinymce.PluginManager.add( 'wpgrade', tinymce.plugins.wpgrade );
 
 		// if the shortcode doesn't have params it needs to be inserted directly
 		modal_selector.on( 'click', '.insert-direct-shortcode', function() {
