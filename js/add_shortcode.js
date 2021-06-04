@@ -1,6 +1,11 @@
 editor = '';
 (function($) {
 
+	$( 'body' ).append( '<div id="pixelgrade_shortcodes_modal"  class="reveal-modal l_pxg_modal">' );
+
+	let modal_selector = $( '#pixelgrade_shortcodes_modal' ),
+		plugin_url;
+
 	tinymce.create( 'tinymce.plugins.wpgrade', {
 		init: function( ed, url ) {
 			plugin_url = url;
@@ -34,10 +39,7 @@ editor = '';
 
 	$( document ).ready( function() {
 
-		$( 'body' ).append( '<div id="pixelgrade_shortcodes_modal"  class="reveal-modal l_pxg_modal">' );
-
-		var modal_selector = $( '#pixelgrade_shortcodes_modal' ),
-			plugin_url;
+		var modal_selector = $( '#pixelgrade_shortcodes_modal' );
 
 		$.ajax( {
 			url: ajaxurl,
