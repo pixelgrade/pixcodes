@@ -2,9 +2,9 @@
 Contributors: pixelgrade, vlad.olaru, babbardel
 Tags: shortcodes, insert, columns, sliders, tabs, buttons
 Requires at least: 4.9.0
-Tested up to: 5.1.0
+Tested up to: 5.7.2
 Requires PHP: 5.2.4
-Stable tag: 2.3.5
+Stable tag: 2.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,9 @@ Here is a [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/ma
 3. For further instructions and how to filter parameters or overwrite templates, read our [detailed documentation](http://github.com/pixelgrade/pixcodes/blob/dev/README.md)
 
 == Changelog ==
+
+= 2.3.6 =
+* Improve compatibility with WordPress 5.7.2.
 
 = 2.3.5 =
 * Checked and made sure that the plugin works with the latest WordPress version (5.1)
